@@ -6,6 +6,9 @@
 	$(document).ready(function() {
 	 window.location.href = "loginController.do?login";
  });
+	function value(){
+
+    }
 </script>
 </head>
 <body>
