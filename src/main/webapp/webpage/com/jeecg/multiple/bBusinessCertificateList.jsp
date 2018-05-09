@@ -123,15 +123,6 @@
                          <input id="filePaths" name="filePaths" type="hidden" />
         </span>
 
-        <label class="Validform_label"> 文件列表: </label>
-       <div class="value" colspan="2" id="fileList"><c:forEach
-               var="file" items="${casefileList}">
-        <div id="${file.id }">
-         <a href='AcertificatesUploadController.do?downloadFile&id=${file.id}&type=download'>${file.name }</a>&nbsp;&nbsp;<a
-                href="javascript:void(0)" onclick="delFile('','1','${file.id}')">删除</a>
-        </div>
-       </c:forEach></div>
-
        </td>
       </tr>
     </c:forEach>
