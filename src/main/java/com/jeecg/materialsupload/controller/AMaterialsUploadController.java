@@ -263,7 +263,7 @@ public class AMaterialsUploadController extends BaseController {
 		file.setId(id);
 		file = aMaterialsUploadService.getEntity(AMaterialsUploadEntity.class, file.getId());
 		//type==1 表示 上传的是材料 type==2 表示 上传的是证照
-		if("1".equals(type)){
+//		if("1".equals(type)){
 			file.setCreateTime(new Date());
 			file.setMaterialsPath(filePath);
 			file.setMaterialsName(realName);
@@ -274,7 +274,7 @@ public class AMaterialsUploadController extends BaseController {
 //			file.setPhasesId(phasesId);
 //			file.setItemsId(itemsId);
 //			file.setMaterialsId(materialsId);
-		}
+//		}
 
 		systemService.updateEntitie(file);
 	}

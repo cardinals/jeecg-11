@@ -10,7 +10,7 @@
      $(function(){
          $('input.materials').fileupload({
              dataType: 'json',
-             acceptFileTypes: /(\.|\/)(gif|jpe?g|png|pdf|txt|doc|docx|xls|xlsx|ppt)$/i,
+             acceptFileTypes: /(\.|\/)(gif|jpe?g|png|pdf|txt|doc|docx|xls|xlsx|ppt|rar|zip)$/i,
              maxFileSize: 2097152*3,  // 2*3 MB
              done: function (e, data) {
                  debugger;

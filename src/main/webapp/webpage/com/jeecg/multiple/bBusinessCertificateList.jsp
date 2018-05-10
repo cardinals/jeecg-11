@@ -82,12 +82,13 @@
    <table style="width: 100%;" cellpadding="0" cellspacing="1" class="formtable table table-hover" >
     <thead>
     <tr>
-     <th>序号</th>
-     <th style="width: 20%;">实际项目名称</th>
-     <th style="width: 30%;">阶段编号</th>
-     <th style="width: 30%;">事项名称</th>
+     <th align="center">序号</th>
+     <th align="center" style="width: 20%;">实际项目名称</th>
+     <th align="center" style="width: 10%;">阶段编号</th>
+     <th align="center" style="width: 25%;">事项名称</th>
      <%--<th style="width: 40%;">材料名称</th>--%>
-     <th style="width: 40%;">操作</th>
+     <th align="center" style="width: 20%;">操作</th>
+     <th align="center" style="width: 20%;">文件名称</th>
     </tr>
     </thead>
    <c:if test="${fn:length(certificateList)  > 0 }">
@@ -100,7 +101,24 @@
         ${certificate.reality_project_name }
       </td>
       <td align="center">
-        ${certificate.phases_id }
+       <c:if test="${certificate.phases_id == '001' }">
+         第一阶段
+       </c:if>
+       <c:if test="${certificate.phases_id == '002' }">
+        第二阶段
+       </c:if>
+       <c:if test="${certificate.phases_id == '003' }">
+        第三阶段
+       </c:if>
+       <c:if test="${certificate.phases_id == '004' }">
+        第四阶段
+       </c:if>
+       <c:if test="${certificate.phases_id == '005' }">
+        第五阶段
+       </c:if>
+       <c:if test="${certificate.phases_id == '006' }">
+        第六阶段
+       </c:if>
       </td>
 
       <td align="center">
@@ -114,16 +132,14 @@
         ${fn:substring(certificate.certificates_name, 0, 40) }
       </td>--%>
       <td align="center">
-        <%--<input type="file">--%>
-
-        <label class="Validform_label"> 文件上传: </label>
         <span class="btn btn-success fileinput-button"><span>选择文件</span>
-         <input id="fileupload" type="file" name="files[]"
-               data-url="AcertificatesUploadController.do?uploadFile" multiple>&nbsp;&nbsp;
-                         <input id="filePaths" name="filePaths" type="hidden" />
+         <input class="materials" id="fileupload" type="file" name="files[]" data-url="aMaterialsUploadController.do?uploadFile&id=${certificate.id }&type=2"  >
+         &nbsp;&nbsp;  <input id="filePaths" name="filePaths" type="hidden" />
         </span>
-
        </td>
+      <td align="left" title="${certificate.file_name }">
+       <a href='aMaterialsUploadController.do?downloadFile&id=${certificate.id }&type=download' target='_blank'>${certificate.file_name }</a>
+      </td>
       </tr>
     </c:forEach>
    </c:if>

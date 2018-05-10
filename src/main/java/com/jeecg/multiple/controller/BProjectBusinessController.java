@@ -153,7 +153,7 @@ public class BProjectBusinessController extends BaseController {
 					" and f.phases_id = b.phases_id"+
 					" and f.business_id = e.business_id"+
 					" and f.items_id = c.items_id || c.items_child_id"+
-					" and f.materials_id = d.materials_id"+
+					" and f.materials_id = d.materials_id and f.materials_type = '1'" +
 					" and e.business_id = '"+bProjectBusiness.getBusinessId()+"'";
 		}else{
 			sql = "select f.id,substr(f.materials_name,37) as file_name, f.materials_path,e.business_id,a.project_id, a.project_name, b.phases_id, b.phases_name, c.items_id || c.items_child_id as items_id, " +
@@ -165,7 +165,7 @@ public class BProjectBusinessController extends BaseController {
 					" and f.phases_id = b.phases_id"+
 					" and f.business_id = e.business_id"+
 					" and f.items_id = c.items_id || c.items_child_id"+
-					" and f.materials_id = d.materials_id"+
+					" and f.materials_id = d.materials_id and f.materials_type = '1'" +
 					" and e.business_id = '"+bProjectBusiness.getBusinessId()+"'" +
 				" and c.dept_id = '"+user.getCurrentDepart().getId()+"'" ;
 		}
@@ -188,7 +188,14 @@ public class BProjectBusinessController extends BaseController {
 			req.setAttribute("bProjectBusinessPage", bProjectBusiness);
 		}
 		TSUser user = ResourceUtil.getSessionUser();
-		String sql = "select * from B_CHILD_BUSINESS t where t.business_id = '"+bProjectBusiness.getBusinessId()+"'";
+		String sql = "select a.business_id,a.project_id,substr(a.phases_id,-3) as phases_id , a.items_id,a.items_name ,a.dept_id,a.dept_name,a.reality_project_name,b.id, " +
+				" substr(b.materials_name,37) as file_name from B_CHILD_BUSINESS a, A_MATERIALS_UPLOAD b " +
+				" where   a.business_id = b.business_id" +
+				"      and a.project_id = b.project_id" +
+				"      and a.phases_id = b.phases_id" +
+				"      and a.items_id = b.items_id" +
+				"      and b.materials_type = '2'" +
+				"      and a.business_id = '"+bProjectBusiness.getBusinessId()+"' order by a.phases_id ";
 		List<Map<String, Object>> certificateList =  systemService.findForJdbc(sql);
 		req.setAttribute("certificateList", certificateList);
 		return new ModelAndView("com/jeecg/multiple/bBusinessCertificateList");
@@ -370,11 +377,35 @@ public class BProjectBusinessController extends BaseController {
 					aMaterialsUpload.setItemsId(String.valueOf(obj.get("items_id")));
 					aMaterialsUpload.setMaterialsId(String.valueOf(obj.get("materials_id")));
 					aMaterialsUpload.setStatus("1");
+					//MaterialsType == 1 表示材料 MaterialsType ==2 表示证照
+					aMaterialsUpload.setMaterialsType("1");
 					aMaterialsUpload.setCreateTime(new Date());
 					aMaterialsUploadService.save(aMaterialsUpload);
 
 				}
 			}
+
+			//3.插入该项目的所有子项证照信息
+			String certsql = "select * from B_CHILD_BUSINESS t where t.business_id = '"+bProjectBusiness.getBusinessId()+"'";
+			List<Map<String, Object>> certificateList =  systemService.findForJdbc(certsql);
+			if(certificateList!=null && certificateList.size()>0){
+				for(int i=0;i<certificateList.size();i++){
+					AMaterialsUploadEntity aMaterialsUpload = new AMaterialsUploadEntity();
+					Map<String, Object> obj =  certificateList.get(i);
+					aMaterialsUpload.setBusinessId(bProjectBusiness.getBusinessId());
+					aMaterialsUpload.setProjectId(bProjectBusiness.getProjectId());
+					aMaterialsUpload.setPhasesId(String.valueOf(obj.get("phases_id")));
+					aMaterialsUpload.setItemsId(String.valueOf(obj.get("items_id")));
+					aMaterialsUpload.setMaterialsId(String.valueOf(obj.get("materials_id")));
+					aMaterialsUpload.setStatus("1");
+					//MaterialsType == 1 表示材料 MaterialsType ==2 表示证照
+					aMaterialsUpload.setMaterialsType("2");
+					aMaterialsUpload.setCreateTime(new Date());
+					aMaterialsUploadService.save(aMaterialsUpload);
+				}
+			}
+
+
 		}catch(Exception e){
 			e.printStackTrace();
 			message = "并联业务信息添加失败";
