@@ -81,23 +81,32 @@
   <div region="center" style="padding:0px;border:0px">
    <table style="width: 100%;" cellpadding="0" cellspacing="1" class="formtable table table-hover" >
     <thead>
-    <tr>
+    <tr style="height: 42px;background: #e897ad;">
      <th align="center">序号</th>
+     <th align="center" style="width: 15%;">部门名称</th>
      <th align="center" style="width: 20%;">实际项目名称</th>
-     <th align="center" style="width: 10%;">阶段编号</th>
+     <th align="center" style="width: 8%;">阶段</th>
      <th align="center" style="width: 25%;">事项名称</th>
      <%--<th style="width: 40%;">材料名称</th>--%>
-     <th align="center" style="width: 20%;">操作</th>
+     <th align="center" style="width: 15%;">操作</th>
      <th align="center" style="width: 20%;">文件名称</th>
     </tr>
     </thead>
    <c:if test="${fn:length(certificateList)  > 0 }">
     <c:forEach items="${certificateList}" var="certificate" varStatus="stuts">
-     <tr style="height: 42px;">
+     <c:if test="${stuts.index % 2 == 0}">
+      <tr style="height: 42px;background: #ebecdb;">
+     </c:if>
+     <c:if test="${stuts.index % 2 != 0}">
+      <tr style="height: 42px;background: #d5d5e0;">
+     </c:if>
       <td align="center"><div style="width: 25px;" name="xh">${stuts.index+1 }</div></td>
 
       <input name="certificateList[${stuts.index }].project_id" type="hidden" value="${certificate.project_id }"/>
-      <td align="center">
+     <td align="center">
+       ${certificate.dept_name }
+     </td>
+     <td align="center">
         ${certificate.reality_project_name }
       </td>
       <td align="center">
@@ -132,10 +141,13 @@
         ${fn:substring(certificate.certificates_name, 0, 40) }
       </td>--%>
       <td align="center">
-        <span class="btn btn-success fileinput-button"><span>选择文件</span>
-         <input class="materials" id="fileupload" type="file" name="files[]" data-url="aMaterialsUploadController.do?uploadFile&id=${certificate.id }&type=2"  >
-         &nbsp;&nbsp;  <input id="filePaths" name="filePaths" type="hidden" />
-        </span>
+       <c:if test="${certificate.dept_id == deptId }">
+         <span class="btn btn-success fileinput-button"><span>选择文件</span>
+           <input class="materials" id="fileupload" type="file" name="files[]" data-url="aMaterialsUploadController.do?uploadFile&id=${certificate.id }&type=2"  >
+           &nbsp;&nbsp;  <input id="filePaths" name="filePaths" type="hidden" />
+         </span>
+       </c:if>
+
        </td>
       <td align="left" title="${certificate.file_name }">
        <a href='aMaterialsUploadController.do?downloadFile&id=${certificate.id }&type=download' target='_blank'>${certificate.file_name }</a>

@@ -77,11 +77,13 @@
 </head>
 <body>
 
+<%--<form name="formobj" id="formobj" action="bProjectBusinessController.do?doCheck" method="post"></form>--%>
 <div class="easyui-layout" fit="true">
   <div region="center" style="padding:0px;border:0px">
-   <table style="width: 100%;" cellpadding="0" cellspacing="1" class="formtable table table-hover" >
+   <t:formvalid formid="formobj" dialog="true" usePlugin="password" layout="table" action="bProjectBusinessController.do?doCheck" >
+   <table style="width: 100%;" cellpadding="0" cellspacing="1" class="formtable" >
     <thead>
-    <tr>
+    <tr style="height: 42px;background: #e897ad;">
      <th align="center">序号</th>
      <th align="center" style="width: 15%;">部门名称</th>
      <th align="center" style="width: 25%;">事项名称</th>
@@ -91,8 +93,20 @@
     </tr>
     </thead>
    <c:if test="${fn:length(materialList)  > 0 }">
+    <input name="businessId" type="hidden" value="${materialList[0].business_id }"/>
+    <input name="projectId" type="hidden" value="${materialList[0].project_id }"/>
+    <input name="phasesId" type="hidden" value="${materialList[0].phases_id }"/>
+    <input name="itemsId" type="hidden" value="${materialList[0].items_id }"/>
+
+
+
     <c:forEach items="${materialList}" var="material" varStatus="stuts">
-     <tr style="height: 42px;">
+     <c:if test="${stuts.index % 2 == 0}">
+      <tr style="height: 42px;background: #ebecdb;">
+     </c:if>
+     <c:if test="${stuts.index % 2 != 0}">
+      <tr style="height: 42px;background: #d5d5e0;">
+     </c:if>
       <td align="center"><div style="width: 25px;" name="xh">${stuts.index+1 }</div></td>
 
       <input name="materialList[${stuts.index }].project_id" type="hidden" value="${material.project_id }"/>
@@ -111,7 +125,7 @@
        <label class="Validform_label" style="display: none;">材料编号</label>
       </td>--%>
       <td align="left" title="${material.materials_name }">
-        ${fn:substring(material.materials_name, 0, 40) }
+        ${fn:substring(material.materials_name, 0, 44) }
       </td>
 
 
@@ -143,14 +157,28 @@
     </c:forEach>
    </c:if>
    </table>
+
+   <c:if test="${role =='DEPT_CHECK_ROLE'}">
+    审核意见：<br>
+    <textarea name="checkContent" id="checkContent" style="width: 80%;height: 80px;"></textarea>
+
+   </c:if>
+
   </div>
  </div>
+<%--</form>--%>
+</t:formvalid>
 </body>
  <script src = "webpage/com/jeecg/multiple/bProjectBusinessList.js"></script>
  <script type="text/javascript">
  $(document).ready(function(){
  });
 
+//提交审核意见
+function sub_check(){
+    $("#check_content").val();
+    alert($("#check_content").html());
+}
 
 //查看
 function accept(id,tableName){

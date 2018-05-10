@@ -14,6 +14,7 @@ import java.text.SimpleDateFormat;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.jeecg.util.BusinessUtil;
 import org.apache.log4j.Logger;
 import org.jeecgframework.core.util.*;
 import org.jeecgframework.web.system.pojo.base.TSUser;
@@ -168,6 +169,8 @@ public class BProjectBusinessController extends BaseController {
 					" and f.materials_id = d.materials_id and f.materials_type = '1'" +
 					" and e.business_id = '"+bProjectBusiness.getBusinessId()+"'" +
 				" and c.dept_id = '"+user.getCurrentDepart().getId()+"'" ;
+
+			req.setAttribute("role", BusinessUtil.DEPT_CHECK_ROLE);
 		}
 
 		List<Map<String, Object>> materialList =  systemService.findForJdbc(sql);
@@ -198,7 +201,41 @@ public class BProjectBusinessController extends BaseController {
 				"      and a.business_id = '"+bProjectBusiness.getBusinessId()+"' order by a.phases_id ";
 		List<Map<String, Object>> certificateList =  systemService.findForJdbc(sql);
 		req.setAttribute("certificateList", certificateList);
+		System.out.println(user.getDepartid());
+		req.setAttribute("deptId", user.getDepartid());
 		return new ModelAndView("com/jeecg/multiple/bBusinessCertificateList");
+	}
+
+	/**
+	 * 更新并联业务信息
+	 *
+	 * @param ids
+	 * @return
+	 */
+	@RequestMapping(params = "doCheck")
+	@ResponseBody
+	public AjaxJson doCheck(BProjectBusinessEntity bProjectBusiness, String checkContent,String businessId,
+							String projectId,String phasesId,String itemsId,HttpServletRequest request) {
+		String message = null;
+		AjaxJson j = new AjaxJson();
+		message = "审核意见提交成功";
+
+		try {
+			String sql = "update b_child_business a set a.check_time = sysdate ,a.check_content ='"+checkContent+"' " +
+					" where a.business_id ='"+businessId+"' " +
+					" and a.project_id ='"+projectId+"' " +
+					" and a.phases_id ='"+phasesId+"' " +
+					" and a.items_id = '"+itemsId+"'";
+			int result =  systemService.updateBySqlString(sql);
+			System.out.println(result);
+//			bChildBusinessService.saveOrUpdate(bChildBusiness);
+		} catch (Exception e) {
+			e.printStackTrace();
+			message = "审核意见提交失败";
+			throw new BusinessException(e.getMessage());
+		}
+		j.setMsg(message);
+		return j;
 	}
 
 //~~~~~~~~~~~~~~~~~~~~~~~~
