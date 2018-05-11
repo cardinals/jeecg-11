@@ -201,7 +201,6 @@ public class BProjectBusinessController extends BaseController {
 				"      and a.business_id = '"+bProjectBusiness.getBusinessId()+"' order by a.phases_id ";
 		List<Map<String, Object>> certificateList =  systemService.findForJdbc(sql);
 		req.setAttribute("certificateList", certificateList);
-		System.out.println(user.getDepartid());
 		req.setAttribute("deptId", user.getDepartid());
 		return new ModelAndView("com/jeecg/multiple/bBusinessCertificateList");
 	}
@@ -227,7 +226,6 @@ public class BProjectBusinessController extends BaseController {
 					" and a.phases_id ='"+phasesId+"' " +
 					" and a.items_id = '"+itemsId+"'";
 			int result =  systemService.updateBySqlString(sql);
-			System.out.println(result);
 //			bChildBusinessService.saveOrUpdate(bChildBusiness);
 		} catch (Exception e) {
 			e.printStackTrace();
