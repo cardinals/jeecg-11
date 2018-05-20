@@ -210,6 +210,8 @@ public class BProjectBusinessController extends BaseController {
 		List<Map<String, Object>> certificateList =  systemService.findForJdbc(sql);
 		req.setAttribute("certificateList", certificateList);
 		req.setAttribute("deptId", user.getDepartid());
+		//上传证照权限只给预受理人员
+		req.setAttribute("role", BusinessUtil.WINDOW_ACCEPT);
 		return new ModelAndView("com/jeecg/multiple/bBusinessCertificateList");
 	}
 

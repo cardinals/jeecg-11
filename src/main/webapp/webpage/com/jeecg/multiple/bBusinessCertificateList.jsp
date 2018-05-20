@@ -141,7 +141,8 @@
         ${fn:substring(certificate.certificates_name, 0, 40) }
       </td>--%>
       <td align="center">
-       <c:if test="${certificate.dept_id == deptId }">
+       <%--<c:if test="${certificate.dept_id == deptId }">--%>
+        <c:if test="${role =='WINDOW_ACCEPT'}">
          <span class="btn btn-success fileinput-button"><span>选择文件</span>
            <input class="materials" id="fileupload" type="file" name="files[]" data-url="aMaterialsUploadController.do?uploadFile&id=${certificate.id }&type=2"  >
            &nbsp;&nbsp;  <input id="filePaths" name="filePaths" type="hidden" />

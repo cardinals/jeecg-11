@@ -18,6 +18,7 @@ import java.util.*;
 public class BusinessUtil {
 
 	public static final String DEPT_CHECK_ROLE = "DEPT_CHECK_ROLE";
+	public static final String WINDOW_ACCEPT = "WINDOW_ACCEPT";
 
 
 }
