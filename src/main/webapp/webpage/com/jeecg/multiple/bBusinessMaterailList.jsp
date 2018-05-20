@@ -160,9 +160,46 @@
 
    <c:if test="${role =='DEPT_CHECK_ROLE'}">
     审核意见：<br>
-    <textarea name="checkContent" id="checkContent" style="width: 80%;height: 80px;"></textarea>
-
+    <textarea name="checkContent" id="checkContent" style="width: 80%;height: 80px;">${checklList[0].check_content }</textarea>
    </c:if>
+
+    <c:if test="${role !='DEPT_CHECK_ROLE'}">
+    <table style="width: 100%;" cellpadding="0" cellspacing="1" class="formtable" >
+     <thead>
+     <tr style="height: 42px;background: #e897ad;">
+      <th align="center">序号</th>
+      <th align="center" style="width: 15%;">部门名称</th>
+      <th align="center" style="width: 25%;">事项名称</th>
+      <th align="center" style="width: 30%;">审核意见</th>
+      <th align="center" style="width: 15%;">审核时间</th>
+     </tr>
+     </thead>
+      <c:forEach items="${checklList}" var="check" varStatus="stuts">
+      <c:if test="${stuts.index % 2 == 0}">
+      <tr style="height: 42px;background: #ebecdb;">
+       </c:if>
+       <c:if test="${stuts.index % 2 != 0}">
+      <tr style="height: 42px;background: #d5d5e0;">
+       </c:if>
+
+         <td align="center"><div style="width: 25px;" name="xh">${stuts.index+1 }</div></td>
+         <td align="center">
+           ${check.dept_name }
+         </td>
+          <td align="center">
+            ${check.items_name }
+          </td>
+          <td align="center">
+            ${check.check_content }
+          </td>
+          <td align="center">
+            ${check.check_time }
+          </td>
+        </tr>
+      </c:forEach>
+
+    </table>
+    </c:if>
 
   </div>
  </div>

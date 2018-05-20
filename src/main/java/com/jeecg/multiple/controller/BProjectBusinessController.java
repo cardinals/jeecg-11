@@ -144,6 +144,7 @@ public class BProjectBusinessController extends BaseController {
 		}
 		TSUser user = ResourceUtil.getSessionUser();
 		String sql ="";
+		String check_sql ="";
 		if (ResourceUtil.getConfigByName("accept_deptid").equals(user.getCurrentDepart().getId())){
 			sql = "select f.id,substr(f.materials_name,37) as file_name, f.materials_path,e.business_id,a.project_id, a.project_name, b.phases_id, b.phases_name, c.items_id || c.items_child_id as items_id, " +
 					"c.items_child_name, d.materials_id, d.materials_name, c.dept_id, c.dept_name from A_PROJECT_INFO a, " +
@@ -156,6 +157,9 @@ public class BProjectBusinessController extends BaseController {
 					" and f.items_id = c.items_id || c.items_child_id"+
 					" and f.materials_id = d.materials_id and f.materials_type = '1'" +
 					" and e.business_id = '"+bProjectBusiness.getBusinessId()+"'";
+			check_sql = "select dept_id,dept_name,items_name,items_id,check_content,check_time from B_CHILD_BUSINESS t " +
+					"where business_id ='"+bProjectBusiness.getBusinessId()+"' " +
+					"and  substr(phases_id,-3) ='001'";
 		}else{
 			sql = "select f.id,substr(f.materials_name,37) as file_name, f.materials_path,e.business_id,a.project_id, a.project_name, b.phases_id, b.phases_name, c.items_id || c.items_child_id as items_id, " +
 					"c.items_child_name, d.materials_id, d.materials_name, c.dept_id, c.dept_name from A_PROJECT_INFO a, " +
@@ -169,12 +173,16 @@ public class BProjectBusinessController extends BaseController {
 					" and f.materials_id = d.materials_id and f.materials_type = '1'" +
 					" and e.business_id = '"+bProjectBusiness.getBusinessId()+"'" +
 				" and c.dept_id = '"+user.getCurrentDepart().getId()+"'" ;
-
+			check_sql = "select dept_id,dept_name,items_name,items_id,check_content,check_time from B_CHILD_BUSINESS t " +
+					"where business_id ='"+bProjectBusiness.getBusinessId()+"' " +
+					"and  substr(phases_id,-3) ='001' and dept_id='"+user.getCurrentDepart().getId()+"'";
 			req.setAttribute("role", BusinessUtil.DEPT_CHECK_ROLE);
 		}
 
 		List<Map<String, Object>> materialList =  systemService.findForJdbc(sql);
+		List<Map<String, Object>> checklList =  systemService.findForJdbc(check_sql);
 		req.setAttribute("materialList", materialList);
+		req.setAttribute("checklList", checklList);
 		return new ModelAndView("com/jeecg/multiple/bBusinessMaterailList");
 	}
 
