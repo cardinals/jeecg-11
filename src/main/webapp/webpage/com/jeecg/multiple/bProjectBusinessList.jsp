@@ -26,6 +26,7 @@
    <t:dgFunOpt funname="accept(id)" title="查看"  urlclass="ace_button"  urlfont="fa-copy"></t:dgFunOpt>
    <t:dgFunOpt funname="uploadMaterial(id)" title="材料上传"  urlclass="ace_button"  urlfont="fa-copy"></t:dgFunOpt>
    <t:dgFunOpt funname="uploadCertificate(id)" title="证照上传"  urlclass="ace_button"  urlfont="fa-copy"></t:dgFunOpt>
+   <t:dgFunOpt funname="loadBusinessLog(id)" title="流程日志"  urlclass="ace_button"  urlfont="fa-copy"></t:dgFunOpt>
    <%--<t:dgDelOpt title="删除" url="bProjectBusinessController.do?doDel&id={id}" urlclass="ace_button"  urlfont="fa-trash-o"/>--%>
    <t:dgToolBar title="录入" icon="icon-add" url="bProjectBusinessController.do?goAdd" funname="add"></t:dgToolBar>
    <t:dgToolBar title="编辑" icon="icon-edit" url="bProjectBusinessController.do?goUpdate" funname="update"></t:dgToolBar>
@@ -54,6 +55,10 @@ function uploadMaterial(id){
 //证照上传
 function uploadCertificate(id){
     createwindow("证照上传", "bProjectBusinessController.do?certificateList&id="+id,"1000","500");
+}
+//流程日志
+function loadBusinessLog(id){
+    window.open("bProjectBusinessController.do?loadBusinessLog&id="+id);
 }
 //导入
 function ImportXls() {

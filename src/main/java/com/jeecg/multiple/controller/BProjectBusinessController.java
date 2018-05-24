@@ -216,6 +216,60 @@ public class BProjectBusinessController extends BaseController {
 	}
 
 	/**
+	 * 并联业务日志展示页面
+	 *
+	 * @return
+	 */
+	@RequestMapping(params = "loadBusinessLog")
+	public ModelAndView loadBusinessLog(BProjectBusinessEntity bProjectBusiness, HttpServletRequest req,DataGrid dataGrid) {
+		if (StringUtil.isNotEmpty(bProjectBusiness.getId())) {
+			bProjectBusiness = bProjectBusinessService.getEntity(BProjectBusinessEntity.class, bProjectBusiness.getId());
+			req.setAttribute("bProjectBusiness", bProjectBusiness);
+		}
+//		String phasesId = bProjectBusiness.getCurrentPhases();
+		String phasesId = req.getParameter("phasesId") == null || req.getParameter("phasesId")=="" ?bProjectBusiness.getCurrentPhases():req.getParameter("phasesId");
+
+		TSUser user = ResourceUtil.getSessionUser();
+		//查询并联业务阶段信息
+		String phaseSql = "select a.current_phases," +
+				"     CASE WHEN substr(b.phases_id,-3) = '001' THEN '第一' " +
+				"         WHEN substr(b.phases_id,-3) = '002' THEN '第二' " +
+				"         WHEN substr(b.phases_id,-3) = '003' THEN '第三' " +
+				"         WHEN substr(b.phases_id,-3) = '004' THEN '第四' " +
+				"         WHEN substr(b.phases_id,-3) = '005' THEN '第五'  END as phases_sort," +
+				" CASE WHEN substr(a.current_phases,-3) > substr(b.phases_id,-3) THEN 'ed' " +
+				"      WHEN substr(a.current_phases,-3) = substr(b.phases_id,-3) THEN 'ing' " +
+				"      WHEN substr(a.current_phases,-3) < substr(b.phases_id,-3) THEN 'will' ELSE 'aaa' END as current_phases_status," +
+				"       a.current_phases," +
+				"       b.project_id," +
+				"       b.phases_id," +
+				"       b.phases_name" +
+				"  from b_project_business a, a_phases_info b" +
+				" where a.project_id = b.project_id" +
+				"   and a.business_id = '"+bProjectBusiness.getBusinessId()+"' order by b.phases_id ";
+		List<Map<String, Object>> phaseList =  systemService.findForJdbc(phaseSql);
+		req.setAttribute("phaseList", phaseList);
+		//查询并联业务选中阶段子项业务信息
+		String childBusinessSql = "select c.materials_path," +
+				"       substr(c.materials_name, 37) as materials_name," +
+				"       b.*" +
+				"  from b_project_business a" +
+				"  left join b_child_business b" +
+				"    on a.business_id = b.business_id" +
+				"  left join a_materials_upload c" +
+				"    on b.business_id = c.business_id" +
+				"   and b.items_id = c.items_id" +
+				"   and c.materials_type = '2'" +
+				" where a.business_id = '"+bProjectBusiness.getBusinessId()+"'   and b.phases_id = '"+phasesId+"' order by b.ssgzr";
+		List<Map<String, Object>> childBusinessList =  systemService.findForJdbc(childBusinessSql);
+		req.setAttribute("childBusinessList", childBusinessList);
+		req.setAttribute("deptId", user.getDepartid());
+		//上传证照权限只给预受理人员
+		req.setAttribute("role", BusinessUtil.WINDOW_ACCEPT);
+		return new ModelAndView("com/jeecg/multiple/bBusinessLog");
+	}
+
+	/**
 	 * 更新并联业务信息
 	 *
 	 * @param ids
