@@ -1,0 +1,19 @@
+@font-face {font-family: "iconfont";
+        src:url('../font/iconfonts.ttf') format('truetype'); /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/
+    }
+
+.iconfont {
+  font-family:"iconfont" !important;
+  font-size:16px;
+  font-style:normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+.icon-zhuangtai:before { content: "\e629"; }
+
+.icon-xunhuan--:before { content: "\e61c"; }
+
+.icon-shizhong:before { content: "\e617"; }
+
+.icon-fanhui:before { content: "\e636"; }
+

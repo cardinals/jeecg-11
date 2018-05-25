@@ -18,6 +18,11 @@
  <link rel="stylesheet" href="plug-in/businessLog/css/index.css" type="text/css">
  <link rel="stylesheet" href="plug-in/businessLog/css/htmleaf-demo.css" type="text/css">
 
+ <style>
+  .str_p{
+   line-height: 50px;text-indent: 50px;font-family: 'microsoft yahei';font-size: 17px;color: red;
+  }
+ </style>
  <%-- <script src = "plug-in/fileupload/js/myuploadfunction.js"></script>--%>
  <script type="text/javascript">
 
@@ -30,11 +35,11 @@
 <nav>
  <div class="nav-left">
   <div class="left-icon iconfont icon-ren"></div>
-  <div class="left-title">申请人：<span class="title-span">${bProjectBusiness.applyName}</span></div>
+  <div class="left-title">申请人：<span class="str_p">${bProjectBusiness.applyName}</span></div>
  </div>
  <div class="nav-right">
   <div class="right-title">时间：
-   <span class="right-span"> <fmt:formatDate value="${now}" pattern="yyyy年MM月dd日" /> </span>
+   <span class="str_p"> <fmt:formatDate value="${now}" pattern="yyyy年MM月dd日" /> </span>
   </div>
   <div class="left-icon iconfont icon-shijian"></div>
  </div>
@@ -114,10 +119,10 @@
    <div class="timeline-icon"></div>
    <div class="timeline-content right">
     <c:if test="${childBusiness.status == '1'}">
-    <div class="timelines Two" >
+    <div class="timelines Two" onclick="javascript:window.location.href='bProjectBusinessController.do?loadChildLog&id=${childBusiness.id}'">
      </c:if>
      <c:if test="${childBusiness.status != '1'}">
-     <div class="timelines Two last" >
+     <div class="timelines Two last" onclick="javascript:window.location.href='bProjectBusinessController.do?loadChildLog&id=${childBusiness.id}'">
       </c:if>
       <div class="content-one"></div>
       <div class="Two-title">
@@ -128,7 +133,27 @@
      <div class="content-right">
       <div class="conter-title">
        <span class="conter-span">${childBusiness.status  == '1' ? '已办结' : '审核中'}</span>
-       <img src="plug-in/businessLog/img/01-full.png" />
+       <c:if test="${childBusiness.ssgzr >= 4}">
+         <img src="plug-in/businessLog/img/ssgzr4.png" />
+       </c:if>
+       <c:if test="${childBusiness.ssgzr == 3}">
+        <img src="plug-in/businessLog/img/ssgzr3.png" />
+       </c:if>
+       <c:if test="${childBusiness.ssgzr == 2}">
+        <img src="plug-in/businessLog/img/ssgzr2.png" />
+       </c:if>
+       <c:if test="${childBusiness.ssgzr == 1}">
+        <img src="plug-in/businessLog/img/ssgzr1.png" />
+       </c:if>
+       <c:if test="${childBusiness.ssgzr == 0}">
+        <img src="plug-in/businessLog/img/ssgzr1.png" />
+       </c:if>
+       <c:if test="${childBusiness.ssgzr == -1}">
+        <img src="plug-in/businessLog/img/yellow.png" />
+       </c:if>
+       <c:if test="${childBusiness.ssgzr <= -2}">
+        <img src="plug-in/businessLog/img/red.png" />
+       </c:if>
       </div>
       <div class="bottom-title">剩余<span class="bottom-span">${childBusiness.ssgzr}</span>工作日</div>
      </div>
@@ -142,10 +167,10 @@
     <div class="timeline-icon"> </div>
     <div class="timeline-content" >
      <c:if test="${childBusiness.status == '1'}">
-     <div class="timelines One" >
+     <div class="timelines One" onclick="javascript:window.location.href='bProjectBusinessController.do?loadChildLog&id=${childBusiness.id}'">
       </c:if>
       <c:if test="${childBusiness.status != '1'}">
-      <div class="timelines One last" >
+      <div class="timelines One last" onclick="javascript:window.location.href='bProjectBusinessController.do?loadChildLog&id=${childBusiness.id}'">
        </c:if>
        <div class="content-one"></div>
        <p class="content-p iconfont icon-zhiyeguihua">&nbsp;${childBusiness.dept_name}</p>
@@ -153,8 +178,33 @@
       </div>
       <div class="content-right One-right" >
        <div class="conter-title">
-        <span class="conter-span">${childBusiness.status  == '1' ? '已办结' : '审核中'}</span>
-        <img src="plug-in/businessLog/img/03-transition.png" />
+        <span class="conter-span">${childBusiness.status  == '1' ? '已办结' : '审核中'}
+         <c:if test="${childBusiness.status == 1}">
+          <%--<br/><a href="${childBusiness.materials_path }">证照查看</a><img src="${childBusiness.materials_path }" />--%>
+         </c:if>
+        </span>
+
+        <c:if test="${childBusiness.ssgzr >= 4}">
+         <img src="plug-in/businessLog/img/ssgzr4.png" />
+        </c:if>
+        <c:if test="${childBusiness.ssgzr == 3}">
+         <img src="plug-in/businessLog/img/ssgzr3.png" />
+        </c:if>
+        <c:if test="${childBusiness.ssgzr == 2}">
+         <img src="plug-in/businessLog/img/ssgzr2.png" />
+        </c:if>
+        <c:if test="${childBusiness.ssgzr == 1}">
+         <img src="plug-in/businessLog/img/ssgzr1.png" />
+        </c:if>
+        <c:if test="${childBusiness.ssgzr == 0}">
+         <img src="plug-in/businessLog/img/ssgzr1.png" />
+        </c:if>
+        <c:if test="${childBusiness.ssgzr == -1}">
+         <img src="plug-in/businessLog/img/yellow.png" />
+        </c:if>
+        <c:if test="${childBusiness.ssgzr <= -2}">
+         <img src="plug-in/businessLog/img/red.png" />
+        </c:if>
        </div>
        <div class="bottom-title">剩余<span class="bottom-span">${childBusiness.ssgzr}</span>工作日</div>
       </div>

@@ -58,6 +58,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.jeecgframework.core.beanvalidator.BeanValidators;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
 import java.net.URI;
@@ -104,7 +105,7 @@ public class AMaterialsUploadController extends BaseController {
 	 */
 	@RequestMapping(params = "uploadFile")
 	@ResponseBody
-	public AjaxJson uploadFile(MultipartHttpServletRequest request) throws IOException {
+	public AjaxJson uploadFile(MultipartHttpServletRequest request,HttpSession session) throws IOException {
 		AjaxJson j = new AjaxJson();
 		message = "上传成功";
 		String id = request.getParameter("id");
@@ -125,8 +126,9 @@ public class AMaterialsUploadController extends BaseController {
 							mpf.getOriginalFilename(), ".");
 					String ext = StringUtils.substringAfterLast(
 							mpf.getOriginalFilename(), ".");
-					String rootPath = ResourceUtil.getConfigByName("webUploadpath");
-					String photoPath = "upload\\patrol";
+//					String rootPath = ResourceUtil.getConfigByName("webUploadpath");
+					String rootPath = session.getServletContext().getRealPath("/");
+					String photoPath = "fileUpload\\patrol";
 					String fileName = UUID.randomUUID() + attachmentName + "." + ext;
 					relativePath = photoPath + "\\" + fileName;
 					File realPath = new File(rootPath + photoPath);

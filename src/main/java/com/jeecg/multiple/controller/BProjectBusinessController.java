@@ -270,6 +270,27 @@ public class BProjectBusinessController extends BaseController {
 	}
 
 	/**
+	 * 子业务日志展示页面
+	 *
+	 * @return
+	 */
+	@RequestMapping(params = "loadChildLog")
+	public ModelAndView goAdd(BChildBusinessEntity bChildBusiness, HttpServletRequest req) {
+		if (StringUtil.isNotEmpty(bChildBusiness.getId())) {
+			bChildBusiness = bChildBusinessService.getEntity(BChildBusinessEntity.class, bChildBusiness.getId());
+			req.setAttribute("bChildBusiness", bChildBusiness);
+		}
+		//查询子业务日志信息
+		String childLogSql = "select a.id,a.child_business_id, b.items_id,b.arrive_time,b.handle_time,b.idea,b.handler,b.node_name " +
+				"  from b_child_log b" +
+				"  left join B_CHILD_BUSINESS a" +
+				"    on a.child_business_id = b.child_business_id where a.id = '"+bChildBusiness.getId()+"' order by b.handle_time";
+		List<Map<String, Object>> childLogList =  systemService.findForJdbc(childLogSql);
+		req.setAttribute("childLogList", childLogList);
+		return new ModelAndView("com/jeecg/multiple/bChildBusiness");
+	}
+
+	/**
 	 * 更新并联业务信息
 	 *
 	 * @param ids

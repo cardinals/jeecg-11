@@ -10,12 +10,17 @@ p {
 	-webkit-margin-start: 0px;
 	-webkit-margin-end: 0px;
 }
-
 a:hover {
 	text-decoration: none;
 	cursor: pointer;
 }
-
+.background{
+	width:98.6%;
+	background:#e7e1c4;
+	height:100px;
+	margin-left:0.6%;
+	border-radius:15px;
+}
 body {
 	float: left;
 	width: 100%;
@@ -25,8 +30,8 @@ body {
 
 header {
 	width: 100%;
-	height: 120px;
-	line-height: 120px;
+	height: 80px;
+	line-height: 75px;
 	text-indent: 2%;
 	background: url(../img/head.png) no-repeat;
 	background-size: 100% 100%;
@@ -654,15 +659,7 @@ section {
 	    margin-left: 5%;
 	}
 	.last:before {
-	    content: "";
-	    display: block;
 	    border-left: 20px solid #E1E1E1;
-	    border-top: 20px solid transparent;
-	    border-bottom: 20px solid transparent;
-	    position: absolute;
-	    top: 50%;
-	    left: 96.5%;
-	    transform: translateY(-50%);
 	}
 }
 @media only screen and (max-width:1347px) {
@@ -687,15 +684,7 @@ section {
 		font-size:20px;
 	}
 	.last:before {
-	    content: "";
-	    display: block;
 	    border-left: 20px solid #E1E1E1;
-	    border-top: 20px solid transparent;
-	    border-bottom: 20px solid transparent;
-	    position: absolute;
-	    top: 50%;
-	    left: 96.3%;
-	    transform: translateY(-50%);
 	}
 	.One:before {
 	    content: "";
@@ -744,6 +733,9 @@ section {
 	    transform: rotate(180deg);
 	    margin-top: -5px;
 	}
+	.content-p {
+	    font-size: 17px;
+	}
 	.main-timeline .timeline-content {
 	    margin-top: -11px;
 	    width: 45%;
@@ -770,6 +762,89 @@ section {
 	    height: 75px;
 	    margin-top: 9%;
 	    margin-left: 5%;
+	}
+}
+@media only screen and (max-width:1228px ) {
+	.One:before {
+	    content: "";
+	    display: block;
+	    border-left: 20px solid #EEA52F;
+	    border-top: 20px solid transparent;
+	    border-bottom: 20px solid transparent;
+	    position: absolute;
+	    top: 52%;
+	    left: 46.6%;
+	    transform: translateY(-50%);
+	}
+	.Two:before {
+	    content: "";
+	    display: block;
+	    border-left: 20px solid #EEA52F;
+	    border-top: 20px solid transparent;
+	    border-bottom: 20px solid transparent;
+	    position: absolute;
+	    top: 50%;
+	    left: 96%;
+	    transform: translateY(-50%);
+	}
+	.last:before {
+	    border-left: 20px solid #E1E1E1;
+	}
+}
+@media only screen and (max-width:1182px) {
+	.One:before {
+	    content: "";
+	    display: block;
+	    border-left: 20px solid #EEA52F;
+	    border-top: 20px solid transparent;
+	    border-bottom: 20px solid transparent;
+	    position: absolute;
+	    top: 52%;
+	    left: 46.4%;
+	    transform: translateY(-50%);
+	}
+	.content-p {
+	    font-size: 15px;
+	}
+	.content-op {
+	    width: 92%;
+	    height: 20px;
+	    line-height: 35px;
+	    font-family: "微软雅黑";
+	    font-size: 12px;
+	    color: #fff;
+	    margin-left: 8%;
+	    text-indent: 32px;
+	}
+	.Two:before {
+	    content: "";
+	    display: block;
+	    border-left: 20px solid #EEA52F;
+	    border-top: 20px solid transparent;
+	    border-bottom: 20px solid transparent;
+	    position: absolute;
+	    top: 50%;
+	    left: 95.5%;
+	    transform: translateY(-50%);
+	}
+	.last:before {
+	    border-left: 20px solid #E1E1E1;
+	}
+}
+@media only screen and (max-width:1067px) {
+	.Two:before {
+	    content: "";
+	    display: block;
+	    border-left: 20px solid #EEA52F;
+	    border-top: 20px solid transparent;
+	    border-bottom: 20px solid transparent;
+	    position: absolute;
+	    top: 50%;
+	    left: 95.1%;
+	    transform: translateY(-50%);
+	}
+	.last:before {
+	    border-left: 20px solid #E1E1E1;
 	}
 }
 @media only screen and (max-width: 990px) {
@@ -851,6 +926,20 @@ section {
 	    float: left;
 	    margin-left: 22px;
 	}
+	.Two:before {
+	    content: "";
+	    display: block;
+	    border-left: 20px solid #EEA52F;
+	    border-top: 20px solid transparent;
+	    border-bottom: 20px solid transparent;
+	    position: absolute;
+	    top: 50%;
+	    left: 97.5%;
+	    transform: translateY(-50%);
+	}
+	.last:before {
+	    border-left: 20px solid #E1E1E1;
+	}
 }
 
 @media only screen and (max-width: 767px) {
@@ -930,5 +1019,202 @@ section {
 	}
 	.main-timeline .timeline-content:before {
 		top: 13px;
+	}
+	header {
+	    width: 100%;
+	    height: 50px;
+	    line-height: 50px;
+	    text-indent: 2%;
+	    background: url(../img/head.png) no-repeat;
+	    background-size: 100% 100%;
+	    color: #fff;
+	    font-size: 18px;
+	    font-weight: 999;
+	    letter-spacing: 4px;
+	    font-family: "方正正纤黑简体";
+	}
+	header img {
+	    width: 17px;
+	    height: 17px;
+	    margin-right: 1%;
+	}
+	.left-icon {
+	    float: left;
+	    margin: 0 7px 0 22px;
+	    line-height: 50px;
+	}
+	.icon-ren, .icon-shijian {
+	    font-size: 15px;
+	}
+	.left-title {
+	    height: 50px;
+	    line-height: 50px;
+	    font-family: "microsoft yahei";
+	    font-size: 12px;
+	    color: #323333;
+	    float: left;
+	}
+	.right-title {
+	    height: 50px;
+	    line-height: 50px;
+	    font-family: "arial rounded mt bold";
+	    font-size: 12px;
+	    color: #040000;
+	    float: right;
+	    margin-right: 27px;
+	}
+	#section-center {
+	    width: 80%;
+	    float: left;
+	     margin-left:0%; 
+	    position: relative;
+	}
+	.round {
+	    width: 70px;
+	    height: 70px;
+	    border-radius: 50%;
+	    background: rgba(245, 169, 21, 0.5);
+	    margin: 10px 0 0 30%;
+	    position: relative;
+	}
+	.circle {
+	    width: 55px;
+	    height: 55px;
+	    border-radius: 50%;
+	    background: #f5a915;
+	    position: absolute;
+	    left: 7.5px;
+	    top: 7.5px;
+	}
+	.round-two {
+	    background: rgba(153, 152, 153, 0.5);
+	}
+	.circle-two {
+	    background: #999;
+	}
+	.circle-title, .circle-p {
+	    color: #fff;
+	    width: 100%;
+	    text-align: center;
+	    height: 20px;
+	    line-height: 14px;
+	    font-size: 14px;
+	    font-family: 'microsoft yahei';
+	}
+	.xian,.dt-title,.section-dt-two,.section-dt-three,.section-dt-three,.section-dd,.section-dt{
+	    display: none;
+	}
+	.section-dl {
+	    width: 20%;
+	    height: auto; 
+	    float: left;
+	    margin-top: 1%;
+	}
+	section {
+	    width: 95%;
+	     height:auto; 
+	    border-radius: 15px;
+	    background: #f8f4e4;
+	    float: left;
+	    margin-left: 2.5%;
+	    opacity: 0.7;
+	}
+	#section-center {
+	    width: 80%;
+	    float: left;
+	    margin-left: 0%;
+	    position: relative;
+	    margin-bottom: 20px;
+	}
+	.footer {
+	    position: relative;
+	    width: 95%;
+	    margin-left: 2.5%;
+	    float: left;
+	    background: url(../img/toudi-.png) no-repeat;
+	    background-size: 100% 100%;
+	    margin-top: -6%;
+	}
+	.content-right {
+	    float: right;
+	    width: 100%;
+	    height: 85px;
+	    display:none;
+	}
+	.Two {
+	    float: left;
+	    width: 95%;
+	    margin-left:-4%;
+	}
+	.One {
+	    float: left;
+	    width: 95%;
+	    margin-left:3%;
+	}
+	.Two:before {
+	    left: 84.5%;
+	}
+	.One:before {
+	    left: 17.5%;
+	}
+	.last.right {
+	    margin-left: 10%;
+	    float: left;
+	    transform: rotate(180deg);
+	    margin-top: -11px;
+	}
+	.main-timeline .timeline-icon {
+	    left: 41px;
+	}
+	.last.timeline-icon{
+		margin-top:9px;
+	}
+	.main-timeline {
+	    margin-left: 0px;
+	}
+	.footer-title {
+	    width: 90%;
+	    height: 75px;
+	    margin-top: 12%;
+	    margin-left: 5%;
+	}
+	.main-timeline {
+    	margin-top: 20px;
+    }
+    .Two-title .content-p{
+    	text-indent:0;
+    }
+    .Two-title .content-op{
+    	text-indent:0;
+    }
+}
+@media only screen and (max-width:320px) {
+	.main-timeline {
+	    margin-left: 0px;
+	}
+	.Two {
+	    float: left;
+	    width: 92%;
+	    margin-left: -4%;
+	}
+	.Two:before {
+	    left: 80.5%;
+	}
+	.One {
+	    float: left;
+	    width: 92%;
+	    margin-left: 5%;
+	}
+	.One:before {
+	    left: 19.5%;
+	}
+	.main-timeline {
+    	margin-top: 0px;
+    }
+    .footer-title {
+	    width: 90%;
+	    height: 75px;
+	    margin-top: 15%;
+	    margin-left: 5%;
 	}
 }
