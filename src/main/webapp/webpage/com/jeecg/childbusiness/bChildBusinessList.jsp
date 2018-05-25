@@ -32,7 +32,7 @@
    <t:dgCol title="上传人"  field="createBy"  hidden="true"  queryMode="group"  width="120"></t:dgCol>
    <t:dgCol title="操作" field="opt" width="100"></t:dgCol>
    <%--<t:dgDelOpt title="删除" url="bChildBusinessController.do?doDel&id={id}" urlclass="ace_button"  urlfont="fa-trash-o"/>--%>
-   <t:dgFunOpt funname="accept(id)" title="查看"  urlclass="ace_button"  urlfont="fa-copy"></t:dgFunOpt>
+   <t:dgFunOpt funname="view(id)" title="查看"  urlclass="ace_button"  urlfont="fa-copy"></t:dgFunOpt>
    <%--<t:dgFunOpt funname="uploadMaterial(id)" title="证照上传"  urlclass="ace_button"  urlfont="fa-copy"></t:dgFunOpt>--%>
 
    <t:dgToolBar title="录入" icon="icon-add" url="bChildBusinessController.do?goAdd" funname="add"></t:dgToolBar>
@@ -52,18 +52,18 @@
 
 
 //查看
-function accept(id,tableName){
-    createwindow("查看", "bProjectBusinessController.do?goUpdate&id="+id);
+function view(id,tableName){
+    createdetailwindow("查看", "bChildBusinessController.do?goUpdate&id="+id);
 }
-//证照上传
-function uploadMaterial(id){
-    createwindow("证照上传", "bProjectBusinessController.do?materialList&id="+id,"1000","500");
-}
-
-//导入
-function ImportXls() {
-	openuploadwin('Excel导入', 'bChildBusinessController.do?upload', "bChildBusinessList");
-}
+////证照上传
+//function uploadMaterial(id){
+//    createwindow("证照上传", "bProjectBusinessController.do?materialList&id="+id,"1000","500");
+//}
+//
+////导入
+//function ImportXls() {
+//	openuploadwin('Excel导入', 'bChildBusinessController.do?upload', "bChildBusinessList");
+//}
 
 //导出
 function ExportXls() {

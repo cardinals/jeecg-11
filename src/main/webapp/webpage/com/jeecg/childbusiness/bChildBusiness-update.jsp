@@ -145,7 +145,7 @@
 							<label class="Validform_label" style="display: none;">所剩时限</label>
 						</td>
 					</tr>
-					<tr>
+					<%--<tr>
 						<td align="right">
 							<label class="Validform_label">
 								业务状态:
@@ -232,7 +232,7 @@
 							<span class="Validform_checktip"></span>
 							<label class="Validform_label" style="display: none;">上传人</label>
 						</td>
-					</tr>
+					</tr>--%>
 				
 			</table>
 		</t:formvalid>
