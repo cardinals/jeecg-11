@@ -76,21 +76,21 @@
 				<tr>
 					<td align="right">
 						<label class="Validform_label">
-							项目id:
+							项目编号:
 						</label>
 					</td>
 					<td class="value">
-					     	 <input id="projectId" name="projectId" type="text" style="width: 150px" class="inputxt"  />
+					     	 <input id="projectId" name="projectId" type="text" style="width: 150px" class="inputxt" datatype="*" ignore="checked"  />
 							<span class="Validform_checktip"></span>
 							<label class="Validform_label" style="display: none;">项目id</label>
 						</td>
 					<td align="right">
 						<label class="Validform_label">
-							阶段id:
+							阶段编号:
 						</label>
 					</td>
 					<td class="value">
-					     	 <input id="phasesId" name="phasesId" type="text" style="width: 150px" class="inputxt"  ignore="ignore" />
+					     	 <input id="phasesId" name="phasesId" type="text" style="width: 150px" class="inputxt"  datatype="*" ignore="checked"  />
 							<span class="Validform_checktip"></span>
 							<label class="Validform_label" style="display: none;">阶段id</label>
 						</td>
@@ -102,7 +102,7 @@
 						</label>
 					</td>
 					<td class="value">
-					     	 <input id="itemsId" name="itemsId" type="text" style="width: 150px" class="inputxt"  ignore="ignore" />
+					     	 <input id="itemsId" name="itemsId" type="text" style="width: 150px" class="inputxt"  datatype="*" ignore="checked"  />
 							<span class="Validform_checktip"></span>
 							<label class="Validform_label" style="display: none;">事项编号</label>
 						</td>
@@ -112,7 +112,7 @@
 						</label>
 					</td>
 					<td class="value">
-					     	 <input id="itemsChildId" name="itemsChildId" type="text" style="width: 150px" class="inputxt"  ignore="ignore" />
+					     	 <input id="itemsChildId" name="itemsChildId" type="text" style="width: 150px" class="inputxt"  datatype="*" ignore="checked" />
 							<span class="Validform_checktip"></span>
 							<label class="Validform_label" style="display: none;">事项子项编号</label>
 						</td>
@@ -124,7 +124,7 @@
 						</label>
 					</td>
 					<td class="value">
-					     	 <input id="itemsName" name="itemsName" type="text" style="width: 150px" class="inputxt"  ignore="ignore" />
+					     	 <input id="itemsName" name="itemsName" type="text" style="width: 150px" class="inputxt"  datatype="*" ignore="checked"  />
 							<span class="Validform_checktip"></span>
 							<label class="Validform_label" style="display: none;">事项名称</label>
 						</td>
@@ -134,7 +134,7 @@
 						</label>
 					</td>
 					<td class="value">
-					     	 <input id="itemsChildName" name="itemsChildName" type="text" style="width: 150px" class="inputxt"  ignore="ignore" />
+					     	 <input id="itemsChildName" name="itemsChildName" type="text" style="width: 150px" class="inputxt"  datatype="*" ignore="checked" />
 							<span class="Validform_checktip"></span>
 							<label class="Validform_label" style="display: none;">事项子项名称</label>
 						</td>
@@ -163,13 +163,13 @@
 						</label>
 					</td>
 					<td class="value">
-					     	 <input id="limitDays" name="limitDays" type="text" style="width: 150px" class="inputxt"  ignore="ignore" />
+					     	 <input id="limitDays" name="limitDays" type="text" style="width: 150px" class="inputxt"  datatype="*" ignore="checked"  />
 							<span class="Validform_checktip"></span>
 							<label class="Validform_label" style="display: none;">承诺时限</label>
 						</td>
 					<td align="right">
 						<label class="Validform_label">
-							status:
+							状态:
 						</label>
 					</td>
 					<td class="value">
@@ -181,7 +181,7 @@
 				<tr>
 					<td align="right">
 						<label class="Validform_label">
-							remark:
+							备注:
 						</label>
 					</td>
 					<td class="value">

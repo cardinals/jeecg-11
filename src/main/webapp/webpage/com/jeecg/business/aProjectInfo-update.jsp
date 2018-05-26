@@ -16,13 +16,13 @@
 					<tr>
 						<td align="right">
 							<label class="Validform_label">
-								项目id:
+								项目编号:
 							</label>
 						</td>
 						<td class="value">
-						    <input id="projectId" name="projectId" type="text" style="width: 150px" class="inputxt"  ignore="ignore"  value='${aProjectInfoPage.projectId}'/>
+						    <input id="projectId" name="projectId" type="text" style="width: 150px" class="inputxt" datatype="*" ignore="checked"   value='${aProjectInfoPage.projectId}'/>
 							<span class="Validform_checktip"></span>
-							<label class="Validform_label" style="display: none;">项目id</label>
+							<label class="Validform_label" style="display: none;">项目编号</label>
 						</td>
 					</tr>
 					<tr>
@@ -32,12 +32,12 @@
 							</label>
 						</td>
 						<td class="value">
-						    <input id="projectName" name="projectName" type="text" style="width: 150px" class="inputxt"  ignore="ignore"  value='${aProjectInfoPage.projectName}'/>
+						    <input id="projectName" name="projectName" type="text" style="width: 150px" class="inputxt"  datatype="*" ignore="checked"  value='${aProjectInfoPage.projectName}'/>
 							<span class="Validform_checktip"></span>
 							<label class="Validform_label" style="display: none;">项目名称</label>
 						</td>
 					</tr>
-					<tr>
+					<%--<tr>
 						<td align="right">
 							<label class="Validform_label">
 								createTime:
@@ -72,7 +72,7 @@
 							<span class="Validform_checktip"></span>
 							<label class="Validform_label" style="display: none;">delFlag</label>
 						</td>
-					</tr>
+					</tr>--%>
 					<tr>
 						<td align="right">
 							<label class="Validform_label">
@@ -88,7 +88,7 @@
 					<tr>
 						<td align="right">
 							<label class="Validform_label">
-								remark:
+								备注:
 							</label>
 						</td>
 						<td class="value">

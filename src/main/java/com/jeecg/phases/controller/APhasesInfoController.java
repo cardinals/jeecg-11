@@ -1,6 +1,6 @@
-package com.jeecg.business.controller;
-import com.jeecg.business.entity.AProjectInfoEntity;
-import com.jeecg.business.service.AProjectInfoServiceI;
+package com.jeecg.phases.controller;
+import com.jeecg.phases.entity.APhasesInfoEntity;
+import com.jeecg.phases.service.APhasesInfoServiceI;
 import java.util.ArrayList;
 import java.util.List;
 import java.text.SimpleDateFormat;
@@ -8,7 +8,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
-import org.jeecgframework.web.system.pojo.base.TSUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -77,64 +76,38 @@ import io.swagger.annotations.ApiParam;
 
 /**   
  * @Title: Controller  
- * @Description: 项目基本信息
+ * @Description: A_PHASES_INFO
  * @author onlineGenerator
- * @date 2018-05-05 20:50:28
+ * @date 2018-05-26 21:05:11
  * @version V1.0   
  *
  */
-@Api(value="AProjectInfo",description="项目基本信息",tags="aProjectInfoController")
+@Api(value="APhasesInfo",description="A_PHASES_INFO",tags="aPhasesInfoController")
 @Controller
-@RequestMapping("/aProjectInfoController")
-public class AProjectInfoController extends BaseController {
+@RequestMapping("/aPhasesInfoController")
+public class APhasesInfoController extends BaseController {
 	/**
 	 * Logger for this class
 	 */
-	private static final Logger logger = Logger.getLogger(AProjectInfoController.class);
+	private static final Logger logger = Logger.getLogger(APhasesInfoController.class);
 
 	@Autowired
-	private AProjectInfoServiceI aProjectInfoService;
+	private APhasesInfoServiceI aPhasesInfoService;
 	@Autowired
 	private SystemService systemService;
 	@Autowired
 	private Validator validator;
+	
 
 
 	/**
-	 * 预受理页面
-	 */
-	@RequestMapping(params = "accept")
-	public ModelAndView accept(AProjectInfoEntity aProjectInfo, HttpServletRequest req) {
-		System.out.println("aaa");
-
-		if (StringUtil.isNotEmpty(aProjectInfo.getId())) {
-			aProjectInfo = aProjectInfoService.getEntity(AProjectInfoEntity.class, aProjectInfo.getId());
-			req.setAttribute("aProjectInfoPage", aProjectInfo);
-		}
-
-		return new ModelAndView("com/jeecg/business/accept");
-	}
-
-
-	/**
-	 * 项目基本信息列表 页面跳转
+	 * A_PHASES_INFO列表 页面跳转
 	 * 
 	 * @return
 	 */
 	@RequestMapping(params = "list")
 	public ModelAndView list(HttpServletRequest request) {
-		TSUser user = ResourceUtil.getSessionUser();
-		return new ModelAndView("com/jeecg/business/aProjectInfoList");
-	}
-	/**
-	 * 项目基本信息配置列表 页面跳转
-	 *
-	 * @return
-	 */
-	@RequestMapping(params = "configList")
-	public ModelAndView configList(HttpServletRequest request) {
-		TSUser user = ResourceUtil.getSessionUser();
-		return new ModelAndView("com/jeecg/business/aProjectInfoConfigList");
+		return new ModelAndView("com/jeecg/phases/aPhasesInfoList");
 	}
 
 	/**
@@ -147,38 +120,38 @@ public class AProjectInfoController extends BaseController {
 	 */
 
 	@RequestMapping(params = "datagrid")
-	public void datagrid(AProjectInfoEntity aProjectInfo,HttpServletRequest request, HttpServletResponse response, DataGrid dataGrid) {
-		CriteriaQuery cq = new CriteriaQuery(AProjectInfoEntity.class, dataGrid);
+	public void datagrid(APhasesInfoEntity aPhasesInfo,HttpServletRequest request, HttpServletResponse response, DataGrid dataGrid) {
+		CriteriaQuery cq = new CriteriaQuery(APhasesInfoEntity.class, dataGrid);
 		//查询条件组装器
-		org.jeecgframework.core.extend.hqlsearch.HqlGenerateUtil.installHql(cq, aProjectInfo, request.getParameterMap());
+		org.jeecgframework.core.extend.hqlsearch.HqlGenerateUtil.installHql(cq, aPhasesInfo, request.getParameterMap());
 		try{
 		//自定义追加查询条件
 		}catch (Exception e) {
 			throw new BusinessException(e.getMessage());
 		}
 		cq.add();
-		this.aProjectInfoService.getDataGridReturn(cq, true);
+		this.aPhasesInfoService.getDataGridReturn(cq, true);
 		TagUtil.datagrid(response, dataGrid);
 	}
 	
 	/**
-	 * 删除项目基本信息
+	 * 删除A_PHASES_INFO
 	 * 
 	 * @return
 	 */
 	@RequestMapping(params = "doDel")
 	@ResponseBody
-	public AjaxJson doDel(AProjectInfoEntity aProjectInfo, HttpServletRequest request) {
+	public AjaxJson doDel(APhasesInfoEntity aPhasesInfo, HttpServletRequest request) {
 		String message = null;
 		AjaxJson j = new AjaxJson();
-		aProjectInfo = systemService.getEntity(AProjectInfoEntity.class, aProjectInfo.getId());
-		message = "项目基本信息删除成功";
+		aPhasesInfo = systemService.getEntity(APhasesInfoEntity.class, aPhasesInfo.getId());
+		message = "A_PHASES_INFO删除成功";
 		try{
-			aProjectInfoService.delete(aProjectInfo);
+			aPhasesInfoService.delete(aPhasesInfo);
 			systemService.addLog(message, Globals.Log_Type_DEL, Globals.Log_Leavel_INFO);
 		}catch(Exception e){
 			e.printStackTrace();
-			message = "项目基本信息删除失败";
+			message = "A_PHASES_INFO删除失败";
 			throw new BusinessException(e.getMessage());
 		}
 		j.setMsg(message);
@@ -186,7 +159,7 @@ public class AProjectInfoController extends BaseController {
 	}
 	
 	/**
-	 * 批量删除项目基本信息
+	 * 批量删除A_PHASES_INFO
 	 * 
 	 * @return
 	 */
@@ -195,18 +168,18 @@ public class AProjectInfoController extends BaseController {
 	public AjaxJson doBatchDel(String ids,HttpServletRequest request){
 		String message = null;
 		AjaxJson j = new AjaxJson();
-		message = "项目基本信息删除成功";
+		message = "A_PHASES_INFO删除成功";
 		try{
 			for(String id:ids.split(",")){
-				AProjectInfoEntity aProjectInfo = systemService.getEntity(AProjectInfoEntity.class, 
+				APhasesInfoEntity aPhasesInfo = systemService.getEntity(APhasesInfoEntity.class, 
 				id
 				);
-				aProjectInfoService.delete(aProjectInfo);
+				aPhasesInfoService.delete(aPhasesInfo);
 				systemService.addLog(message, Globals.Log_Type_DEL, Globals.Log_Leavel_INFO);
 			}
 		}catch(Exception e){
 			e.printStackTrace();
-			message = "项目基本信息删除失败";
+			message = "A_PHASES_INFO删除失败";
 			throw new BusinessException(e.getMessage());
 		}
 		j.setMsg(message);
@@ -215,23 +188,23 @@ public class AProjectInfoController extends BaseController {
 
 
 	/**
-	 * 添加项目基本信息
+	 * 添加A_PHASES_INFO
 	 * 
 	 * @param ids
 	 * @return
 	 */
 	@RequestMapping(params = "doAdd")
 	@ResponseBody
-	public AjaxJson doAdd(AProjectInfoEntity aProjectInfo, HttpServletRequest request) {
+	public AjaxJson doAdd(APhasesInfoEntity aPhasesInfo, HttpServletRequest request) {
 		String message = null;
 		AjaxJson j = new AjaxJson();
-		message = "项目基本信息添加成功";
+		message = "A_PHASES_INFO添加成功";
 		try{
-			aProjectInfoService.save(aProjectInfo);
+			aPhasesInfoService.save(aPhasesInfo);
 			systemService.addLog(message, Globals.Log_Type_INSERT, Globals.Log_Leavel_INFO);
 		}catch(Exception e){
 			e.printStackTrace();
-			message = "项目基本信息添加失败";
+			message = "A_PHASES_INFO添加失败";
 			throw new BusinessException(e.getMessage());
 		}
 		j.setMsg(message);
@@ -239,25 +212,25 @@ public class AProjectInfoController extends BaseController {
 	}
 	
 	/**
-	 * 更新项目基本信息
+	 * 更新A_PHASES_INFO
 	 * 
 	 * @param ids
 	 * @return
 	 */
 	@RequestMapping(params = "doUpdate")
 	@ResponseBody
-	public AjaxJson doUpdate(AProjectInfoEntity aProjectInfo, HttpServletRequest request) {
+	public AjaxJson doUpdate(APhasesInfoEntity aPhasesInfo, HttpServletRequest request) {
 		String message = null;
 		AjaxJson j = new AjaxJson();
-		message = "项目基本信息更新成功";
-		AProjectInfoEntity t = aProjectInfoService.get(AProjectInfoEntity.class, aProjectInfo.getId());
+		message = "A_PHASES_INFO更新成功";
+		APhasesInfoEntity t = aPhasesInfoService.get(APhasesInfoEntity.class, aPhasesInfo.getId());
 		try {
-			MyBeanUtils.copyBeanNotNull2Bean(aProjectInfo, t);
-			aProjectInfoService.saveOrUpdate(t);
+			MyBeanUtils.copyBeanNotNull2Bean(aPhasesInfo, t);
+			aPhasesInfoService.saveOrUpdate(t);
 			systemService.addLog(message, Globals.Log_Type_UPDATE, Globals.Log_Leavel_INFO);
 		} catch (Exception e) {
 			e.printStackTrace();
-			message = "项目基本信息更新失败";
+			message = "A_PHASES_INFO更新失败";
 			throw new BusinessException(e.getMessage());
 		}
 		j.setMsg(message);
@@ -266,30 +239,30 @@ public class AProjectInfoController extends BaseController {
 	
 
 	/**
-	 * 项目基本信息新增页面跳转
+	 * A_PHASES_INFO新增页面跳转
 	 * 
 	 * @return
 	 */
 	@RequestMapping(params = "goAdd")
-	public ModelAndView goAdd(AProjectInfoEntity aProjectInfo, HttpServletRequest req) {
-		if (StringUtil.isNotEmpty(aProjectInfo.getId())) {
-			aProjectInfo = aProjectInfoService.getEntity(AProjectInfoEntity.class, aProjectInfo.getId());
-			req.setAttribute("aProjectInfoPage", aProjectInfo);
+	public ModelAndView goAdd(APhasesInfoEntity aPhasesInfo, HttpServletRequest req) {
+		if (StringUtil.isNotEmpty(aPhasesInfo.getId())) {
+			aPhasesInfo = aPhasesInfoService.getEntity(APhasesInfoEntity.class, aPhasesInfo.getId());
+			req.setAttribute("aPhasesInfoPage", aPhasesInfo);
 		}
-		return new ModelAndView("com/jeecg/business/aProjectInfo-add");
+		return new ModelAndView("com/jeecg/phases/aPhasesInfo-add");
 	}
 	/**
-	 * 项目基本信息编辑页面跳转
+	 * A_PHASES_INFO编辑页面跳转
 	 * 
 	 * @return
 	 */
 	@RequestMapping(params = "goUpdate")
-	public ModelAndView goUpdate(AProjectInfoEntity aProjectInfo, HttpServletRequest req) {
-		if (StringUtil.isNotEmpty(aProjectInfo.getId())) {
-			aProjectInfo = aProjectInfoService.getEntity(AProjectInfoEntity.class, aProjectInfo.getId());
-			req.setAttribute("aProjectInfoPage", aProjectInfo);
+	public ModelAndView goUpdate(APhasesInfoEntity aPhasesInfo, HttpServletRequest req) {
+		if (StringUtil.isNotEmpty(aPhasesInfo.getId())) {
+			aPhasesInfo = aPhasesInfoService.getEntity(APhasesInfoEntity.class, aPhasesInfo.getId());
+			req.setAttribute("aPhasesInfoPage", aPhasesInfo);
 		}
-		return new ModelAndView("com/jeecg/business/aProjectInfo-update");
+		return new ModelAndView("com/jeecg/phases/aPhasesInfo-update");
 	}
 	
 	/**
@@ -299,7 +272,7 @@ public class AProjectInfoController extends BaseController {
 	 */
 	@RequestMapping(params = "upload")
 	public ModelAndView upload(HttpServletRequest req) {
-		req.setAttribute("controller_name","aProjectInfoController");
+		req.setAttribute("controller_name","aPhasesInfoController");
 		return new ModelAndView("common/upload/pub_excel_upload");
 	}
 	
@@ -310,16 +283,16 @@ public class AProjectInfoController extends BaseController {
 	 * @param response
 	 */
 	@RequestMapping(params = "exportXls")
-	public String exportXls(AProjectInfoEntity aProjectInfo,HttpServletRequest request,HttpServletResponse response
+	public String exportXls(APhasesInfoEntity aPhasesInfo,HttpServletRequest request,HttpServletResponse response
 			, DataGrid dataGrid,ModelMap modelMap) {
-		CriteriaQuery cq = new CriteriaQuery(AProjectInfoEntity.class, dataGrid);
-		org.jeecgframework.core.extend.hqlsearch.HqlGenerateUtil.installHql(cq, aProjectInfo, request.getParameterMap());
-		List<AProjectInfoEntity> aProjectInfos = this.aProjectInfoService.getListByCriteriaQuery(cq,false);
-		modelMap.put(NormalExcelConstants.FILE_NAME,"项目基本信息");
-		modelMap.put(NormalExcelConstants.CLASS,AProjectInfoEntity.class);
-		modelMap.put(NormalExcelConstants.PARAMS,new ExportParams("项目基本信息列表", "导出人:"+ResourceUtil.getSessionUser().getRealName(),
+		CriteriaQuery cq = new CriteriaQuery(APhasesInfoEntity.class, dataGrid);
+		org.jeecgframework.core.extend.hqlsearch.HqlGenerateUtil.installHql(cq, aPhasesInfo, request.getParameterMap());
+		List<APhasesInfoEntity> aPhasesInfos = this.aPhasesInfoService.getListByCriteriaQuery(cq,false);
+		modelMap.put(NormalExcelConstants.FILE_NAME,"A_PHASES_INFO");
+		modelMap.put(NormalExcelConstants.CLASS,APhasesInfoEntity.class);
+		modelMap.put(NormalExcelConstants.PARAMS,new ExportParams("A_PHASES_INFO列表", "导出人:"+ResourceUtil.getSessionUser().getRealName(),
 			"导出信息"));
-		modelMap.put(NormalExcelConstants.DATA_LIST,aProjectInfos);
+		modelMap.put(NormalExcelConstants.DATA_LIST,aPhasesInfos);
 		return NormalExcelConstants.JEECG_EXCEL_VIEW;
 	}
 	/**
@@ -329,11 +302,11 @@ public class AProjectInfoController extends BaseController {
 	 * @param response
 	 */
 	@RequestMapping(params = "exportXlsByT")
-	public String exportXlsByT(AProjectInfoEntity aProjectInfo,HttpServletRequest request,HttpServletResponse response
+	public String exportXlsByT(APhasesInfoEntity aPhasesInfo,HttpServletRequest request,HttpServletResponse response
 			, DataGrid dataGrid,ModelMap modelMap) {
-    	modelMap.put(NormalExcelConstants.FILE_NAME,"项目基本信息");
-    	modelMap.put(NormalExcelConstants.CLASS,AProjectInfoEntity.class);
-    	modelMap.put(NormalExcelConstants.PARAMS,new ExportParams("项目基本信息列表", "导出人:"+ResourceUtil.getSessionUser().getRealName(),
+    	modelMap.put(NormalExcelConstants.FILE_NAME,"A_PHASES_INFO");
+    	modelMap.put(NormalExcelConstants.CLASS,APhasesInfoEntity.class);
+    	modelMap.put(NormalExcelConstants.PARAMS,new ExportParams("A_PHASES_INFO列表", "导出人:"+ResourceUtil.getSessionUser().getRealName(),
     	"导出信息"));
     	modelMap.put(NormalExcelConstants.DATA_LIST,new ArrayList());
     	return NormalExcelConstants.JEECG_EXCEL_VIEW;
@@ -354,9 +327,9 @@ public class AProjectInfoController extends BaseController {
 			params.setHeadRows(1);
 			params.setNeedSave(true);
 			try {
-				List<AProjectInfoEntity> listAProjectInfoEntitys = ExcelImportUtil.importExcel(file.getInputStream(),AProjectInfoEntity.class,params);
-				for (AProjectInfoEntity aProjectInfo : listAProjectInfoEntitys) {
-					aProjectInfoService.save(aProjectInfo);
+				List<APhasesInfoEntity> listAPhasesInfoEntitys = ExcelImportUtil.importExcel(file.getInputStream(),APhasesInfoEntity.class,params);
+				for (APhasesInfoEntity aPhasesInfo : listAPhasesInfoEntitys) {
+					aPhasesInfoService.save(aPhasesInfo);
 				}
 				j.setMsg("文件导入成功！");
 			} catch (Exception e) {
@@ -375,68 +348,68 @@ public class AProjectInfoController extends BaseController {
 	
 	@RequestMapping(method = RequestMethod.GET)
 	@ResponseBody
-	@ApiOperation(value="项目基本信息列表信息",produces="application/json",httpMethod="GET")
-	public ResponseMessage<List<AProjectInfoEntity>> list() {
-		List<AProjectInfoEntity> listAProjectInfos=aProjectInfoService.getList(AProjectInfoEntity.class);
-		return Result.success(listAProjectInfos);
+	@ApiOperation(value="A_PHASES_INFO列表信息",produces="application/json",httpMethod="GET")
+	public ResponseMessage<List<APhasesInfoEntity>> list() {
+		List<APhasesInfoEntity> listAPhasesInfos=aPhasesInfoService.getList(APhasesInfoEntity.class);
+		return Result.success(listAPhasesInfos);
 	}
 	
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	@ResponseBody
-	@ApiOperation(value="根据ID获取项目基本信息信息",notes="根据ID获取项目基本信息信息",httpMethod="GET",produces="application/json")
+	@ApiOperation(value="根据ID获取A_PHASES_INFO信息",notes="根据ID获取A_PHASES_INFO信息",httpMethod="GET",produces="application/json")
 	public ResponseMessage<?> get(@ApiParam(required=true,name="id",value="ID")@PathVariable("id") String id) {
-		AProjectInfoEntity task = aProjectInfoService.get(AProjectInfoEntity.class, id);
+		APhasesInfoEntity task = aPhasesInfoService.get(APhasesInfoEntity.class, id);
 		if (task == null) {
-			return Result.error("根据ID获取项目基本信息信息为空");
+			return Result.error("根据ID获取A_PHASES_INFO信息为空");
 		}
 		return Result.success(task);
 	}
 
 	@RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	@ApiOperation(value="创建项目基本信息")
-	public ResponseMessage<?> create(@ApiParam(name="项目基本信息对象")@RequestBody AProjectInfoEntity aProjectInfo, UriComponentsBuilder uriBuilder) {
+	@ApiOperation(value="创建A_PHASES_INFO")
+	public ResponseMessage<?> create(@ApiParam(name="A_PHASES_INFO对象")@RequestBody APhasesInfoEntity aPhasesInfo, UriComponentsBuilder uriBuilder) {
 		//调用JSR303 Bean Validator进行校验，如果出错返回含400错误码及json格式的错误信息.
-		Set<ConstraintViolation<AProjectInfoEntity>> failures = validator.validate(aProjectInfo);
+		Set<ConstraintViolation<APhasesInfoEntity>> failures = validator.validate(aPhasesInfo);
 		if (!failures.isEmpty()) {
 			return Result.error(JSONArray.toJSONString(BeanValidators.extractPropertyAndMessage(failures)));
 		}
 
 		//保存
 		try{
-			aProjectInfoService.save(aProjectInfo);
+			aPhasesInfoService.save(aPhasesInfo);
 		} catch (Exception e) {
 			e.printStackTrace();
-			return Result.error("项目基本信息信息保存失败");
+			return Result.error("A_PHASES_INFO信息保存失败");
 		}
-		return Result.success(aProjectInfo);
+		return Result.success(aPhasesInfo);
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	@ApiOperation(value="更新项目基本信息",notes="更新项目基本信息")
-	public ResponseMessage<?> update(@ApiParam(name="项目基本信息对象")@RequestBody AProjectInfoEntity aProjectInfo) {
+	@ApiOperation(value="更新A_PHASES_INFO",notes="更新A_PHASES_INFO")
+	public ResponseMessage<?> update(@ApiParam(name="A_PHASES_INFO对象")@RequestBody APhasesInfoEntity aPhasesInfo) {
 		//调用JSR303 Bean Validator进行校验，如果出错返回含400错误码及json格式的错误信息.
-		Set<ConstraintViolation<AProjectInfoEntity>> failures = validator.validate(aProjectInfo);
+		Set<ConstraintViolation<APhasesInfoEntity>> failures = validator.validate(aPhasesInfo);
 		if (!failures.isEmpty()) {
 			return Result.error(JSONArray.toJSONString(BeanValidators.extractPropertyAndMessage(failures)));
 		}
 
 		//保存
 		try{
-			aProjectInfoService.saveOrUpdate(aProjectInfo);
+			aPhasesInfoService.saveOrUpdate(aPhasesInfo);
 		} catch (Exception e) {
 			e.printStackTrace();
-			return Result.error("更新项目基本信息信息失败");
+			return Result.error("更新A_PHASES_INFO信息失败");
 		}
 
 		//按Restful约定，返回204状态码, 无内容. 也可以返回200状态码.
-		return Result.success("更新项目基本信息信息成功");
+		return Result.success("更新A_PHASES_INFO信息成功");
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
 	@ResponseStatus(HttpStatus.NO_CONTENT)
-	@ApiOperation(value="删除项目基本信息")
+	@ApiOperation(value="删除A_PHASES_INFO")
 	public ResponseMessage<?> delete(@ApiParam(name="id",value="ID",required=true)@PathVariable("id") String id) {
 		logger.info("delete[{}]" + id);
 		// 验证
@@ -444,10 +417,10 @@ public class AProjectInfoController extends BaseController {
 			return Result.error("ID不能为空");
 		}
 		try {
-			aProjectInfoService.deleteEntityById(AProjectInfoEntity.class, id);
+			aPhasesInfoService.deleteEntityById(APhasesInfoEntity.class, id);
 		} catch (Exception e) {
 			e.printStackTrace();
-			return Result.error("项目基本信息删除失败");
+			return Result.error("A_PHASES_INFO删除失败");
 		}
 
 		return Result.success();

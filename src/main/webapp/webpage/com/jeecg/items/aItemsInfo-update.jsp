@@ -76,23 +76,23 @@
 					<tr>
 						<td align="right">
 							<label class="Validform_label">
-								项目id:
+								项目编号:
 							</label>
 						</td>
 						<td class="value">
-						    <input id="projectId" name="projectId" type="text" style="width: 150px" class="inputxt"  ignore="ignore"  value='${aItemsInfoPage.projectId}'/>
+						    <input id="projectId" name="projectId" type="text" style="width: 150px" class="inputxt"  datatype="*" ignore="checked"  value='${aItemsInfoPage.projectId}'/>
 							<span class="Validform_checktip"></span>
-							<label class="Validform_label" style="display: none;">项目id</label>
+							<label class="Validform_label" style="display: none;">项目编号</label>
 						</td>
 						<td align="right">
 							<label class="Validform_label">
-								阶段id:
+								阶段编号:
 							</label>
 						</td>
 						<td class="value">
-						    <input id="phasesId" name="phasesId" type="text" style="width: 150px" class="inputxt"  ignore="ignore"  value='${aItemsInfoPage.phasesId}'/>
+						    <input id="phasesId" name="phasesId" type="text" style="width: 150px" class="inputxt"  datatype="*" ignore="checked"  value='${aItemsInfoPage.phasesId}'/>
 							<span class="Validform_checktip"></span>
-							<label class="Validform_label" style="display: none;">阶段id</label>
+							<label class="Validform_label" style="display: none;">阶段编号</label>
 						</td>
 					</tr>
 					<tr>
@@ -102,7 +102,7 @@
 							</label>
 						</td>
 						<td class="value">
-						    <input id="itemsId" name="itemsId" type="text" style="width: 150px" class="inputxt"  ignore="ignore"  value='${aItemsInfoPage.itemsId}'/>
+						    <input id="itemsId" name="itemsId" type="text" style="width: 150px" class="inputxt"  datatype="*" ignore="checked"  value='${aItemsInfoPage.itemsId}'/>
 							<span class="Validform_checktip"></span>
 							<label class="Validform_label" style="display: none;">事项编号</label>
 						</td>
@@ -112,7 +112,7 @@
 							</label>
 						</td>
 						<td class="value">
-						    <input id="itemsChildId" name="itemsChildId" type="text" style="width: 150px" class="inputxt"  ignore="ignore"  value='${aItemsInfoPage.itemsChildId}'/>
+						    <input id="itemsChildId" name="itemsChildId" type="text" style="width: 150px" class="inputxt"  datatype="*" ignore="checked"   value='${aItemsInfoPage.itemsChildId}'/>
 							<span class="Validform_checktip"></span>
 							<label class="Validform_label" style="display: none;">事项子项编号</label>
 						</td>
@@ -124,7 +124,7 @@
 							</label>
 						</td>
 						<td class="value">
-						    <input id="itemsName" name="itemsName" type="text" style="width: 150px" class="inputxt"  ignore="ignore"  value='${aItemsInfoPage.itemsName}'/>
+						    <input id="itemsName" name="itemsName" type="text" style="width: 150px" class="inputxt"  datatype="*" ignore="checked"  value='${aItemsInfoPage.itemsName}'/>
 							<span class="Validform_checktip"></span>
 							<label class="Validform_label" style="display: none;">事项名称</label>
 						</td>
@@ -134,7 +134,7 @@
 							</label>
 						</td>
 						<td class="value">
-						    <input id="itemsChildName" name="itemsChildName" type="text" style="width: 150px" class="inputxt"  ignore="ignore"  value='${aItemsInfoPage.itemsChildName}'/>
+						    <input id="itemsChildName" name="itemsChildName" type="text" style="width: 150px" class="inputxt"  datatype="*" ignore="checked"   value='${aItemsInfoPage.itemsChildName}'/>
 							<span class="Validform_checktip"></span>
 							<label class="Validform_label" style="display: none;">事项子项名称</label>
 						</td>
