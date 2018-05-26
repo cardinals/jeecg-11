@@ -133,11 +133,12 @@
         <%--<input type="file">--%>
 
         <%--<label class="Validform_label"> 文件上传: </label>--%>
+         <c:if test="${role !='DEPT_CHECK_ROLE'}">
         <span class="btn btn-success fileinput-button"><span>选择文件</span>
          <input class="materials" id="fileupload" type="file" name="files[]" data-url="aMaterialsUploadController.do?uploadFile&id=${material.id }&type=1"  >
          &nbsp;&nbsp;  <input id="filePaths" name="filePaths" type="hidden" />
         </span>
-
+         </c:if>
         <%--<label class="Validform_label"> 文件列表: </label>
        <div class="value" colspan="2" id="fileList">
         <c:forEach var="file" items="${casefileList}">

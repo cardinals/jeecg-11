@@ -211,7 +211,9 @@ public class BProjectBusinessController extends BaseController {
 		req.setAttribute("certificateList", certificateList);
 		req.setAttribute("deptId", user.getDepartid());
 		//上传证照权限只给预受理人员
-		req.setAttribute("role", BusinessUtil.WINDOW_ACCEPT);
+		if (ResourceUtil.getConfigByName("accept_deptid").equals(user.getCurrentDepart().getId())){
+			req.setAttribute("role", BusinessUtil.WINDOW_ACCEPT);
+		}
 		return new ModelAndView("com/jeecg/multiple/bBusinessCertificateList");
 	}
 
