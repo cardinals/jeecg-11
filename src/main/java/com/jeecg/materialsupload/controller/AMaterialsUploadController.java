@@ -317,12 +317,26 @@ public class AMaterialsUploadController extends BaseController {
 //		this.aMaterialsUploadService.getDataGridReturn(cq, true);
 //		TagUtil.datagrid(response, dataGrid);
 		TSUser user = ResourceUtil.getSessionUser();
+		String condition = "";
+		if (StringUtil.isNotEmpty(aMaterialsUpload.getBusinessId())) {
+			condition += " and a.business_id ='" +aMaterialsUpload.getBusinessId()+"'";
+		}
+		if (StringUtil.isNotEmpty(aMaterialsUpload.getMaterialsType())) {
+			condition += " and a.materials_type ='" +aMaterialsUpload.getMaterialsType()+"'";
+		}
+		if (StringUtil.isNotEmpty(aMaterialsUpload.getMaterialsName())) {
+			condition += " and substr(a.materials_name ,37) ='" +aMaterialsUpload.getMaterialsName()+"'";
+		}
+		if (StringUtil.isNotEmpty(aMaterialsUpload.getItemsId())) {
+			condition += " and b.items_child_name ='" +aMaterialsUpload.getItemsId()+"'";
+		}
 		String sql = "select a.id,a.business_id,a.materials_id,a.materials_path,a.update_time," +
 				"      substr(a.materials_name ,37) as materials_name," +
 				"       a.materials_type," +
-				"       b.items_child_name" +
+				"       b.items_child_name as items_id" +
 				"  from A_MATERIALS_UPLOAD a, a_items_info b " +
-				" where a.items_id = b.items_id||b.items_child_id order by a.update_time";
+				" where a.items_id = b.items_id||b.items_child_id " +condition +
+				" order by a.update_time";
 
 		List<Map<String, Object>> resultList =  systemService.findForJdbc(sql,dataGrid.getPage(),dataGrid.getRows());
 		//将List转换成JSON存储
@@ -337,7 +351,7 @@ public class AMaterialsUploadController extends BaseController {
 				n.put("materialsPath", String.valueOf(obj.get("materials_path")));
 				n.put("materialsName",String.valueOf(obj.get("materials_name")));
 				n.put("materialsType",String.valueOf(obj.get("materials_type")));
-				n.put("itemsChildName",String.valueOf(obj.get("items_child_name")));
+				n.put("itemsId",String.valueOf(obj.get("items_id")));
 				n.put("updateTime",String.valueOf(obj.get("update_time")));
 				materialsList.add(n);
 			}
@@ -345,7 +359,7 @@ public class AMaterialsUploadController extends BaseController {
 		dataGrid.setResults(materialsList);
 		String getCountSql ="select count(a.id) as count " +
 				"  from A_MATERIALS_UPLOAD a, a_items_info b " +
-				" where a.items_id = b.items_id||b.items_child_id";
+				" where a.items_id = b.items_id||b.items_child_id " +condition ;
 		List<Map<String, Object>> resultList2 =  systemService.findForJdbc(getCountSql);
 		Object count = resultList2.get(0).get("count");
 

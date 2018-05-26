@@ -4,14 +4,15 @@
 <div class="easyui-layout" fit="true">
   <div region="center" style="padding:0px;border:0px">
   <t:datagrid name="aMaterialsUploadList" checkbox="true" pagination="true" fitColumns="true" title="材料上传信息" actionUrl="aMaterialsUploadController.do?datagrid" idField="id" fit="true" queryMode="group">
-   <t:dgCol title="主键"  field="id"  hidden="true"  queryMode="group"  width="120"></t:dgCol>
-   <t:dgCol title="业务编号"  field="businessId"  queryMode="group"  width="120"></t:dgCol>
+   <t:dgCol title="主键"  field="id"  hidden="true"    width="120"></t:dgCol>
+   <t:dgCol title="业务编号"  field="businessId"  query="true"  width="120"></t:dgCol>
    <%--<t:dgCol title="项目编号"  field="projectId"  queryMode="group"  width="120"></t:dgCol>
    <t:dgCol title="阶段编号"  field="phasesId"  queryMode="group"  width="120"></t:dgCol>--%>
-   <t:dgCol title="事项名称"  field="itemsChildName"  queryMode="group"  width="120"></t:dgCol>
+   <t:dgCol title="事项名称"  field="itemsId" query="true"   width="120"></t:dgCol>
+   <%--<t:dgCol title="事项名称"  field="itemsChildName" query="true"   width="120"></t:dgCol>--%>
    <t:dgCol title="材料编号"  field="materialsId"  queryMode="group"  width="120"></t:dgCol>
-   <t:dgCol title="文件名称"  field="materialsName"  queryMode="group"  width="120"></t:dgCol>
-   <t:dgCol title="文件类型"  field="materialsType"  queryMode="group" replace="证照_2,材料_1" width="120"></t:dgCol>
+   <t:dgCol title="文件名称"  field="materialsName"  query="true"  width="120"></t:dgCol>
+   <t:dgCol title="文件类型"  field="materialsType"  query="true" replace="证照_2,材料_1" width="120"></t:dgCol>
    <%--<t:dgCol title="文件路径"  field="materialsPath" queryMode="group"  width="120"></t:dgCol>--%>
    <%--<t:dgCol title="createTime"  field="createTime"  formatter="yyyy-MM-dd"  queryMode="group"  width="120"></t:dgCol>--%>
    <t:dgCol title="上传时间"  field="updateTime"  formatter="yyyy-MM-dd"  queryMode="group"  width="120"></t:dgCol>
