@@ -37,7 +37,7 @@
 </header>
 <div class="header-nav iconfont icon-xunhuan--">${bChildBusiness.itemsName}<img src="plug-in/businessLog/img/line-y.png"/></div>
 <div class="center-category">
- <div class="center-title">以下状态模式时无论是在审核中还是在办结完状态均为这几种状态</div>
+ <div class="center-title"><%--以下状态模式时无论是在审核中还是在办结完状态均为这几种状态--%></div>
  <div class="center-section">
 
 
@@ -48,12 +48,12 @@
 
    </c:if>
   <div class="section-line">
-   <div class="section-tai">已办理完结</div>
+   <%--<div class="section-tai">已办理完结</div>--%>
    <div class="section-icon"></div>
    <c:if test="${childLog.node_name == '受理'}">
      <div class="section-img"><img src="plug-in/businessLog/img/01-02.png"/></div>
    </c:if>
-   <c:if test="${childLog.node_name = '审核'}">
+   <c:if test="${childLog.node_name != '受理' && childLog.node_name != '办结'}">
     <div class="section-img"><img src="plug-in/businessLog/img/02-02.png"/></div>
    </c:if>
    <c:if test="${childLog.node_name == '办结'}">
