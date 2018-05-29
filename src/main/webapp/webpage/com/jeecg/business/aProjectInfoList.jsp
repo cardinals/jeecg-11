@@ -3,7 +3,7 @@
 <t:base type="jquery,easyui,tools,DatePicker"></t:base>
 <div class="easyui-layout" fit="true">
   <div region="center" style="padding:0px;border:0px">
-  <t:datagrid name="aProjectInfoList" checkbox="true" pagination="true" fitColumns="true" title="项目基本信息" actionUrl="aProjectInfoController.do?datagrid" idField="id" fit="true" queryMode="group">
+  <t:datagrid name="aProjectInfoList" pagination="true" fitColumns="true" title="项目基本信息" actionUrl="aProjectInfoController.do?datagrid" idField="id" fit="true" queryMode="group">
    <t:dgCol title="主键"  field="id"  hidden="true"  queryMode="group"  width="120"></t:dgCol>
    <t:dgCol title="项目编号"  field="projectId"  queryMode="group"  width="120"></t:dgCol>
    <t:dgCol title="项目名称"  field="projectName"  queryMode="group"  width="120"></t:dgCol>
@@ -11,7 +11,7 @@
    <t:dgCol title="updateTime"  field="updateTime"  formatter="yyyy-MM-dd"  queryMode="group"  width="120"></t:dgCol>
    <t:dgCol title="delFlag"  field="delFlag"  queryMode="group"  width="120"></t:dgCol>--%>
    <t:dgCol title="项目简介"  field="projectIntro"  queryMode="group"  width="120"></t:dgCol>
-   <t:dgCol title="remark"  field="remark"  queryMode="group"  width="120"></t:dgCol>
+   <%--<t:dgCol title="remark"  field="remark"  queryMode="group"  width="120"></t:dgCol>--%>
    <t:dgCol title="操作" field="opt" width="100"></t:dgCol>
 
    <t:dgFunOpt funname="accept(id,tableName)" title="预受理"  urlclass="ace_button"  urlfont="fa-copy"></t:dgFunOpt>

@@ -132,7 +132,7 @@
 	<div class="layout-admin">
 		<!-- top -->
 		<header class="layout-header">
-			<span class="header-logo"><img alt="image" width="190" height="68" src="plug-in/login/images/jeecg-aceplus.png" /></span>
+			<span class="header-logo"><%--<img alt="image" width="190" height="68" src="plug-in/login/images/jeecg-aceplus.png" />--%></span>
 			
 			<div class="titlerow" >
 				<div class="titlecell">

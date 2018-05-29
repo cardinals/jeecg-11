@@ -50,8 +50,16 @@
   <div class="section-line">
    <div class="section-tai">已办理完结</div>
    <div class="section-icon"></div>
-   <div class="section-img"><img src="plug-in/businessLog/img/01-02.png"/></div>
-   <div class="section-name">处理人：<span class="name-span">${childLog.handler}</span></div>
+   <c:if test="${childLog.node_name == '受理'}">
+     <div class="section-img"><img src="plug-in/businessLog/img/01-02.png"/></div>
+   </c:if>
+   <c:if test="${childLog.node_name = '审核'}">
+    <div class="section-img"><img src="plug-in/businessLog/img/02-02.png"/></div>
+   </c:if>
+   <c:if test="${childLog.node_name == '办结'}">
+    <div class="section-img"><img src="plug-in/businessLog/img/03-01.png"/></div>
+   </c:if>
+   <div class="section-name">处理人：<span class="name-span" style="    font-size: 22px;">${childLog.handler}</span></div>
    <div class="section-time"><fmt:formatDate value="${childLog.handle_time}" pattern="yyyy年MM月dd日 HH:mm:ss" /></div>
    <div class="section-idea">${childLog.idea}</div>
   </div>

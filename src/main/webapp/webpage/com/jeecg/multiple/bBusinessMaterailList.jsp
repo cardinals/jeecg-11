@@ -97,6 +97,7 @@
     <input name="projectId" type="hidden" value="${materialList[0].project_id }"/>
     <input name="phasesId" type="hidden" value="${materialList[0].phases_id }"/>
     <input name="itemsId" type="hidden" value="${materialList[0].items_id }"/>
+    <input name="deptId" type="hidden" value="${materialList[0].dept_id }"/>
 
 
 

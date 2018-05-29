@@ -44,7 +44,7 @@
             <ul class="nav" id="side-menu">
                 <li class="nav-header">
                     <div class="dropdown profile-element">
-                                <span><img alt="image" width="180" height="61" src="plug-in/login/images/jeecg-aceplus.png" /></span>
+                                <span><%--<img alt="image" width="180" height="61" src="plug-in/login/images/jeecg-aceplus.png" />--%></span>
                             <%--dangzhenghui end 20170502 for 增加添加头像功能--%>
                             <%--//update-start--Author: chenj Date:20160726 for: TASK #1207 [改造]h+风格下，去掉logo下面的内容，迁移位置到右上角，主题位置
                         <a data-toggle="dropdown" class="dropdown-toggle" href="#">
@@ -69,7 +69,7 @@
                         </ul>
                          //update-end--Author: chenj Date:20160726 for: TASK #1207 [改造]h+风格下，去掉logo下面的内容，迁移位置到右上角，主题位置 --%>
                     </div>
-                    <div class="logo-element">JEECG
+                    <div class="logo-element">
                     </div>
                 </li>
 
@@ -86,7 +86,7 @@
                 <div class="navbar-header" style="height: 60px;"><a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-bars"></i> </a>
                     <form role="search" class="navbar-form-custom" method="post" action="search_results.html">
                         <div class="form-group">
-                            <input type="text" placeholder="欢迎使用Jeecg快速开发平台 …" class="form-control" name="top-search" id="top-search">
+                            <input type="text" placeholder="郑东新区建设项目并联审批监管系统建设合同" class="form-control" name="top-search" id="top-search">
                         </div>
                     </form>
                 </div>
@@ -165,11 +165,11 @@
                     </li>
                     
                      
-                    <li class="dropdown hidden-xs">
+                    <%--<li class="dropdown hidden-xs">
                         <a class="right-sidebar-toggle" aria-expanded="false">
                             <i class="fa fa-tasks"></i> 主题
                         </a>
-                    </li>
+                    </li>--%>
                       <li class="dropdown">
                      <a href="javascript:logout()" class="roll-nav roll-right J_tabExit"><i class="fa fa fa-sign-out"></i> 退出</a>
                      </li>
@@ -210,14 +210,14 @@
 		.proccess b{vertical-align:middle;background:url(plug-in/layer/skin/default/loading-0.gif) no-repeat 0 center;padding-left:55px;display:inline-block;}  
 		-->  
 		</style> 
-        <div class="row J_mainContent" id="content-main" style="margin-left:-13px;">
+        <div class="row J_mainContent" id="content-main" style="margin-left:-13px;height: calc(100% - 103px);">
             <div class="proccess" id="panelloadingDiv"><b>&nbsp;</b></div> 
             <iframe class="J_iframe" name="iframe0" width="100%" height="100%" src="loginController.do?hplushome" frameborder="0" data-id="loginController.do?hplushome" seamless></iframe>
         </div>
-        <div class="footer" style="border-top:none;">
+        <%--<div class="footer" style="border-top:none;">
             <div class="pull-right">&copy; <t:mutiLang langKey="system.version.number"/> <a href="http://www.jeecg.org/" target="_blank">jeecg</a>
             </div>
-        </div>        
+        </div>--%>
     </div>
     <!--右侧部分结束-->
     <!--右侧边栏开始-->
@@ -468,8 +468,8 @@
 
 <!-- 弹出TAB -->
 <script type="text/javascript" src="plug-in/hplus/hplus-tab.js"></script>
-<!-- 在线聊天 -->
-<%@include file="/context/layui.jsp"%>
+<%--<!-- 在线聊天 -->
+<%@include file="/context/layui.jsp"%>--%>
 <script>
     function logout(){
         /*bootbox.confirm("<t:mutiLang langKey="common.exit.confirm"/>", function(result) {

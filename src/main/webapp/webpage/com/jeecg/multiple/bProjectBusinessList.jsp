@@ -3,7 +3,7 @@
 <t:base type="jquery,easyui,tools,DatePicker"></t:base>
 <div class="easyui-layout" fit="true">
   <div region="center" style="padding:0px;border:0px">
-  <t:datagrid name="bProjectBusinessList" checkbox="true" pagination="true" fitColumns="true" title="并联业务信息" actionUrl="bProjectBusinessController.do?datagrid" idField="id" fit="true" queryMode="group">
+  <t:datagrid name="bProjectBusinessList"  pagination="true" fitColumns="true" title="并联业务信息" actionUrl="bProjectBusinessController.do?datagrid" idField="id" fit="true" queryMode="group">
    <t:dgCol title="主键"  field="id"  hidden="true"  queryMode="group"  width="120"></t:dgCol>
    <t:dgCol title="业务流水号"  field="businessId"  query="true"  width="120"></t:dgCol>
    <t:dgCol title="实际项目名称"  field="realityProjectName"  query="true"  width="150"></t:dgCol>
@@ -50,11 +50,16 @@ function accept(id,tableName){
 }
 //材料上传
 function uploadMaterial(id){
-    createwindow("材料上传", "bProjectBusinessController.do?materialList&id="+id,"1000","500");
+    //预受理权限进入查看窗口
+    if("WINDOW_ACCEPT"=="${role}"){
+        createdetailwindow("材料上传", "bProjectBusinessController.do?materialList&id="+id,"1000","500");
+    }else{
+        createwindow("材料上传", "bProjectBusinessController.do?materialList&id="+id,"1000","500");
+    }
 }
 //证照上传
 function uploadCertificate(id){
-    createwindow("证照上传", "bProjectBusinessController.do?certificateList&id="+id,"1000","500");
+    createdetailwindow("证照上传", "bProjectBusinessController.do?certificateList&id="+id,"1000","500");
 }
 ////流程日志
 //function loadBusinessLog(id){

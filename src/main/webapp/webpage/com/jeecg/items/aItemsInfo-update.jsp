@@ -142,13 +142,13 @@
 					<tr>
 						<td align="right" >
 							<label class="Validform_label">
-								部门编号:
+								部门名称:
 							</label>
 						</td>
 						<td class="value" colspan="3">
 
-							<input id="deptName" name="deptName" type="text" readonly="readonly" class="inputxt" datatype="*" value="${deptName}"/>
-							<input id="deptId" name="deptId" type="hidden" value="${deptId}"/>
+							<input id="deptName" name="deptName" type="text" readonly="readonly" class="inputxt" datatype="*" value="${aItemsInfoPage.deptName}"/>
+							<input id="deptId" name="deptId" type="hidden" value="${aItemsInfoPage.deptId}"/>
 							<a href="#" class="easyui-linkbutton" plain="true" icon="icon-search" id="departSearch" onclick="openDepartmentSelect()">选择</a>
 							<a href="#" class="easyui-linkbutton" plain="true" icon="icon-redo" id="departRedo" onclick="callbackClean()">清空</a>
 								<%--update-end--Author:jg_renjie  Date:20160320 for：#942 【组件封装】组织机构弹出模式，目前是列表，得改造成树方式--%>

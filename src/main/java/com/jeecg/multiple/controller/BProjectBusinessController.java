@@ -156,10 +156,10 @@ public class BProjectBusinessController extends BaseController {
 					" and f.business_id = e.business_id"+
 					" and f.items_id = c.items_id || c.items_child_id"+
 					" and f.materials_id = d.materials_id and f.materials_type = '1'" +
-					" and e.business_id = '"+bProjectBusiness.getBusinessId()+"'";
+					" and e.business_id = '"+bProjectBusiness.getBusinessId()+"' order by c.items_id || c.items_child_id";
 			check_sql = "select dept_id,dept_name,items_name,items_id,check_content,check_time from B_CHILD_BUSINESS t " +
 					"where business_id ='"+bProjectBusiness.getBusinessId()+"' " +
-					"and  substr(phases_id,-3) ='001'";
+					"and  substr(phases_id,-3) ='001'  order by items_id  ";
 		}else{
 			sql = "select f.id,substr(f.materials_name,37) as file_name, f.materials_path,e.business_id,a.project_id, a.project_name, b.phases_id, b.phases_name, c.items_id || c.items_child_id as items_id, " +
 					"c.items_child_name, d.materials_id, d.materials_name, c.dept_id, c.dept_name from A_PROJECT_INFO a, " +
@@ -172,10 +172,10 @@ public class BProjectBusinessController extends BaseController {
 					" and f.items_id = c.items_id || c.items_child_id"+
 					" and f.materials_id = d.materials_id and f.materials_type = '1'" +
 					" and e.business_id = '"+bProjectBusiness.getBusinessId()+"'" +
-				" and c.dept_id = '"+user.getCurrentDepart().getId()+"'" ;
+				" and c.dept_id = '"+user.getCurrentDepart().getId()+"' order by c.items_id || c.items_child_id" ;
 			check_sql = "select dept_id,dept_name,items_name,items_id,check_content,check_time from B_CHILD_BUSINESS t " +
 					"where business_id ='"+bProjectBusiness.getBusinessId()+"' " +
-					"and  substr(phases_id,-3) ='001' and dept_id='"+user.getCurrentDepart().getId()+"'";
+					"and  substr(phases_id,-3) ='001' and dept_id='"+user.getCurrentDepart().getId()+"'  order by items_id  ";
 			req.setAttribute("role", BusinessUtil.DEPT_CHECK_ROLE);
 		}
 
@@ -259,7 +259,7 @@ public class BProjectBusinessController extends BaseController {
 				"  left join b_child_business b" +
 				"    on a.business_id = b.business_id" +
 				"  left join a_materials_upload c" +
-				"    on b.business_id = c.business_id" +
+				"    on b.business_id = c.business_id  and c.phases_id= b.phases_id" +
 				"   and b.items_id = c.items_id" +
 				"   and c.materials_type = '2'" +
 				" where a.business_id = '"+bProjectBusiness.getBusinessId()+"'   and b.phases_id = '"+phasesId+"' order by b.ssgzr";
@@ -301,17 +301,22 @@ public class BProjectBusinessController extends BaseController {
 	@RequestMapping(params = "doCheck")
 	@ResponseBody
 	public AjaxJson doCheck(BProjectBusinessEntity bProjectBusiness, String checkContent,String businessId,
-							String projectId,String phasesId,String itemsId,HttpServletRequest request) {
+							String projectId,String phasesId,String itemsId,String deptId,HttpServletRequest request) {
 		String message = null;
 		AjaxJson j = new AjaxJson();
 		message = "审核意见提交成功";
 
 		try {
+//			String sql = "update b_child_business a set a.check_time = sysdate ,a.check_content ='"+checkContent+"' " +
+//					" where a.business_id ='"+businessId+"' " +
+//					" and a.project_id ='"+projectId+"' " +
+//					" and a.phases_id ='"+phasesId+"' " +
+//					" and a.items_id = '"+itemsId+"'";
 			String sql = "update b_child_business a set a.check_time = sysdate ,a.check_content ='"+checkContent+"' " +
 					" where a.business_id ='"+businessId+"' " +
 					" and a.project_id ='"+projectId+"' " +
 					" and a.phases_id ='"+phasesId+"' " +
-					" and a.items_id = '"+itemsId+"'";
+					" and a.dept_id = '"+deptId+"'";
 			int result =  systemService.updateBySqlString(sql);
 //			bChildBusinessService.saveOrUpdate(bChildBusiness);
 		} catch (Exception e) {
@@ -331,6 +336,11 @@ public class BProjectBusinessController extends BaseController {
 	 */
 	@RequestMapping(params = "list")
 	public ModelAndView list(HttpServletRequest request) {
+		TSUser user = ResourceUtil.getSessionUser();
+		//前台获取权限
+		if (ResourceUtil.getConfigByName("accept_deptid").equals(user.getCurrentDepart().getId())){
+			request.setAttribute("role", BusinessUtil.WINDOW_ACCEPT);
+		}
 		return new ModelAndView("com/jeecg/multiple/bProjectBusinessList");
 	}
 

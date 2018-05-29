@@ -3,7 +3,7 @@
 <t:base type="jquery,easyui,tools,DatePicker"></t:base>
 <div class="easyui-layout" fit="true">
   <div region="center" style="padding:0px;border:0px">
-  <t:datagrid name="bChildBusinessList" checkbox="true" pagination="true" fitColumns="true" title="子业务信息" actionUrl="bChildBusinessController.do?datagrid" idField="id" fit="true" queryMode="group">
+  <t:datagrid name="bChildBusinessList" pagination="true" fitColumns="true" title="子业务信息" actionUrl="bChildBusinessController.do?datagrid" idField="id" fit="true" queryMode="group">
    <t:dgCol title="id"  field="id"  hidden="true"  queryMode="group"  width="120"></t:dgCol>
    <t:dgCol title="实际项目名称"  field="realityProjectName" query="true"  width="120"></t:dgCol>
    <t:dgCol title="并联业务流水号"  field="businessId" hidden="true" query="true" width="120"></t:dgCol>
