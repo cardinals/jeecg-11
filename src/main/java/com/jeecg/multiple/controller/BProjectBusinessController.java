@@ -131,6 +131,62 @@ public class BProjectBusinessController extends BaseController {
 		return new ModelAndView("com/jeecg/multiple/bProjectBusiness-add");
 	}
 
+//	/**
+//	 * 并联业务跳转至材料上传页面--old
+//	 *
+//	 * @return
+//	 */
+//	@RequestMapping(params = "materialList")
+//	public ModelAndView materialList(BProjectBusinessEntity bProjectBusiness, HttpServletRequest req,DataGrid dataGrid) {
+//		if (StringUtil.isNotEmpty(bProjectBusiness.getId())) {
+//			bProjectBusiness = bProjectBusinessService.getEntity(BProjectBusinessEntity.class, bProjectBusiness.getId());
+//			req.setAttribute("bProjectBusinessPage", bProjectBusiness);
+//		}
+//		TSUser user = ResourceUtil.getSessionUser();
+//		String sql ="";
+//		String check_sql ="";
+//		if (ResourceUtil.getConfigByName("accept_deptid").equals(user.getCurrentDepart().getId())){
+//			sql = "select f.id,substr(f.materials_name,37) as file_name, f.materials_path,e.business_id,a.project_id, a.project_name, b.phases_id, b.phases_name, c.items_id || c.items_child_id as items_id, " +
+//					"c.items_child_name, d.materials_id, d.materials_name, c.dept_id, c.dept_name from A_PROJECT_INFO a, " +
+//					"A_PHASES_INFO b, A_ITEMS_INFO c, A_materials_INFO d, b_project_business e, a_materials_upload f where " +
+//					"a.project_id = b.project_id and b.phases_id = c.phases_id and c.items_id || c.items_child_id = d.items_id " +
+//					" and e.project_id = a.project_id"+
+//					" and f.project_id = a.project_id"+
+//					" and f.phases_id = b.phases_id"+
+//					" and f.business_id = e.business_id"+
+//					" and f.items_id = c.items_id || c.items_child_id"+
+//					" and f.materials_id = d.materials_id and f.materials_type = '1'" +
+//					" and e.business_id = '"+bProjectBusiness.getBusinessId()+"' order by c.items_id || c.items_child_id";
+//			check_sql = "select dept_id,dept_name,items_name,items_id,check_content,check_time from B_CHILD_BUSINESS t " +
+//					"where business_id ='"+bProjectBusiness.getBusinessId()+"' " +
+//					"and  substr(phases_id,-3) ='001'  order by items_id  ";
+//		}else{
+//			sql = "select f.id,substr(f.materials_name,37) as file_name, f.materials_path,e.business_id,a.project_id, a.project_name, b.phases_id, b.phases_name, c.items_id || c.items_child_id as items_id, " +
+//					"c.items_child_name, d.materials_id, d.materials_name, c.dept_id, c.dept_name from A_PROJECT_INFO a, " +
+//					"A_PHASES_INFO b, A_ITEMS_INFO c, A_materials_INFO d, b_project_business e, a_materials_upload f where " +
+//					"a.project_id = b.project_id and b.phases_id = c.phases_id and c.items_id || c.items_child_id = d.items_id " +
+//					" and e.project_id = a.project_id"+
+//					" and f.project_id = a.project_id"+
+//					" and f.phases_id = b.phases_id"+
+//					" and f.business_id = e.business_id"+
+//					" and f.items_id = c.items_id || c.items_child_id"+
+//					" and f.materials_id = d.materials_id and f.materials_type = '1'" +
+//					" and e.business_id = '"+bProjectBusiness.getBusinessId()+"'" +
+//				" and c.dept_id = '"+user.getCurrentDepart().getId()+"' order by c.items_id || c.items_child_id" ;
+//			check_sql = "select dept_id,dept_name,items_name,items_id,check_content,check_time from B_CHILD_BUSINESS t " +
+//					"where business_id ='"+bProjectBusiness.getBusinessId()+"' " +
+//					"and  substr(phases_id,-3) ='001' and dept_id='"+user.getCurrentDepart().getId()+"'  order by items_id  ";
+//			req.setAttribute("role", BusinessUtil.DEPT_CHECK_ROLE);
+//		}
+//
+//		List<Map<String, Object>> materialList =  systemService.findForJdbc(sql);
+//		List<Map<String, Object>> checklList =  systemService.findForJdbc(check_sql);
+//		req.setAttribute("materialList", materialList);
+//		req.setAttribute("checklList", checklList);
+//		return new ModelAndView("com/jeecg/multiple/bBusinessMaterailList");
+//	}
+
+
 	/**
 	 * 并联业务跳转至材料上传页面
 	 *
@@ -145,6 +201,7 @@ public class BProjectBusinessController extends BaseController {
 		TSUser user = ResourceUtil.getSessionUser();
 		String sql ="";
 		String check_sql ="";
+		String itemsId= req.getParameter("itemsId");
 		if (ResourceUtil.getConfigByName("accept_deptid").equals(user.getCurrentDepart().getId())){
 			sql = "select f.id,substr(f.materials_name,37) as file_name, f.materials_path,e.business_id,a.project_id, a.project_name, b.phases_id, b.phases_name, c.items_id || c.items_child_id as items_id, " +
 					"c.items_child_name, d.materials_id, d.materials_name, c.dept_id, c.dept_name from A_PROJECT_INFO a, " +
@@ -156,10 +213,10 @@ public class BProjectBusinessController extends BaseController {
 					" and f.business_id = e.business_id"+
 					" and f.items_id = c.items_id || c.items_child_id"+
 					" and f.materials_id = d.materials_id and f.materials_type = '1'" +
-					" and e.business_id = '"+bProjectBusiness.getBusinessId()+"' order by c.items_id || c.items_child_id";
-			check_sql = "select dept_id,dept_name,items_name,items_id,check_content,check_time from B_CHILD_BUSINESS t " +
+					" and e.business_id = '"+bProjectBusiness.getBusinessId()+"' and d.items_id = '"+itemsId+"'  order by c.items_id || c.items_child_id";
+			check_sql = "select dept_id,dept_name,items_name,items_id,check_content,check_time,check_status from B_CHILD_BUSINESS t " +
 					"where business_id ='"+bProjectBusiness.getBusinessId()+"' " +
-					"and  substr(phases_id,-3) ='001'  order by items_id  ";
+					"and items_id = '"+itemsId+"' order by items_id  ";
 		}else{
 			sql = "select f.id,substr(f.materials_name,37) as file_name, f.materials_path,e.business_id,a.project_id, a.project_name, b.phases_id, b.phases_name, c.items_id || c.items_child_id as items_id, " +
 					"c.items_child_name, d.materials_id, d.materials_name, c.dept_id, c.dept_name from A_PROJECT_INFO a, " +
@@ -172,10 +229,10 @@ public class BProjectBusinessController extends BaseController {
 					" and f.items_id = c.items_id || c.items_child_id"+
 					" and f.materials_id = d.materials_id and f.materials_type = '1'" +
 					" and e.business_id = '"+bProjectBusiness.getBusinessId()+"'" +
-				" and c.dept_id = '"+user.getCurrentDepart().getId()+"' order by c.items_id || c.items_child_id" ;
-			check_sql = "select dept_id,dept_name,items_name,items_id,check_content,check_time from B_CHILD_BUSINESS t " +
+					" and c.dept_id = '"+user.getCurrentDepart().getId()+"' and d.items_id = '"+itemsId+"' order by c.items_id || c.items_child_id" ;
+			check_sql = "select dept_id,dept_name,items_name,items_id,check_content,check_time,check_status from B_CHILD_BUSINESS t " +
 					"where business_id ='"+bProjectBusiness.getBusinessId()+"' " +
-					"and  substr(phases_id,-3) ='001' and dept_id='"+user.getCurrentDepart().getId()+"'  order by items_id  ";
+					" and items_id='"+itemsId+"'  order by items_id  ";
 			req.setAttribute("role", BusinessUtil.DEPT_CHECK_ROLE);
 		}
 
@@ -185,7 +242,6 @@ public class BProjectBusinessController extends BaseController {
 		req.setAttribute("checklList", checklList);
 		return new ModelAndView("com/jeecg/multiple/bBusinessMaterailList");
 	}
-
 
 	/**
 	 * 并联业务跳转至证照上传页面
@@ -198,6 +254,7 @@ public class BProjectBusinessController extends BaseController {
 			bProjectBusiness = bProjectBusinessService.getEntity(BProjectBusinessEntity.class, bProjectBusiness.getId());
 			req.setAttribute("bProjectBusinessPage", bProjectBusiness);
 		}
+
 		TSUser user = ResourceUtil.getSessionUser();
 		String sql = "select a.business_id,a.project_id,substr(a.phases_id,-3) as phases_id , a.items_id,a.items_name ,a.dept_id,a.dept_name,a.reality_project_name,b.id, " +
 				" substr(b.materials_name,37) as file_name from B_CHILD_BUSINESS a, A_MATERIALS_UPLOAD b " +
@@ -300,7 +357,7 @@ public class BProjectBusinessController extends BaseController {
 	 */
 	@RequestMapping(params = "doCheck")
 	@ResponseBody
-	public AjaxJson doCheck(BProjectBusinessEntity bProjectBusiness, String checkContent,String businessId,
+	public AjaxJson doCheck(BProjectBusinessEntity bProjectBusiness, String checkContent,String checkStatus,String businessId,
 							String projectId,String phasesId,String itemsId,String deptId,HttpServletRequest request) {
 		String message = null;
 		AjaxJson j = new AjaxJson();
@@ -312,11 +369,11 @@ public class BProjectBusinessController extends BaseController {
 //					" and a.project_id ='"+projectId+"' " +
 //					" and a.phases_id ='"+phasesId+"' " +
 //					" and a.items_id = '"+itemsId+"'";
-			String sql = "update b_child_business a set a.check_time = sysdate ,a.check_content ='"+checkContent+"' " +
+			String sql = "update b_child_business a set a.check_time = sysdate ,a.check_status ='"+checkStatus+"' ,a.check_content ='"+checkContent+"' " +
 					" where a.business_id ='"+businessId+"' " +
 					" and a.project_id ='"+projectId+"' " +
 					" and a.phases_id ='"+phasesId+"' " +
-					" and a.dept_id = '"+deptId+"'";
+					" and a.items_id = '"+itemsId+"'";
 			int result =  systemService.updateBySqlString(sql);
 //			bChildBusinessService.saveOrUpdate(bChildBusiness);
 		} catch (Exception e) {
@@ -492,12 +549,17 @@ public class BProjectBusinessController extends BaseController {
 			}
 
 			//2.插入该项目的所有材料信息
+//			String sql = "select a.project_id, a.project_name, b.phases_id, b.phases_name, " +
+//					"c.items_id || c.items_child_id as items_id, c.items_child_name, d.materials_id, d.materials_name, " +
+//					"c.dept_id, c.dept_name from A_PROJECT_INFO a, A_PHASES_INFO b, A_ITEMS_INFO c, " +
+//					"A_materials_INFO d where a.project_id = b.project_id and b.phases_id = c.phases_id and " +
+//					"c.items_id || c.items_child_id = d.items_id and a.project_id = '"+bProjectBusiness.getProjectId()+"'" +
+//					" and substr(b.phases_id,-3) ='001'";
 			String sql = "select a.project_id, a.project_name, b.phases_id, b.phases_name, " +
 					"c.items_id || c.items_child_id as items_id, c.items_child_name, d.materials_id, d.materials_name, " +
 					"c.dept_id, c.dept_name from A_PROJECT_INFO a, A_PHASES_INFO b, A_ITEMS_INFO c, " +
 					"A_materials_INFO d where a.project_id = b.project_id and b.phases_id = c.phases_id and " +
-					"c.items_id || c.items_child_id = d.items_id and a.project_id = '"+bProjectBusiness.getProjectId()+"'" +
-					" and substr(b.phases_id,-3) ='001'";
+					"c.items_id || c.items_child_id = d.items_id and a.project_id = '"+bProjectBusiness.getProjectId()+"'"  ;
 			List<Map<String, Object>> resultList =  systemService.findForJdbc(sql);
 			if(resultList!=null && resultList.size()>0){
 				for(int i=0;i<resultList.size();i++){

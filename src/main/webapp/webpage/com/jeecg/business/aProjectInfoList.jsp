@@ -14,7 +14,7 @@
    <%--<t:dgCol title="remark"  field="remark"  queryMode="group"  width="120"></t:dgCol>--%>
    <t:dgCol title="操作" field="opt" width="100"></t:dgCol>
 
-   <t:dgFunOpt funname="accept(id,tableName)" title="预受理"  urlclass="ace_button"  urlfont="fa-copy"></t:dgFunOpt>
+   <t:dgFunOpt funname="accept(id,tableName)" title="预登记"  urlclass="ace_button"  urlfont="fa-copy"></t:dgFunOpt>
   <%-- <t:dgDelOpt title="删除" url="aProjectInfoController.do?doDel&id={id}" urlclass="ace_button"  urlfont="fa-trash-o"/>
    <t:dgToolBar title="录入" icon="icon-add" url="aProjectInfoController.do?goAdd" funname="add"></t:dgToolBar>
    <t:dgToolBar title="编辑" icon="icon-edit" url="aProjectInfoController.do?goUpdate" funname="update"></t:dgToolBar>
@@ -32,9 +32,9 @@
  });
 
 
-//预受理
+//预登记
 function accept(id,tableName){
-    createwindow("预受理", "bProjectBusinessController.do?accept&id="+id);
+    createwindow("预登记", "bProjectBusinessController.do?accept&id="+id);
 
 }
 //导入

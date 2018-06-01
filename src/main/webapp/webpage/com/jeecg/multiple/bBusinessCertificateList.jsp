@@ -82,14 +82,18 @@
    <table style="width: 100%;" cellpadding="0" cellspacing="1" class="formtable table table-hover" >
     <thead>
     <tr style="height: 42px;background: #e897ad;">
-     <th align="center">序号</th>
+     <th align="center" style="width: 3%;">序号</th>
      <th align="center" style="width: 15%;">部门名称</th>
-     <th align="center" style="width: 20%;">实际项目名称</th>
+     <%--<th align="center" style="width: 20%;">实际项目名称</th>--%>
      <th align="center" style="width: 8%;">阶段</th>
      <th align="center" style="width: 25%;">事项名称</th>
      <%--<th style="width: 40%;">材料名称</th>--%>
-     <th align="center" style="width: 15%;">操作</th>
-     <th align="center" style="width: 20%;">文件名称</th>
+     <c:if test="${role =='WINDOW_ACCEPT'}">
+      <th align="center" style="width: 15%;">证照上传</th>
+     </c:if>
+     <th align="center" style="width: 20%;">证照名称</th>
+     <th align="center" style="width: 8%;">操作</th>
+
     </tr>
     </thead>
    <c:if test="${fn:length(certificateList)  > 0 }">
@@ -106,9 +110,9 @@
      <td align="center">
        ${certificate.dept_name }
      </td>
-     <td align="center">
+     <%--<td align="center">
         ${certificate.reality_project_name }
-      </td>
+      </td>--%>
       <td align="center">
        <c:if test="${certificate.phases_id == '001' }">
          第一阶段
@@ -140,19 +144,33 @@
      <%-- <td align="left" title="${certificate.certificates_name }">
         ${fn:substring(certificate.certificates_name, 0, 40) }
       </td>--%>
+     <c:if test="${role =='WINDOW_ACCEPT'}">
       <td align="center">
        <%--<c:if test="${certificate.dept_id == deptId }">--%>
-        <c:if test="${role =='WINDOW_ACCEPT'}">
          <span class="btn btn-success fileinput-button"><span>选择文件</span>
            <input class="materials" id="fileupload" type="file" name="files[]" data-url="aMaterialsUploadController.do?uploadFile&id=${certificate.id }&type=2"  >
            &nbsp;&nbsp;  <input id="filePaths" name="filePaths" type="hidden" />
          </span>
-       </c:if>
-
        </td>
+     </c:if>
       <td align="left" title="${certificate.file_name }">
        <a href='aMaterialsUploadController.do?downloadFile&id=${certificate.id }&type=download' target='_blank'>${certificate.file_name }</a>
       </td>
+     <c:if test="${role =='WINDOW_ACCEPT'}">
+      <td align="center" >
+       <a href="#" class="ace_button" onclick="javascript:window.location.href='bProjectBusinessController.do?materialList&id=${bProjectBusinessPage.id}&itemsId=${certificate.items_id }'">  <i class=" fa fa-copy"></i>材料上传</a>
+      </td>
+     </c:if>
+     <c:if test="${role == 'DEPT_CHECK_ROLE'}">
+      <td align="center" >
+       <c:if test="${certificate.dept_id ==deptId}">
+        <a href="#" class="ace_button" onclick="javascript:window.location.href='bProjectBusinessController.do?materialList&id=${bProjectBusinessPage.id}&itemsId=${certificate.items_id }'">  <i class=" fa fa-copy"></i>材料预审</a>
+       </c:if>
+       <c:if test="${certificate.dept_id !=deptId}">
+       </c:if>
+      </td>
+     </c:if>
+
       </tr>
     </c:forEach>
    </c:if>

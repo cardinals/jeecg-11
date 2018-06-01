@@ -20,7 +20,7 @@
 						</label>
 					</td>
 					<td class="value">
-					     	 <input id="projectId" name="projectId" type="text" style="width: 150px" class="inputxt" datatype="*" ignore="checked" />
+					     	 <input id="projectId" name="projectId" type="text" style="width: 150px" datatype="*" errormsg="该字段不为空" />
 							<span class="Validform_checktip"></span>
 							<label class="Validform_label" style="display: none;">项目编号</label>
 						</td>

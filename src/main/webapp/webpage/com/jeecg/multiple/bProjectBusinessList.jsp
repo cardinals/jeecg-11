@@ -22,10 +22,18 @@
    <t:dgCol title="申请人身份证号"  field="applyIdentityCard"  hidden="true"  queryMode="group"  width="120"></t:dgCol>
    <t:dgCol title="申请人电话"  field="applyPhone"  hidden="true"  queryMode="group"  width="120"></t:dgCol>
 
-   <t:dgCol title="操作" field="opt" width="200"></t:dgCol>
+   <t:dgCol title="操作" field="opt" width="100"></t:dgCol>
    <t:dgFunOpt funname="accept(id)" title="查看"  urlclass="ace_button"  urlfont="fa-copy"></t:dgFunOpt>
-   <t:dgFunOpt funname="uploadMaterial(id)" title="材料上传"  urlclass="ace_button"  urlfont="fa-copy"></t:dgFunOpt>
-   <t:dgFunOpt funname="uploadCertificate(id)" title="证照上传"  urlclass="ace_button"  urlfont="fa-copy"></t:dgFunOpt>
+   <%--<t:dgFunOpt funname="uploadMaterial(id)" title="材料上传"  urlclass="ace_button"  urlfont="fa-copy"></t:dgFunOpt>
+   <t:dgFunOpt funname="uploadCertificate(id)" title="证照上传"  urlclass="ace_button"  urlfont="fa-copy"></t:dgFunOpt>--%>
+
+   <c:if test="${role =='WINDOW_ACCEPT'}">
+    <t:dgFunOpt funname="uploadCertificate(id)" title="预受理"  urlclass="ace_button"  urlfont="fa-copy"></t:dgFunOpt>
+    <%--<t:dgDelOpt title="删除" url="bProjectBusinessController.do?doDel&id={id}" urlclass="ace_button"  urlfont="fa-trash-o"/>--%>
+   </c:if>
+   <c:if test="${role =='DEPT_CHECK_ROLE'}">
+    <t:dgFunOpt funname="uploadCertificate(id)" title="预审核"  urlclass="ace_button"  urlfont="fa-copy"></t:dgFunOpt>
+   </c:if>
    <%--<t:dgFunOpt funname="loadBusinessLog(id)" title="流程日志"  urlclass="ace_button"  urlfont="fa-copy"></t:dgFunOpt>--%>
    <%--<t:dgDelOpt title="删除" url="bProjectBusinessController.do?doDel&id={id}" urlclass="ace_button"  urlfont="fa-trash-o"/>--%>
    <%--<t:dgToolBar title="录入" icon="icon-add" url="bProjectBusinessController.do?goAdd" funname="add"></t:dgToolBar>
@@ -46,7 +54,7 @@
 
 //查看
 function accept(id,tableName){
-    createwindow("查看", "bProjectBusinessController.do?goUpdate&id="+id);
+    createdetailwindow("查看", "bProjectBusinessController.do?goUpdate&id="+id);
 }
 //材料上传
 function uploadMaterial(id){
@@ -57,9 +65,19 @@ function uploadMaterial(id){
         createwindow("材料上传", "bProjectBusinessController.do?materialList&id="+id,"1000","500");
     }
 }
-//证照上传
+////证照上传
+//function uploadCertificate(id){
+//    createdetailwindow("证照上传", "bProjectBusinessController.do?certificateList&id="+id,"1000","500");
+//}
+
+//预受理
 function uploadCertificate(id){
-    createdetailwindow("证照上传", "bProjectBusinessController.do?certificateList&id="+id,"1000","500");
+    if("WINDOW_ACCEPT"=="${role}"){
+        createdetailwindow("预受理", "bProjectBusinessController.do?certificateList&id="+id,"1000","500");
+    }else{
+        createdetailwindow("预审核", "bProjectBusinessController.do?certificateList&id="+id,"1000","500");
+    }
+
 }
 ////流程日志
 //function loadBusinessLog(id){

@@ -71,7 +71,9 @@
          }, function(){
          });
      }
-
+function check_sub() {
+    $("#formobj").submit();
+}
  </script>
 
 </head>
@@ -88,7 +90,10 @@
      <th align="center" style="width: 15%;">部门名称</th>
      <th align="center" style="width: 25%;">事项名称</th>
      <th align="center" style="width: 30%;">材料名称</th>
-     <th align="center" style="width: 15%;">操作</th>
+     <c:if test="${role =='WINDOW_ACCEPT'}">
+      <th align="center" style="width: 15%;">操作</th>
+     </c:if>
+
      <th align="center" style="width: 20%;">文件名称</th>
     </tr>
     </thead>
@@ -129,29 +134,14 @@
         ${fn:substring(material.materials_name, 0, 44) }
       </td>
 
-
+     <c:if test="${role =='WINDOW_ACCEPT'}">
       <td align="center">
-        <%--<input type="file">--%>
-
-        <%--<label class="Validform_label"> 文件上传: </label>--%>
-         <c:if test="${role !='DEPT_CHECK_ROLE'}">
         <span class="btn btn-success fileinput-button"><span>选择文件</span>
          <input class="materials" id="fileupload" type="file" name="files[]" data-url="aMaterialsUploadController.do?uploadFile&id=${material.id }&type=1"  >
          &nbsp;&nbsp;  <input id="filePaths" name="filePaths" type="hidden" />
         </span>
-         </c:if>
-        <%--<label class="Validform_label"> 文件列表: </label>
-       <div class="value" colspan="2" id="fileList">
-        <c:forEach var="file" items="${casefileList}">
-        <div id="${file.id }">
-         <a href='aMaterialsUploadController.do?downloadFile&id=${material.id}&type=download'>${file.name }</a>&nbsp;&nbsp;<a
-                href="javascript:void(0)" onclick="delFile('','1','${material.id}')">删除11</a>
-        </div>
-       </c:forEach>
-       </div>--%>
-
        </td>
-
+     </c:if>
       <td align="left" title="${material.file_name }">
        <a href='aMaterialsUploadController.do?downloadFile&id=${material.id }&type=download' target='_blank'>${material.file_name }</a>
       </td>
@@ -161,12 +151,25 @@
    </table>
 
    <c:if test="${role =='DEPT_CHECK_ROLE'}">
-    审核意见：<br>
-    <textarea name="checkContent" id="checkContent" style="width: 80%;height: 80px;">${checklList[0].check_content }</textarea>
+    <br>
+    <div>
+      审核状态：
+      <select name="checkStatus">
+       <option value="1" ${checklList[0].check_status==1?'selected':''}>通过</option>
+       <option value="0" ${checklList[0].check_status==0?'selected':''}>退回</option>
+      </select><br>
+      审核意见：
+      <textarea name="checkContent" id="checkContent" style="width: 99%;height: 80px;max-width: 99%">${checklList[0].check_content }</textarea>
+     <div style="text-align: center;">
+      <a href='javascript:void(0)' onclick="javascript:history.go(-1)" class="ace_button" target='_blank'>返回</a>
+      <a href='javascript:void(0)' onclick="check_sub()" class="ace_button" target='_blank' style="background-color: #d25656;">提交</a>
+     </div>
+    </div>
    </c:if>
 
     <c:if test="${role !='DEPT_CHECK_ROLE'}">
-    <table style="width: 100%;" cellpadding="0" cellspacing="1" class="formtable" >
+     <br>
+    <%--<table style="width: 100%;" cellpadding="0" cellspacing="1" class="formtable" >
      <thead>
      <tr style="height: 42px;background: #e897ad;">
       <th align="center">序号</th>
@@ -183,7 +186,6 @@
        <c:if test="${stuts.index % 2 != 0}">
       <tr style="height: 42px;background: #d5d5e0;">
        </c:if>
-
          <td align="center"><div style="width: 25px;" name="xh">${stuts.index+1 }</div></td>
          <td align="center">
            ${check.dept_name }
@@ -199,8 +201,19 @@
           </td>
         </tr>
       </c:forEach>
-
-    </table>
+    </table>--%>
+     <div>
+      审核状态：
+      <c:if test="${checklList[0].check_status == 0}">退回</c:if>
+      <c:if test="${checklList[0].check_status == 1}">通过</c:if>
+      <c:if test="${checklList[0].check_status == '' || checklList[0].check_status == null}">待审核</c:if>
+      <br>
+      审核意见：
+      <textarea name="checkContent" readonly style="width: 99%;height: 80px;max-width: 99%">${checklList[0].check_content }</textarea>
+      <div style="text-align: center;">
+       <a href='javascript:void(0)' onclick="javascript:history.go(-1)" class="ace_button" target='_blank'>返回</a>
+      </div>
+     </div>
     </c:if>
 
   </div>

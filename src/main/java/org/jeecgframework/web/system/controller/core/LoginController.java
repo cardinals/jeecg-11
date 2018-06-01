@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.jeecg.util.BusinessUtil;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.jeecgframework.core.common.controller.BaseController;
@@ -403,6 +404,13 @@ public class LoginController extends BaseController{
 		TSUser user = ResourceUtil.getSessionUser();
 		String roles = "";
 		if (user != null) {
+			//验证用户权限
+			if (ResourceUtil.getConfigByName("accept_deptid").equals(user.getCurrentDepart().getId())){
+				request.getSession().setAttribute("role", BusinessUtil.WINDOW_ACCEPT);
+			}else{
+				request.getSession().setAttribute("role", BusinessUtil.DEPT_CHECK_ROLE);
+			}
+
 			List<TSRoleUser> rUsers = systemService.findByProperty(TSRoleUser.class, "TSUser.id", user.getId());
 			for (TSRoleUser ru : rUsers) {
 				TSRole role = ru.getTSRole();
