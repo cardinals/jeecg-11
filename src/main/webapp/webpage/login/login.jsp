@@ -42,16 +42,17 @@
   <![endif]-->
 
 </head>
-<body class="login-layout light-login">
+<body class="login-layout light-login" style="background-image:url(plug-in/login_new/bg.png)">
 <div class="main-container">
   <div class="main-content">
     <div class="row">
       <div class="col-sm-10 col-sm-offset-1" style="    margin-top: 5%;">
         <h1 id="id-text2" class="grey" style="text-align:center">
-          <i class="ace-icon fa fa-leaf green"></i>
-          <%--JEECG 演示系统--%>郑东新区建设项目并联审批监管系统
+          <%--<i class="ace-icon fa fa-leaf green"></i>--%>
+            <img src="plug-in/login_new/logo-.png" style="width: 30px;">
+          <%--JEECG 演示系统--%><font style="font-size: 30px;color: #5a1a1a;">郑东新区建设项目并联审批监管系统</font>
         </h1>
-        <div class="login-container" style="    margin-top: 30px;">
+        <div class="login-container" style="margin-top: 40px;">
           <div class="center">
             <%--<h1 id="id-text2" class="grey">
               <i class="ace-icon fa fa-leaf green"></i>
@@ -60,7 +61,7 @@
             <h4 class="blue" id="id-company-text"><%--www.jeecg.org--%></h4>
           </div>
           <div class="space-6"></div>
-          <div class="position-relative">
+          <div class="position-relative" style="opacity: 0.8;">
             <div id="login-box" class="login-box visible widget-box no-border">
               <div class="widget-body">
                 <!--update-begin--Author:zhangliang  Date:20170628 for：TASK #2116 【性能问题】优化登录逻辑---------------------->
@@ -73,8 +74,8 @@
 				  <div id="showErrMsg"></div>
 				</div>
                   <h4 class="header blue lighter bigger">
-                    <i class="ace-icon fa fa-coffee green"></i>
-                	    用户登录
+                    <%--<i class="ace-icon fa fa-coffee green"></i>--%>
+                	    <font style="color: #42423c;font-size: 20px;">用户登录</font>
                   </h4>
                   <div class="space-6"></div>
                       <label class="block clearfix">
@@ -114,15 +115,15 @@
                       <div class="space-4"></div>
 
                 </div>
-                <div class="toolbar clearfix">
+                <%--<div class="toolbar clearfix">
                   <div style="float: right">
-                   <%-- <a href="#"  class="forgot-password-link">
+                   &lt;%&ndash; <a href="#"  class="forgot-password-link">
                     	  语言
                       <i class="ace-icon fa fa-arrow-right"></i>
                       <t:dictSelect id="langCode" field="langCode" typeGroupCode="lang" hasLabel="false" extendJson="{style:'padding:2px; width:80px;'}" defaultVal="zh-cn"></t:dictSelect>
-                    </a>--%>
+                    </a>&ndash;%&gt;
                   </div>
-                </div>
+                </div>--%>
                 </form>
               </div>
             </div>
@@ -290,10 +291,10 @@
     });
   }
   //登录提示消息显示
-  function showErrorMsg(msg){	
+  function showErrorMsg(msg){
     $("#errMsgContiner").show();
-    $("#showErrMsg").html(msg);    
-    window.setTimeout(optErrMsg,3000); 
+    $("#showErrMsg").html(msg);
+    window.setTimeout(optErrMsg,3000);
   }
   /**
    * 刷新验证码
@@ -360,7 +361,7 @@ function reloadRandCodeImage() {
           });
   		$("#on_off").attr("checked", true);
   		$("#on_off").val("1");
-  	} 
+  	}
   	else
   	{
   		$("#on_off").attr("checked", false);

@@ -22,7 +22,7 @@
    <t:dgCol title="申请人身份证号"  field="applyIdentityCard"  hidden="true"  queryMode="group"  width="120"></t:dgCol>
    <t:dgCol title="申请人电话"  field="applyPhone"  hidden="true"  queryMode="group"  width="120"></t:dgCol>
 
-   <t:dgCol title="操作" field="opt" width="120"></t:dgCol>
+   <t:dgCol title="操作" field="opt" width="100"></t:dgCol>
    <t:dgFunOpt funname="accept(id)" title="查看"  urlclass="ace_button"  urlfont="fa-copy"></t:dgFunOpt>
    <%--<t:dgFunOpt funname="uploadMaterial(id)" title="材料上传"  urlclass="ace_button"  urlfont="fa-copy"></t:dgFunOpt>
    <t:dgFunOpt funname="uploadCertificate(id)" title="证照上传"  urlclass="ace_button"  urlfont="fa-copy"></t:dgFunOpt>--%>

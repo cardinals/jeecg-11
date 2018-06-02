@@ -420,7 +420,7 @@ public class LoginController extends BaseController{
 				roles = roles.substring(0, roles.length() - 1);
 			}
 			
-            modelMap.put("roleName", roles.length()>3?roles.substring(0,3)+"...":roles);
+            modelMap.put("roleName", roles.length()>5?roles.substring(0,5)+"...":roles);
             modelMap.put("userName", user.getUserName().length()>5?user.getUserName().substring(0, 5)+"...":user.getUserName());
             modelMap.put("portrait", user.getPortrait());
 

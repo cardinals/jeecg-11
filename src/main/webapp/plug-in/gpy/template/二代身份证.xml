@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="gb2312" standalone="yes" ?>
+<Template name="" id="0" width="732" height="459">
+    <Field>
+        <name>姓名</name>
+        <left>120</left>
+        <top>39</top>
+        <right>303</right>
+        <bottom>118</bottom>
+        <mode>0</mode>
+    </Field>
+    <Field>
+        <name>性别</name>
+        <left>123</left>
+        <top>99</top>
+        <right>200</right>
+        <bottom>170</bottom>
+        <mode>0</mode>
+    </Field>
+    <Field>
+        <name>民族</name>
+        <left>279</left>
+        <top>107</top>
+        <right>385</right>
+        <bottom>168</bottom>
+        <mode>0</mode>
+    </Field>
+    <Field>
+        <name>住址</name>
+        <left>131</left>
+        <top>224</top>
+        <right>444</right>
+        <bottom>323</bottom>
+        <mode>1</mode>
+    </Field>
+    <Field>
+        <name>头像</name>
+        <left>451</left>
+        <top>61</top>
+        <right>688</right>
+        <bottom>358</bottom>
+        <mode>1</mode>
+    </Field>
+</Template>

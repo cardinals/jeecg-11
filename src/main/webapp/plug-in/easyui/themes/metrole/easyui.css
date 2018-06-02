@@ -127,7 +127,8 @@
 .north-header,
 /*update--end--author:zhangjiaqiang date:20170622 for:增加一个样式引用*/
 .panel-header {
-  background-color: #F9F9F9; 
+  /*background-color: #F9F9F9;*/
+  background-color: #c6f0fd;
   background-repeat: repeat-x;
   height: 30px;
   line-height: 30px;
@@ -1073,7 +1074,8 @@ a:hover.l-btn-disabled {
 .datagrid-header-row{
   font-weight: bold;
   height: 25px;
-  background-color:#F9F9F9;
+ background-color: #5bb5ea;
+  color: white;
 }
 /*update-end--Author:xuelin  Date:20170517 for：TASK#1969::【UI美化】h+风格下，列表整体风格有点灰------------------- */
 .datagrid-row {

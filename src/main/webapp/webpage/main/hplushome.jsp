@@ -28,7 +28,7 @@
 
 
 <div class="t2-main t2-main-bj">
-    <div class="container">
+    <div class="container" style="padding: 0;">
 
         <div class="t2-neiye to_top">
             <h1 class="t2_nytitle">待处理业务</h1>
@@ -80,18 +80,6 @@
 </div>
 <!--main end-->
 
-<div class="t2-footer text-center">
-    <div class="container">
-        <div class="row t2-rel"> <img src="plug-in/hplushome/images/dzjg_img.png" height="100" alt="" class="t2-abs t2-dzjg-img"/>
-            <div class="col-xs-12 col-md-12">
-                <p>Copyright 2016-2020 www.kflz.gov.cn All Rights Reserved</p>
-                <p>版权所有：中共开封市纪律检查委员会 开封市监察局 开封市预防腐败局</p>
-                <p>技术支持：山谷网安&nbsp;&nbsp;&nbsp;&nbsp;访问量：497698</p>
-                <p>备案序号：豫ICP备11007040号-1</p>
-            </div>
-        </div>
-    </div>
-</div>
 <!--footer end-->
 
 <script language="javascript" type="text/javascript" src="plug-in/hplushome/js/index.js"></script>

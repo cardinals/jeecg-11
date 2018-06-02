@@ -1,0 +1,740 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>拍照上传</title>
+	<link href="css/style.css" rel="stylesheet" type="text/css" />
+	<script language=JavaScript>
+
+        function deloptionRes()
+        {
+            var obj=document.getElementById("selRes").options;
+            while (obj.length > 0)
+            {
+                obj.options.remove(obj.length - 1);
+            }
+        }
+
+
+        function addoptionRes(s)
+        {
+            var obj=document.getElementById("selRes").options;
+            var opt = new Option(s, obj.length );
+            obj.options.add(opt);
+        }
+
+
+        function deloptionScanSize()
+        {
+            var obj=document.getElementById("selScanSize").options;
+            while (obj.length > 0)
+            {
+                obj.options.remove(obj.length - 1);
+            }
+        }
+
+
+        function addoptionScanSize(s)
+        {
+            var obj=document.getElementById("selScanSize").options;
+            var opt = new Option(s, obj.length );
+            obj.options.add(opt);
+        }
+
+
+        function deloptionColor()
+        {
+            var obj=document.getElementById("selColor").options;
+            while (obj.length > 0)
+            {
+                obj.options.remove(obj.length - 1);
+            }
+        }
+
+
+        function addoptionColor(s)
+        {
+            var obj=document.getElementById("selColor").options;
+            var opt = new Option(s, obj.length );
+            obj.options.add(opt);
+        }
+
+
+        function deloptionDev()
+        {
+            var obj=document.getElementById("selDev").options;
+            while (obj.length > 0)
+            {
+                obj.options.remove(obj.length - 1);
+            }
+        }
+
+
+        function addoptionDev(s)
+        {
+            var obj=document.getElementById("selDev").options;
+            var opt = new Option(s, obj.length );
+            obj.options.add(opt);
+        }
+
+
+        function deloptionRotate()
+        {
+            var obj=document.getElementById("selRotate").options;
+            while (obj.length > 0)
+            {
+                obj.options.remove(obj.length - 1);
+            }
+        }
+
+
+        function addoptionRotate(s)
+        {
+            var obj=document.getElementById("selRotate").options;
+            var opt = new Option(s, obj.length );
+            obj.options.add(opt);
+        }
+
+
+        function contentLoad()
+        {
+            ScanCtrl.EnableDateRecord(true);
+            fun();
+        }
+
+        //demo初始化
+        function fun()
+        {
+            deloptionDev();
+            var iDevIndex = ScanCtrl.GetCurDevIndex();
+            if(iDevIndex != -1)
+            {
+                var count = ScanCtrl.GetDeviceCount();
+                for(i = 0; i < count; i++)
+                {
+                    var s = ScanCtrl.GetDevName(i);
+                    addoptionDev(s);
+                }
+                document.getElementById("selDev").value=iDevIndex;
+            }
+
+            deloptionRes();
+            var iResIndex = ScanCtrl.GetCurResolutionIndex();
+            if(iResIndex != -1)
+            {
+                var count = ScanCtrl.GetResolutionCount();
+                for(i = 0;i < count; i++)
+                {
+                    var w=ScanCtrl.GetResolutionWidth(i);
+                    var h=ScanCtrl.GetResolutionHeight(i);
+                    var str=w.toString()+"x"+h.toString();
+                    addoptionRes(str);
+                }
+                document.getElementById("selRes").value=iResIndex;
+            }
+
+            deloptionScanSize();
+            var iScanSizeIndex = ScanCtrl.GetCurScanSizeIndex();
+            if(iScanSizeIndex != -1)
+            {
+                var count = ScanCtrl.GetScanSizeCount();
+                for(i = 0; i < count; i++)
+                {
+                    var str = ScanCtrl.GetScanSizeName(i);
+                    addoptionScanSize(str);
+                }
+                addoptionScanSize("自定义");
+
+                var bCustom = ScanCtrl.IsCustom();
+                if(bCustom)
+                {
+                    document.getElementById("selScanSize").value=count;
+                }
+                else
+                {
+                    document.getElementById("selScanSize").value=iScanSizeIndex;
+                }
+
+            }
+
+            deloptionRotate();
+            var iRotateIndex = ScanCtrl.GetCurRotateAngle();
+            if(iRotateIndex != -1)
+            {
+                addoptionRotate("0");
+                addoptionRotate("90");
+                addoptionRotate("180");
+                addoptionRotate("270");
+                document.getElementById("selRotate").value=iRotateIndex;
+            }
+
+            deloptionColor();
+            var iColorIndex = ScanCtrl.GetCurColor();
+            if(iColorIndex != -1)
+            {
+                addoptionColor("彩色");
+                addoptionColor("灰度");
+                addoptionColor("黑白");
+                document.getElementById("selColor").value=iColorIndex;
+            }
+
+            var bRotateCrop = ScanCtrl.IsRotateCrop();
+            document.getElementById("rotatecrop").checked=bRotateCrop;
+            var bDelBkColor = ScanCtrl.IsDelBackColor();
+            document.getElementById("delbkcolor").checked = bDelBkColor;
+        }
+
+
+        function start_preview(url)
+        {
+            ScanCtrl.StartPreviewEx();
+            fun();
+        }
+
+
+        function stop_preview(url)
+        {
+            ScanCtrl.StopPreviewEx();
+            fun();
+
+        }
+
+        function get_name(){
+            var date=new Date();
+            var yy=date.getFullYear().toString();
+            var mm=(date.getMonth()+1).toString();
+            var dd=date.getDate().toString();
+            var hh=date.getHours().toString();
+            var nn=date.getMinutes().toString();
+            var ss=date.getSeconds().toString();
+            var mi=date.getMilliseconds().toString();
+            var picName=yy+mm+dd+hh+nn+ss+mi;
+            return picName;
+        }
+
+        function TakePic(url)
+        {
+            var path="d:\\test\\gpy\\"+get_name()+".jpg";
+            ScanCtrl.EnableDateRecord(0);
+
+            var flag=ScanCtrl.Scan(path);
+            if(flag)
+            {
+                EThumbnails.AddToDisplay(path);
+            }
+        }
+
+        function Property(url)
+        {
+            ScanCtrl.Property();
+        }
+
+        function ZoomIn()
+        {
+            ScanCtrl.SetZoomIn();
+
+        }
+
+
+        function ZoomOut()
+        {
+            ScanCtrl.SetZoomOut();
+
+        }
+        /*  function deletefolder()
+          {
+              ScanCtrl.DeleteFolder("D:\\imageqq");
+          }*/
+
+        function changeresolution()
+        {
+            var num= ScanCtrl.GetResolutionCount();
+            var obj=document.getElementById("selRes").options;
+            var x = obj.selectedIndex;
+
+            ScanCtrl.SetResolution(x);
+            fun();
+
+        }
+
+        function changedev()
+        {
+            var num= ScanCtrl.GetDeviceCount();
+            var obj=document.getElementById("selDev").options;
+            var x = obj.selectedIndex;
+
+            ScanCtrl.SetCurDev(x);
+            fun();
+
+        }
+
+        function changescansize()
+        {
+            var   num=ScanCtrl.GetScanSizeCount();
+            var   obj=document.getElementById("selScanSize").options;
+            var   x = obj.selectedIndex;
+
+            ScanCtrl.SetScanSize(x);
+            fun();
+        }
+        function changerotate()
+        {
+            var   obj=document.getElementById("selRotate").options;
+            var   x = obj.selectedIndex;
+
+            ScanCtrl.SetVideoRotate(x);
+            fun();
+        }
+        function changecolor()
+        {
+            var obj = document.getElementById("selColor").options;
+            var x = obj.selectedIndex;
+
+            ScanCtrl.SetVideoColor(x);
+            fun();
+        }
+        function RotateCrop(obj)
+        {
+            ScanCtrl.SetRotateCrop(obj.checked);
+            fun();
+        }
+        function RemoveBackColor(obj)
+        {
+            ScanCtrl.DelBackColor(obj.checked);
+            fun();
+        }
+        function ocr()
+        {
+            var b = ScanCtrl.IDCardRecognize();
+            ScanCtrl.GetIDCardPICBase64("E:\\temp\\11.jpg");
+            if(b)
+            {
+                alert(ScanCtrl.GetIDCardName());
+                alert(ScanCtrl.GetIDCardSex());
+                alert(ScanCtrl.GetIDCardNation());
+                alert(ScanCtrl.GetIDCardBorn());
+                alert(ScanCtrl.GetIDCardAddr());
+                alert(ScanCtrl.GetIDCardNo());
+                alert(ScanCtrl.GetIDCardPolice());
+                alert(ScanCtrl.GetIDCardActive());
+                ScanCtrl.EnableDateRecord(1);
+
+            }
+            else
+            {
+                alert("识别失败");
+            }
+        }
+
+        function barcode() {
+            ScanCtrl.EncBase64NUploadHttp("http:", "D:\\1.jpg", "http:\\192.168.1.1");
+            ScanCtrl.GetPictureProSize();
+            ScanCtrl.GetPictureProBuffer();
+            alert(ScanCtrl.ScanBarcode("E:\\temp\\1.jpg"));
+//			alert(ScanCtrl.Barcode("D:\\1.jpg"));
+        }
+        function Pdf_Create()
+        {
+            var tp=new Array();
+            tp=thumbnailPath();
+            if(tp.length<=0){
+                alert("请选择要上传的图片！");
+                return;
+            }
+            var imgStr,pdfName="E:/temp/x"+get_name()+".pdf";
+            for(var i=0;i<tp.length;i++){
+                // alert(tp[i]);
+                imgStr=tp[i];
+                if(imgStr=='' || imgStr==null || imgStr==undefined){
+                    continue;
+                }
+                ScanCtrl.PDF_AddFile(imgStr);
+            }
+            var isOk=ScanCtrl.PDF_Create(pdfName);
+            if(isOk){
+                alert("PDF创建成功！");
+            }
+        }
+        function TIF_Create() {
+            var tp = new Array();
+            tp = thumbnailPath();
+            if (tp.length <= 0) {
+                alert("请选择要上传的图片！");
+                return;
+            }
+            var imgStr, pdfName = "E:/temp/x" + get_name() + ".tif";
+            for (var i = 0; i < tp.length; i++) {
+                // alert(tp[i]);
+                imgStr = tp[i];
+                if (imgStr == '' || imgStr == null || imgStr == undefined) {
+                    continue;
+                }
+                ScanCtrl.TIF_AddFile(imgStr);
+            }
+            var isOk = ScanCtrl.TIF_Create(pdfName);
+            if (isOk) {
+                alert("TIF创建成功！");
+            }
+        }
+        function thumbnailPath(){
+            var isOk,num,gfp=new Array();
+            num=EThumbnails.GetDisplayCount();
+            for(var i=0;i<num;i++){
+                isOk=EThumbnails.IsChecked(i);
+                if(isOk==1){
+                    gfp[i]=EThumbnails.GetFilePath(i);
+                }
+            }
+            return gfp;
+        }
+        function SetJpgQuality()
+        {
+            ScanCtrl.SetJpegQuality(7);
+        }
+        function startccc() {
+            ScanCtrl.SetRecordPath("E://temp//1234.avi");
+            ScanCtrl.SetRecordEx();
+
+        }
+        function stoptcccc() {
+            ScanCtrl.StopRecordEx();
+        }
+
+        function ocr() {
+            var con = ScanCtrl.ScanRegImage("");
+            alert(con);
+        }
+        //加密文件
+        function Encrypt() {
+            //调用控件OCX方法
+            ScanCtrl.EncryptDlg();
+        }
+        //解密文件
+        function Decrypt() {
+            //调用控件OCX方法
+            ScanCtrl.DecryptDlg();
+        }
+
+        //条码扫描
+        //function barcode() {
+        //    //alert(ScanCtrl.Barcode("F:\\LTQ\\控件20140702\\barcode.jpg"));
+        //    alert(ScanCtrl.Barcode("D:\\Program Files\\ScanCtrl\\Test\\barcode.jpg"));
+        //}
+        //OCR识别
+        function ocr() {
+            var b = ScanCtrl.IDCardRecognize();
+            ScanCtrl.GetIDCardPICBase64("F:\\LTQ\\控件20140702\\ocr.jpg");
+            if (b) {
+                alert(ScanCtrl.GetIDCardName());
+                alert(ScanCtrl.GetIDCardSex());
+                alert(ScanCtrl.GetIDCardNation());
+                alert(ScanCtrl.GetIDCardBorn());
+                alert(ScanCtrl.GetIDCardAddr());
+                alert(ScanCtrl.GetIDCardNo());
+                alert(ScanCtrl.GetIDCardPolice());
+                alert(ScanCtrl.GetIDCardActive());
+                ScanCtrl.EnableDateRecord(1);
+
+            }
+            else {
+                alert("识别失败");
+            }
+        }
+
+        //水印有关
+        function AddWater(obj) {
+            ScanCtrl.SetAddWater(obj.checked);
+
+        }
+        function AddAutoWater(obj) {
+            ScanCtrl.SetAutoWater(obj.checked);
+        }
+
+        //有关连拍功能
+        function limitScan() {
+            alert("开始连拍---您的连拍照片保存在D:/目录下");
+            ScanCtrl.TiminPhoto(2, "E:/temp/aaa.jpg");
+            //ScanCtrl.TiminPhoto(2, "D:/aaa.jpg");
+        }
+
+        function stoplimitScan() {
+            ScanCtrl.stopTiminPhoto();
+            alert("停止连拍！");
+        }
+        function photomix() {
+            //ScanCtrl.PhotoMixNew("F:\\LTQ\\控件20140702\\test1.jpg", "F:\\LTQ\\控件20140702\\test2.jpg", "F:\\LTQ\\控件20140702\\test3.jpg");
+            //alert("您的图片已经成功保存在 --F:\\LTQ\\控件20140702\\test3.jpg");
+            alert("测试图片合成之前请确保图片在正确的位置");
+            ScanCtrl.PhotoMixNew("D:\\Program Files\\ScanCtrl\\Test\\test1.jpg", "D:\\Program Files\\ScanCtrl\\Test\\test2.jpg", "D:\\Program Files\\ScanCtrl\\Test\\test3.jpg");
+            alert("您的图片已经成功保存在 --D:\\Program Files\\ScanCtrl\\Test\\test3.jpg");
+        }
+
+        function ocrScan() {
+            var con = ScanCtrl.ScanRegImage("");
+            alert(con);
+        }
+
+        //获取安装路径
+        function getAnPath() {
+            var anpath = location.href;
+            anpath = anpath.substring(anpath.lastIndexOf(':/') - 1, anpath.lastIndexOf('/') + 1);
+            //alert(anpath);
+            //替换所有斜杠	正则表达式 /\//g
+            anpath = anpath.replace(/\%20/g, ' ');
+            return anpath;
+        }
+        function getName() {
+            var date = new Date();
+            var yy = date.getFullYear().toString();
+            var mm = (date.getMonth() + 1).toString();
+            var dd = date.getDate().toString();
+            var hh = date.getHours().toString();
+            var nn = date.getMinutes().toString();
+            var ss = date.getSeconds().toString();
+            var mi = date.getMilliseconds().toString();
+            var getName = yy + mm + dd + hh + nn + ss + mi;
+            return getName;
+        }
+
+        function NewInfoAction(resName) {
+
+            var dom;
+
+            var type = 1;                                         //默认为IE浏览器
+
+            var data = new Array();                             //存储实体的数组
+
+            if (true){
+                //navigator.userAgent.indexOf("MSIE") > 0) {
+
+                dom = new ActiveXObject("Microsoft.XMLDOM");    //实例化dom对象
+
+
+
+                dom.async = false;
+
+                dom.load(resName);                        //加载xml文件
+
+                // window.alert('IE');
+
+            }
+
+            else if (isFirefox = navigator.userAgent.indexOf("Firefox") > 0) {
+
+                type = 2;
+
+                dom = document.implementation.createDocument("", "", null);         //火狐不支持ActiveXObject
+
+                dom.async = false;
+
+                dom.load(resName);
+
+            }
+
+            else {
+
+                window.alert('暂不识别该浏览器!');
+
+                return;
+
+            }
+
+            if (dom) {
+
+                var node;
+
+                if (type == 1)   //判断是否为IE浏览器
+                {
+
+
+
+                    node = dom.documentElement.childNodes;      //这里的node大家可以理解为net中的表,方便大家理解
+
+                    for (var i = 0; i < node.length; i++) {
+
+                        var proVal = node[i].childNodes[0].text;                 //取出i行中的字段的值，大家这样理解更方便
+
+                        var resVal = node[i].childNodes[1].text;
+                        data[i] = { pro: proVal, res: resVal };
+
+
+                    }
+
+                }
+
+                else {
+
+                    var node = dom.getElementsByTagName("News");
+
+                    for (var i = 0; i < node.length; i++) {
+
+                        window.alert(dom.getElementsByTagName("News")[i].childNodes[1].textContent);
+
+                        window.alert(dom.getElementsByTagName("News")[i].childNodes[3].textContent);
+
+
+                    }
+
+                }
+
+            }
+
+            else {
+
+                window.alert("dom对象为空，失败了!");
+
+                return;
+
+            }
+
+            if (data.length != 0) {
+
+                var shtml = '';
+
+                for (var i = 0; i < data.length; i++) {
+
+                    shtml += data[i].pro;
+
+                    shtml += ':';
+
+                    shtml += '\t';
+
+
+                    shtml += data[i].res;
+
+                    shtml += '\r';
+
+
+                }
+
+                alert(shtml);
+            }
+
+            else {
+
+                alert('没有信息!');
+            }
+
+        }
+        function ScanDiscern() {
+            var anpath = getAnPath();
+
+            var resName = anpath + getName() + ".xml";
+
+            var model = document.getElementById('selType').value;
+            //var model1 = "idcard2_0.xml"
+            model = anpath + "template/" + model;
+            //alert(model);
+            var isOk = ScanCtrl.ScanDiscern(model, resName);
+            if (isOk) {
+                NewInfoAction(resName);
+            } else {
+                alert('证件识别失败！');
+            }
+
+        }
+        function Base64EncodeDecode() {
+            //ScanCtrl.Base64EncodeAndDecode("F:\\LTQ\\控件20140702\\bk.jpg", "F:\\LTQ\\控件20140702\\string.txt", "F:\\LTQ\\控件20140702\\bk2.jpg");
+            ScanCtrl.Base64EncodeAndDecode("F:\\LTQ\\控件20140702\\bk.jpg", "F:\\LTQ\\控件20140702\\bk2.jpg");
+            //ScanCtrl.Base64EncodeAndDecode("F:\\LTQ\\控件20140702\\bk.jpg", "F:\\LTQ\\控件20140702\\bk2.jpg");
+        }
+	</script>
+
+	<script language="Javascript" event="DeviceChange(code)" for="ScanCtrl">
+        fun();
+	</script>
+
+	<style type="text/css">
+		.one
+		{
+			border-color: #ffa8a8;
+			background-color: #fff3f3;
+			color: #000;
+		}
+	</style>
+</head>
+<body onload="contentLoad();ScanCtrl.SetCurDev(1);
+			fun();">
+
+
+<div class="main">
+	<div class="global-width">
+
+		<div class="action">
+			<div class="t">开始预览</div>
+			<div class="pages">
+				<div>
+					<object classid="clsid:090457CB-DF21-41EB-84BB-39AAFC9E271A"
+							id="ScanCtrl" codebase="*.cab#version=1,0,0,1" width="660"
+							height="400"></object>
+				</div>
+
+				<form>
+					<table width="90%" border="0" cellspacing="0" cellpadding="0"
+						   class="addform-item">
+						<tbody>
+						<tr>
+							<td><input class="submit_01" type="button" value="开始预览" onclick="start_preview()" />
+								<input class="submit_01" type="button" value="停止预览" onclick="stop_preview()" />
+								<input class="submit_01" type="button" value="拍照" onclick="TakePic()" />
+								<input class="submit_01" type="button" value="属性" onclick="Property()" style="display: none"/>
+								<input class="submit_01" type="button" value="放大" onclick="ZoomIn()" />
+								<input class="submit_01" type="button" value="缩小" onclick="ZoomOut()" />
+								<input class="submit_01" type="button" value="上传" onclick="uploadImg()" />
+								<input class="submit_01" type="button" value="开始录像" onclick="startccc()" style="display: none"/>
+								<input class="submit_01" type="button" value="关闭录像" onclick="stoptcccc()" style="display: none"/>
+								<input class="submit_01" type="button" value="扫描条形码" onclick="barcode()" style="display: none"/>
+								<input class="submit_01" type="button" value="OCR识别" onclick="ocrScan()" style="display: none"/>
+								<input class="submit_01" type="button" value="定时连拍" onclick="limitScan()" style="display: none"/>
+								<input class="submit_01" type="button" value="停止定时连拍" onclick="stoplimitScan()" style="display: none"/>
+							</td>
+						</tr>
+						<tr>
+							</select> 设备列表：<select id="selDev" style="width: 90px" name="selDev" onchange="changedev()"></select>
+							旋转角度：&nbsp;&nbsp;<select id="selRotate" style="width: 90px" name="selRotate" onchange="changerotate()"></select>
+						</tr>
+						<tr style="display: none">
+							<td>分辨率：<select id="selRes" style="width: 90px" name="selRes"
+											onchange="changeresolution()"></select> 扫描尺寸：<select id="selScanSize"
+																								 style="width: 90px" name="selScanSize" onchange="changescansize()"></select>
+								旋转角度：&nbsp;&nbsp;<select id="selRotate" style="width: 90px"
+														 name="selRotate" onchange="changerotate()"></select> <input id="rotatecrop"
+																													 type="checkbox" value="" onclick="RotateCrop(this)" />纠偏裁边
+								<input id="Addwater" type="checkbox" value="" onclick="AddWater(this)" />添加水印
+								<input id="Addwater" type="checkbox" value="" onclick="AddAutoWater(this)" />添加水印动态显示
+								证件类型：<select id="selType" style="width: 90px"
+											 name="selType"><option value="idcard2_0.xml">二代身份证</option><option value="户口本.xml">户口本</option></select>
+								<input type="button" class="submit_01" value="证件识别" onclick="ScanDiscern()" />
+								<input type="button" class="submit_01" value="Base64编解码" onclick="Base64EncodeDecode()" />
+							</td>
+						</tr>
+						<tr style="display: none">
+							<td>颜&nbsp;&nbsp;色：<select id="selColor" style="width: 90px"
+													   name="selColor" onchange="changecolor()"><input id="delbkcolor" type="checkbox" value=""
+																									   onclick="RemoveBackColor(this)" />去底色
+								<input class="submit_01" type="button" value="扫描二代证" onclick="ocr()" />
+								<input class="submit_01" type="button" value="图片合成" onclick="photomix()" />
+								<input class="submit_01" type="button" value="图片质量设定" onclick="SetJpgQuality()" />
+
+
+								<input class="submit_01" type="button" value="一键PDF" onclick="Pdf_Create()" />
+								<input class="submit_01" type="button" value="一键TIF" onclick="TIF_Create()" />
+								<input class="submit_01" type="button"   value="加密文件" onclick="Encrypt()" />
+								<input class="submit_01" type="button"   value="解密文件" onclick="Decrypt()" />
+
+							</td>
+
+						</tr>
+						</tbody>
+					</table>
+				</form>
+				<div>
+					<OBJECT ID="EThumbnails"  CLASSID="CLSID:E8B3DD46-A440-4C3C-AB0A-DC689EEBDA84" width="660" height="150"></OBJECT>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+</body>
+</html>

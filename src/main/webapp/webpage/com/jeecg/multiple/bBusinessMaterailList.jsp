@@ -74,22 +74,32 @@
 function check_sub() {
     $("#formobj").submit();
 }
+//确认材料上传（进入审核开始时限）
+function confirmUpload(){
+         debugger;
+    $.post("bProjectBusinessController.do?confirmUpload",{businessId:'${materialList[0].business_id }',projectId:'${materialList[0].project_id }',phasesId:'${materialList[0].phases_id }',itemsId:'${materialList[0].items_id }'},function (data) {
+        console.log(data);
+        alert(data.msg);
+    },"json")
+
+}
  </script>
 
 </head>
 <body>
 
 <%--<form name="formobj" id="formobj" action="bProjectBusinessController.do?doCheck" method="post"></form>--%>
-<div class="easyui-layout" fit="true">
+<div class="easyui-layout" fit="true" style="margin-top: 5px">
   <div region="center" style="padding:0px;border:0px">
+   <font style="font-size: 20px; color: #243cec;">${materialList[0].dept_name} </font> <font style="font-size: 16px; ">—— ${materialList[0].items_child_name}</font>
    <t:formvalid formid="formobj" dialog="true" usePlugin="password" layout="table" action="bProjectBusinessController.do?doCheck" >
    <table style="width: 100%;" cellpadding="0" cellspacing="1" class="formtable" >
     <thead>
     <tr style="height: 42px;background: #e897ad;">
-     <th align="center">序号</th>
-     <th align="center" style="width: 15%;">部门名称</th>
-     <th align="center" style="width: 25%;">事项名称</th>
-     <th align="center" style="width: 30%;">材料名称</th>
+     <th align="center" style="width: 4%;">序号</th>
+     <%--<th align="center" style="width: 15%;">部门名称</th>
+     <th align="center" style="width: 25%;">事项名称</th>--%>
+     <th align="center" style="width: 50%;">材料名称</th>
      <c:if test="${role =='WINDOW_ACCEPT'}">
       <th align="center" style="width: 15%;">操作</th>
      </c:if>
@@ -116,16 +126,12 @@ function check_sub() {
       <td align="center"><div style="width: 25px;" name="xh">${stuts.index+1 }</div></td>
 
       <input name="materialList[${stuts.index }].project_id" type="hidden" value="${material.project_id }"/>
-      <td align="center">
+      <%--<td align="center">
         ${material.dept_name }
       </td>
-      <%--<td align="center">
-        ${material.items_id }
-       <label class="Validform_label" style="display: none;">事项编号</label>
-      </td>--%>
       <td align="center">
         ${material.items_child_name }
-      </td>
+      </td>--%>
       <%--<td align="center">
         ${material.materials_id }
        <label class="Validform_label" style="display: none;">材料编号</label>
@@ -136,9 +142,13 @@ function check_sub() {
 
      <c:if test="${role =='WINDOW_ACCEPT'}">
       <td align="center">
-        <span class="btn btn-success fileinput-button"><span>选择文件</span>
+        <%--<span class="btn btn-success fileinput-button"><span>本地上传</span>--%>
+         <span class="fileinput-button" style="background: #498bdc;color: white;padding: 2px;width: 50px;height: 20px;"><font>本地上传</font>
          <input class="materials" id="fileupload" type="file" name="files[]" data-url="aMaterialsUploadController.do?uploadFile&id=${material.id }&type=1"  >
          &nbsp;&nbsp;  <input id="filePaths" name="filePaths" type="hidden" />
+        </span>
+
+         <span class="fileinput-button" style="background: #498bdc;color: white;padding: 2px;width: 50px;height: 20px;" onclick="javascript:window.open('bProjectBusinessController.do?gpy&id=${bProjectBusinessPage.id}&itemsId=${certificate.items_id}&materialId=${material.id } ')"><font>拍照上传</font>
         </span>
        </td>
      </c:if>
@@ -149,6 +159,11 @@ function check_sub() {
     </c:forEach>
    </c:if>
    </table>
+    <c:if test="${role =='WINDOW_ACCEPT'}">
+    <div style="text-align: center; margin-top: 5px;">
+     <a href='javascript:void(0)' onclick="confirmUpload()" class="ace_button" target='_blank'>材料确认进入审核</a>
+    </div>
+    </c:if>
 
    <c:if test="${role =='DEPT_CHECK_ROLE'}">
     <br>
@@ -229,8 +244,8 @@ function check_sub() {
 //提交审核意见
 function sub_check(){
     $("#check_content").val();
-    alert($("#check_content").html());
 }
+
 
 //查看
 function accept(id,tableName){

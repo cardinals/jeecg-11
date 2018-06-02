@@ -243,6 +243,54 @@ public class BProjectBusinessController extends BaseController {
 		return new ModelAndView("com/jeecg/multiple/bBusinessMaterailList");
 	}
 
+
+	/**
+	 * 跳转高拍仪页面
+	 *
+	 * @return
+	 */
+	@RequestMapping(params = "gpy")
+	public ModelAndView gp(BProjectBusinessEntity bProjectBusiness, HttpServletRequest req,DataGrid dataGrid) {
+		if (StringUtil.isNotEmpty(bProjectBusiness.getId())) {
+			bProjectBusiness = bProjectBusinessService.getEntity(BProjectBusinessEntity.class, bProjectBusiness.getId());
+			req.setAttribute("bProjectBusiness", bProjectBusiness);
+		}
+		String itemsId= req.getParameter("itemsId");
+		String materialId= req.getParameter("materialId");
+		req.setAttribute("materialId", materialId);
+		req.setAttribute("itemsId", itemsId);
+		return new ModelAndView("com/jeecg/multiple/gpy");
+	}
+	/**
+	 * 并联业务跳转至证照上传页面
+	 *
+	 * @return
+	 */
+	@RequestMapping(params = "uploadcl")
+	public ModelAndView uploadcl(BProjectBusinessEntity bProjectBusiness, HttpServletRequest req,DataGrid dataGrid) {
+		if (StringUtil.isNotEmpty(bProjectBusiness.getId())) {
+			bProjectBusiness = bProjectBusinessService.getEntity(BProjectBusinessEntity.class, bProjectBusiness.getId());
+			req.setAttribute("bProjectBusinessPage", bProjectBusiness);
+		}
+
+		TSUser user = ResourceUtil.getSessionUser();
+		String sql = "select a.business_id,a.project_id,substr(a.phases_id,-3) as phases_id , a.items_id,a.items_name ,a.dept_id,a.dept_name,a.reality_project_name,b.id, " +
+				" substr(b.materials_name,37) as file_name from B_CHILD_BUSINESS a, A_MATERIALS_UPLOAD b " +
+				" where   a.business_id = b.business_id" +
+				"      and a.project_id = b.project_id" +
+				"      and a.phases_id = b.phases_id" +
+				"      and a.items_id = b.items_id" +
+				"      and b.materials_type = '2'" +
+				"      and a.business_id = '"+bProjectBusiness.getBusinessId()+"' order by a.phases_id ";
+		List<Map<String, Object>> certificateList =  systemService.findForJdbc(sql);
+		req.setAttribute("certificateList", certificateList);
+		req.setAttribute("deptId", user.getDepartid());
+		//上传证照权限只给预受理人员
+		if (ResourceUtil.getConfigByName("accept_deptid").equals(user.getCurrentDepart().getId())){
+			req.setAttribute("role", BusinessUtil.WINDOW_ACCEPT);
+		}
+		return new ModelAndView("com/jeecg/multiple/bBusinessClUploadListNew");
+	}
 	/**
 	 * 并联业务跳转至证照上传页面
 	 *
@@ -385,6 +433,36 @@ public class BProjectBusinessController extends BaseController {
 		return j;
 	}
 
+	/**
+	 * 更新并联业务信息
+	 *
+	 * @param ids
+	 * @return
+	 */
+	@RequestMapping(params = "confirmUpload")
+	@ResponseBody
+	public AjaxJson confirmUpload(BProjectBusinessEntity bProjectBusiness,String businessId,
+							String projectId,String phasesId,String itemsId,String deptId,HttpServletRequest request) {
+		String message = null;
+		AjaxJson j = new AjaxJson();
+		message = "确认材料提交成功";
+		try {
+			String sql = "update b_child_business a set a.CONFIRM_UPLOAD_TIME = sysdate " +
+					" where a.business_id ='"+businessId+"' " +
+					" and a.project_id ='"+projectId+"' " +
+					" and a.phases_id ='"+phasesId+"' " +
+					" and a.items_id = '"+itemsId+"'";
+			int result =  systemService.updateBySqlString(sql);
+//			bChildBusinessService.saveOrUpdate(bChildBusiness);
+		} catch (Exception e) {
+			e.printStackTrace();
+			message = "确认材料提交失败";
+			throw new BusinessException(e.getMessage());
+		}
+		j.setMsg(message);
+		return j;
+	}
+
 //~~~~~~~~~~~~~~~~~~~~~~~~
 	/**
 	 * 并联业务信息列表 页面跳转
@@ -399,6 +477,21 @@ public class BProjectBusinessController extends BaseController {
 			request.setAttribute("role", BusinessUtil.WINDOW_ACCEPT);
 		}
 		return new ModelAndView("com/jeecg/multiple/bProjectBusinessList");
+	}
+
+	/**
+	 * 证照管理列表 页面跳转
+	 *
+	 * @return
+	 */
+	@RequestMapping(params = "certificateIndex")
+	public ModelAndView certificateIndex(HttpServletRequest request) {
+		TSUser user = ResourceUtil.getSessionUser();
+		//前台获取权限
+		if (ResourceUtil.getConfigByName("accept_deptid").equals(user.getCurrentDepart().getId())){
+			request.setAttribute("role", BusinessUtil.WINDOW_ACCEPT);
+		}
+		return new ModelAndView("com/jeecg/multiple/bProjectCertificateIndex");
 	}
 
 	/**

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="gb2312" standalone="yes" ?>
+<Template name="" id="0" width="749" height="478">
+    <Field>
+        <name>name</name>
+        <left>123</left>
+        <top>49</top>
+        <right>411</right>
+        <bottom>118</bottom>
+	<mode>0</mode>
+    </Field>
+    <Field>
+        <name>sex</name>
+        <left>123</left>
+        <top>118</top>
+        <right>208</right>
+        <bottom>173</bottom>
+	<mode>0</mode>
+    </Field>
+    <Field>
+        <name>birthday</name>
+        <left>121</left>
+        <top>174</top>
+        <right>207</right>
+        <bottom>234</bottom>
+        <mode>0</mode>
+    </Field>
+    <Field>
+        <name>address</name>
+        <left>119</left>
+        <top>234</top>
+        <right>457</right>
+        <bottom>346</bottom>
+	<mode>1</mode>
+    </Field>
+    <Field>
+        <name>id</name>
+        <left>245</left>
+        <top>369</top>
+        <right>677</right>
+        <bottom>456</bottom>
+	<mode>1</mode>
+    </Field>
+</Template>
