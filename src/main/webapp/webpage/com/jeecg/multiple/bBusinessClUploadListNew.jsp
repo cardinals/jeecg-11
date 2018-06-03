@@ -144,15 +144,36 @@
 
      <c:if test="${role =='WINDOW_ACCEPT'}">
       <td align="center" >
-       <a href="#" class="ace_button" onclick="javascript:window.location.href='bProjectBusinessController.do?materialList&id=${bProjectBusinessPage.id}&itemsId=${certificate.items_id }'">  <i class=" fa fa-copy"></i>材料上传</a>
+       <c:if test="${certificate.status =='待上传'}">
+        <a href="#" class="ace_button" style="background-color: #d43139;width: 63px" onclick="javascript:window.location.href='bProjectBusinessController.do?materialList&id=${bProjectBusinessPage.id}&itemsId=${certificate.items_id }'">  待上传</a>
+       </c:if>
+       <%--<c:if test="${certificate.status =='已上传'}">
+        <a href="#" class="ace_button" style="background-color: #62a7ab;width: 63px" onclick="javascript:window.location.href='bProjectBusinessController.do?materialList&id=${bProjectBusinessPage.id}&itemsId=${certificate.items_id }'">  已上传</a>
+       </c:if>--%>
+       <c:if test="${certificate.status =='审核通过'}">
+        <a href="#" class="ace_button" style="background-color: green;width: 63px" onclick="javascript:window.location.href='bProjectBusinessController.do?materialList&id=${bProjectBusinessPage.id}&itemsId=${certificate.items_id }'">   审核通过</a>
+       </c:if>
+       <c:if test="${certificate.status =='审核退回'}">
+        <a href="#" class="ace_button" style="background-color: #e41313;width: 63px" onclick="javascript:window.location.href='bProjectBusinessController.do?materialList&id=${bProjectBusinessPage.id}&itemsId=${certificate.items_id }'">   审核退回</a>
+       </c:if>
+       <c:if test="${certificate.status =='待审核'}">
+        <a href="#" class="ace_button" style="background-color: #7f9a13;width: 63px" onclick="javascript:window.location.href='bProjectBusinessController.do?materialList&id=${bProjectBusinessPage.id}&itemsId=${certificate.items_id }'">   待审核</a>
+       </c:if>
       </td>
      </c:if>
      <c:if test="${role == 'DEPT_CHECK_ROLE'}">
       <td align="center" >
-       <c:if test="${certificate.dept_id ==deptId}">
-        <a href="#" class="ace_button" onclick="javascript:window.location.href='bProjectBusinessController.do?materialList&id=${bProjectBusinessPage.id}&itemsId=${certificate.items_id }'">  <i class=" fa fa-copy"></i>材料预审</a>
+       <c:if test="${certificate.status =='待审核'}">
+        <a href="#" class="ace_button" style="width: 63px"onclick="javascript:window.location.href='bProjectBusinessController.do?materialList&id=${bProjectBusinessPage.id}&itemsId=${certificate.items_id }'">待审核</a>
        </c:if>
-       <c:if test="${certificate.dept_id !=deptId}">
+       <c:if test="${certificate.status =='待上传'}">
+        待上传
+       </c:if>
+       <c:if test="${certificate.status =='审核通过'}">
+        <a href="#" class="ace_button" style="background-color: green;width: 63px" onclick="javascript:window.location.href='bProjectBusinessController.do?materialList&id=${bProjectBusinessPage.id}&itemsId=${certificate.items_id }'">  审核通过</a>
+       </c:if>
+       <c:if test="${certificate.status =='审核退回'}">
+        <a href="#" class="ace_button" style="background-color: #e41313;width: 63px" onclick="javascript:window.location.href='bProjectBusinessController.do?materialList&id=${bProjectBusinessPage.id}&itemsId=${certificate.items_id }'">   审核退回</a>
        </c:if>
       </td>
      </c:if>

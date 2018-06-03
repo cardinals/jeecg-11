@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
+import org.jeecgframework.web.system.pojo.base.TSUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -124,6 +125,11 @@ public class BChildBusinessController extends BaseController {
 		CriteriaQuery cq = new CriteriaQuery(BChildBusinessEntity.class, dataGrid);
 		//查询条件组装器
 		org.jeecgframework.core.extend.hqlsearch.HqlGenerateUtil.installHql(cq, bChildBusiness, request.getParameterMap());
+		TSUser user = ResourceUtil.getSessionUser();
+		if (ResourceUtil.getConfigByName("accept_deptid").equals(user.getCurrentDepart().getId())){
+		}else{
+			cq.eq("deptId",user.getDepartid());
+		}
 		try{
 		//自定义追加查询条件
 		}catch (Exception e) {

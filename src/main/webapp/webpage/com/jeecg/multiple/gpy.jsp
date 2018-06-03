@@ -15,8 +15,8 @@
 				<tbody>
 				<tr>
 					<td align="center">
-						<button type="button" class="btn btn-default" onclick="start_preview()">开始预览</button>
-						<button type="button" class="btn btn-default" onclick="stop_preview()">停止预览</button>
+						<%--<button type="button" class="btn btn-default" onclick="start_preview()">开始预览</button>
+						<button type="button" class="btn btn-default" onclick="stop_preview()">停止预览</button>--%>
 						<button type="button" class="btn btn-default" onclick="TakePic()">拍照</button>
 						<button type="button" class="btn btn-default" onclick="selectAll()">全选</button>
 						<button type="button" class="btn btn-default" onclick="unSelectAll()">反选</button>
@@ -52,6 +52,7 @@
 //            ScanCtrl.SetCurDev(0);
 //            document.getElementById("selDev").value=0;
 //        }
+        start_preview();
     });
 
     function contentLoad(){
@@ -164,12 +165,7 @@
             alert("请选择要上传的图片！");
             return;
         }
-        var url=url="${webRoot}/aMaterialsUploadController.do?uploadFile&business_id=${bProjectBusiness.id}&items_id=${itemsId}&type=1&id=${materialId }";
-        <%--if("${seq}"!=null&&"${seq}"!=""){//是文书不是附件--%>
-            <%--url="${webRoot}/paperController.do?uploadPaper&taskId=${taskId}&courtCaseId=${courtCaseId}&seq=${seq}";--%>
-        <%--}else{//是附件--%>
-            <%--url="${webRoot}/courtCaseController.do?gpyUploadFile&taskId=${taskId}&courtCaseId=${courtCaseId}";--%>
-        <%--}--%>
+        var url="${webRoot}/aMaterialsUploadController.do?uploadFile&business_id=${bProjectBusiness.id}&items_id=${itemsId}&id=${materialId }&type=${flag}";
         var isSuccess=true;
         for(var i=0;i<objCheck.length;i++){
             if(objCheck[i].checked){

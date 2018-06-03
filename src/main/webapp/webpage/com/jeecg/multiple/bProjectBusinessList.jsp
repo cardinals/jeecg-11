@@ -9,7 +9,7 @@
    <t:dgCol title="实际项目名称"  field="realityProjectName"  query="true"  width="150"></t:dgCol>
    <t:dgCol title="项目id"  field="projectId"  hidden="true"  queryMode="group"  width="120"></t:dgCol>
    <t:dgCol title="项目名称"  field="projectName"  queryMode="group"  width="120"></t:dgCol>
-   <t:dgCol title="项目状态"  field="projectStatus"  queryMode="group" replace="材料上传_1,预审核_2" width="80"></t:dgCol>
+   <t:dgCol title="项目状态"  field="projectStatus"  queryMode="group" replace="材料上传_1,材料审核_2" width="80"></t:dgCol>
    <t:dgCol title="证照上传状态"  field="certificateStatus"  hidden="true"  queryMode="group"  width="120"></t:dgCol>
    <t:dgCol title="当前阶段编号"  field="currentPhases" hidden="true"  queryMode="group"  width="80"></t:dgCol>
    <t:dgCol title="当前阶段状态"  field="currentPhasesStatus"  hidden="true"  queryMode="group"  width="120"></t:dgCol>
@@ -32,7 +32,7 @@
     <%--<t:dgDelOpt title="删除" url="bProjectBusinessController.do?doDel&id={id}" urlclass="ace_button"  urlfont="fa-trash-o"/>--%>
    </c:if>
    <c:if test="${role =='DEPT_CHECK_ROLE'}">
-    <t:dgFunOpt funname="uploadCertificate(id)" title="预审核"  urlclass="ace_button"  urlfont="fa-copy"></t:dgFunOpt>
+    <t:dgFunOpt funname="uploadcl(id)" title="材料审核"  urlclass="ace_button"  urlfont="fa-copy"></t:dgFunOpt>
    </c:if>
    <%--<t:dgFunOpt funname="loadBusinessLog(id)" title="流程日志"  urlclass="ace_button"  urlfont="fa-copy"></t:dgFunOpt>--%>
    <%--<t:dgDelOpt title="删除" url="bProjectBusinessController.do?doDel&id={id}" urlclass="ace_button"  urlfont="fa-trash-o"/>--%>
@@ -46,7 +46,7 @@
   </t:datagrid>
   </div>
  </div>
- <script src = "webpage/com/jeecg/multiple/bProjectBusinessList.js"></script>		
+ <script src = "webpage/com/jeecg/multiple/bProjectBusinessList.js"></script>
  <script type="text/javascript">
  $(document).ready(function(){
  });
@@ -75,7 +75,7 @@ function uploadCertificate(id){
     if("WINDOW_ACCEPT"=="${role}"){
         createdetailwindow("材料上传", "bProjectBusinessController.do?certificateList&id="+id,"1000","500");
     }else{
-        createdetailwindow("预审核", "bProjectBusinessController.do?certificateList&id="+id,"1000","500");
+        createdetailwindow("材料审核", "bProjectBusinessController.do?certificateList&id="+id,"1000","500");
     }
 
 }
@@ -84,7 +84,7 @@ function uploadCertificate(id){
      if("WINDOW_ACCEPT"=="${role}"){
          createdetailwindow("材料上传", "bProjectBusinessController.do?uploadcl&id="+id,"1000","500");
      }else{
-         createdetailwindow("预审核", "bProjectBusinessController.do?uploadcl&id="+id,"1000","500");
+         createdetailwindow("材料审核", "bProjectBusinessController.do?uploadcl&id="+id,"1000","500");
      }
 
  }

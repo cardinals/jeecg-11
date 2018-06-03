@@ -92,7 +92,7 @@
       <th align="center" style="width: 15%;">证照上传</th>
      </c:if>
      <th align="center" style="width: 20%;">证照名称</th>
-     <th align="center" style="width: 8%;">操作</th>
+     <%--<th align="center" style="width: 8%;">操作</th>--%>
 
     </tr>
     </thead>
@@ -145,31 +145,31 @@
         ${fn:substring(certificate.certificates_name, 0, 40) }
       </td>--%>
      <c:if test="${role =='WINDOW_ACCEPT'}">
-      <td align="center">
-       <%--<c:if test="${certificate.dept_id == deptId }">--%>
+      <%--<td align="center">
+       &lt;%&ndash;<c:if test="${certificate.dept_id == deptId }">&ndash;%&gt;
          <span class="btn btn-success fileinput-button"><span>选择文件</span>
            <input class="materials" id="fileupload" type="file" name="files[]" data-url="aMaterialsUploadController.do?uploadFile&id=${certificate.id }&type=2"  >
            &nbsp;&nbsp;  <input id="filePaths" name="filePaths" type="hidden" />
          </span>
-       </td>
+       </td>--%>
+
+      <td align="center">
+        <%--<span class="btn btn-success fileinput-button"><span>本地上传</span>--%>
+       <span class="fileinput-button" style="background: #4eb110;;color: white;padding: 2px;width: 50px;height: 20px;"><font>本地上传</font>
+         <input class="materials" id="fileupload" type="file" name="files[]" data-url="aMaterialsUploadController.do?uploadFile&id=${certificate.id }&type=2"  >
+         &nbsp;&nbsp;  <input id="filePaths" name="filePaths" type="hidden" />
+        </span>
+
+       <span class="fileinput-button" style="cursor:pointer;background: #498bdc;color: white;padding: 2px;width: 50px;height: 20px;" onclick="javascript:window.open('bProjectBusinessController.do?gpy&id=${bProjectBusinessPage.id}&itemsId=${certificate.items_id}&materialId=${certificate.id }&type=2 ')"><font>拍照上传</font>
+        </span>
+      </td>
+
      </c:if>
+
+
       <td align="left" title="${certificate.file_name }">
        <a href='aMaterialsUploadController.do?downloadFile&id=${certificate.id }&type=download' target='_blank'>${certificate.file_name }</a>
       </td>
-     <c:if test="${role =='WINDOW_ACCEPT'}">
-      <td align="center" >
-       <a href="#" class="ace_button" onclick="javascript:window.location.href='bProjectBusinessController.do?materialList&id=${bProjectBusinessPage.id}&itemsId=${certificate.items_id }'">  <i class=" fa fa-copy"></i>材料上传</a>
-      </td>
-     </c:if>
-     <c:if test="${role == 'DEPT_CHECK_ROLE'}">
-      <td align="center" >
-       <c:if test="${certificate.dept_id ==deptId}">
-        <a href="#" class="ace_button" onclick="javascript:window.location.href='bProjectBusinessController.do?materialList&id=${bProjectBusinessPage.id}&itemsId=${certificate.items_id }'">  <i class=" fa fa-copy"></i>材料预审</a>
-       </c:if>
-       <c:if test="${certificate.dept_id !=deptId}">
-       </c:if>
-      </td>
-     </c:if>
 
       </tr>
     </c:forEach>

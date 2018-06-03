@@ -257,8 +257,10 @@ public class BProjectBusinessController extends BaseController {
 		}
 		String itemsId= req.getParameter("itemsId");
 		String materialId= req.getParameter("materialId");
+		String flag= req.getParameter("type");
 		req.setAttribute("materialId", materialId);
 		req.setAttribute("itemsId", itemsId);
+		req.setAttribute("flag", flag);
 		return new ModelAndView("com/jeecg/multiple/gpy");
 	}
 	/**
@@ -272,15 +274,26 @@ public class BProjectBusinessController extends BaseController {
 			bProjectBusiness = bProjectBusinessService.getEntity(BProjectBusinessEntity.class, bProjectBusiness.getId());
 			req.setAttribute("bProjectBusinessPage", bProjectBusiness);
 		}
-
+		String condition = "" ;
 		TSUser user = ResourceUtil.getSessionUser();
+		if (ResourceUtil.getConfigByName("accept_deptid").equals(user.getCurrentDepart().getId())){
+		}else{
+			condition = "and a.dept_id ='" +user.getDepartid() +"'";
+		}
 		String sql = "select a.business_id,a.project_id,substr(a.phases_id,-3) as phases_id , a.items_id,a.items_name ,a.dept_id,a.dept_name,a.reality_project_name,b.id, " +
+				" a.check_status, a.confirm_upload_time, CASE" +
+				"        WHEN a.confirm_upload_time is null THEN '待上传' " +
+				"        WHEN (a.confirm_upload_time is not null and a.check_status is null) " +
+				"           or (a.confirm_upload_time > a.check_time and a.check_status = '0') THEN '待审核'" +
+				"        WHEN  a.confirm_upload_time is not null and a.check_status ='1' THEN '审核通过'" +
+				"        WHEN  a.confirm_upload_time is not null and a.check_status ='0' THEN '审核退回'" +
+				"        ELSE '其他' END as status," +
 				" substr(b.materials_name,37) as file_name from B_CHILD_BUSINESS a, A_MATERIALS_UPLOAD b " +
 				" where   a.business_id = b.business_id" +
 				"      and a.project_id = b.project_id" +
 				"      and a.phases_id = b.phases_id" +
 				"      and a.items_id = b.items_id" +
-				"      and b.materials_type = '2'" +
+				"      and b.materials_type = '2'" + condition +
 				"      and a.business_id = '"+bProjectBusiness.getBusinessId()+"' order by a.phases_id ";
 		List<Map<String, Object>> certificateList =  systemService.findForJdbc(sql);
 		req.setAttribute("certificateList", certificateList);
@@ -310,7 +323,7 @@ public class BProjectBusinessController extends BaseController {
 				"      and a.project_id = b.project_id" +
 				"      and a.phases_id = b.phases_id" +
 				"      and a.items_id = b.items_id" +
-				"      and b.materials_type = '2'" +
+				"      and b.materials_type = '2' and a.status = '1'" +
 				"      and a.business_id = '"+bProjectBusiness.getBusinessId()+"' order by a.phases_id ";
 		List<Map<String, Object>> certificateList =  systemService.findForJdbc(sql);
 		req.setAttribute("certificateList", certificateList);

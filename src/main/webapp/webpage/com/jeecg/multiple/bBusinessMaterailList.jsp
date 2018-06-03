@@ -13,8 +13,8 @@
              acceptFileTypes: /(\.|\/)(gif|jpe?g|png|pdf|txt|doc|docx|xls|xlsx|ppt|rar|zip)$/i,
              maxFileSize: 2097152*3,  // 2*3 MB
              done: function (e, data) {
-                 debugger;
-                 console.log(data);
+//                 debugger;
+//                 console.log(data);
                  var id = data.result.obj;
 //                 var uploadPath = data.result.obj;
 //                 uploadPath = uploadPath.replace("\\", "\\\\");
@@ -83,6 +83,16 @@ function confirmUpload(){
     },"json")
 
 }
+function chooseText(temp,status) {
+    $('#checkContent').html(temp);
+    if(status==1){
+        $('#checkStatus').val(status);
+    }else{
+        $('#checkStatus').val(status);
+    }
+
+
+}
  </script>
 
 </head>
@@ -143,22 +153,24 @@ function confirmUpload(){
      <c:if test="${role =='WINDOW_ACCEPT'}">
       <td align="center">
         <%--<span class="btn btn-success fileinput-button"><span>本地上传</span>--%>
-         <span class="fileinput-button" style="background: #498bdc;color: white;padding: 2px;width: 50px;height: 20px;"><font>本地上传</font>
+         <span class="fileinput-button" style="background: #4eb110;;color: white;padding: 2px;width: 50px;height: 20px;"><font>本地上传</font>
          <input class="materials" id="fileupload" type="file" name="files[]" data-url="aMaterialsUploadController.do?uploadFile&id=${material.id }&type=1"  >
          &nbsp;&nbsp;  <input id="filePaths" name="filePaths" type="hidden" />
         </span>
 
-         <span class="fileinput-button" style="background: #498bdc;color: white;padding: 2px;width: 50px;height: 20px;" onclick="javascript:window.open('bProjectBusinessController.do?gpy&id=${bProjectBusinessPage.id}&itemsId=${certificate.items_id}&materialId=${material.id } ')"><font>拍照上传</font>
+         <span class="fileinput-button" style="cursor:pointer;background: #498bdc;color: white;padding: 2px;width: 50px;height: 20px;" onclick="javascript:window.open('bProjectBusinessController.do?gpy&id=${bProjectBusinessPage.id}&itemsId=${certificate.items_id}&materialId=${material.id }&type=1 ')"><font>拍照上传</font>
         </span>
        </td>
      </c:if>
-      <td align="left" title="${material.file_name }">
+      <td align="center" title="${material.file_name }">
        <a href='aMaterialsUploadController.do?downloadFile&id=${material.id }&type=download' target='_blank'>${material.file_name }</a>
       </td>
       </tr>
     </c:forEach>
    </c:if>
    </table>
+
+
     <c:if test="${role =='WINDOW_ACCEPT'}">
     <div style="text-align: center; margin-top: 5px;">
      <a href='javascript:void(0)' onclick="confirmUpload()" class="ace_button" target='_blank'>材料确认进入审核</a>
@@ -167,19 +179,28 @@ function confirmUpload(){
 
    <c:if test="${role =='DEPT_CHECK_ROLE'}">
     <br>
-    <div>
+    <div style="height: 140px;">
       审核状态：
-      <select name="checkStatus">
+      <select name="checkStatus" id="checkStatus">
+       <%--<option value="9" ${checklList[0].check_status==""||checklList[0].check_status==null}>待审核</option>--%>
        <option value="1" ${checklList[0].check_status==1?'selected':''}>通过</option>
        <option value="0" ${checklList[0].check_status==0?'selected':''}>退回</option>
       </select><br>
-      审核意见：
-      <textarea name="checkContent" id="checkContent" style="width: 99%;height: 80px;max-width: 99%">${checklList[0].check_content }</textarea>
-     <div style="text-align: center;">
+      审核意见：<br>
+      <div style="float: left;width: 60%;height: 80px">
+       <textarea name="checkContent" id="checkContent" style="width: 98%;height: 100%;resize:none">${checklList[0].check_content }</textarea>
+      </div>
+     <div style="float: left;width: 40%;height: 80px ">
+      <p style="margin: 2px;background: #79f32d;padding-left: 15px;cursor: pointer;" onclick="chooseText(this.innerHTML,1)">审核通过！</p>
+      <p style="margin: 2px;background: #fb8989;padding-left: 15px;cursor: pointer;" onclick="chooseText(this.innerHTML,0)">材料上传不完整，请重新上传！</p>
+      <p style="margin: 2px;background: #f7b6b6;padding-left: 15px;cursor: pointer;" onclick="chooseText(this.innerHTML,0)">材料不清晰，请重新上传！</p>
+     </div>
+    </div>
+     <div style="text-align: center;margin-top: 5px">
       <a href='javascript:void(0)' onclick="javascript:history.go(-1)" class="ace_button" target='_blank'>返回</a>
       <a href='javascript:void(0)' onclick="check_sub()" class="ace_button" target='_blank' style="background-color: #d25656;">提交</a>
      </div>
-    </div>
+
    </c:if>
 
     <c:if test="${role !='DEPT_CHECK_ROLE'}">
@@ -223,8 +244,8 @@ function confirmUpload(){
       <c:if test="${checklList[0].check_status == 1}">通过</c:if>
       <c:if test="${checklList[0].check_status == '' || checklList[0].check_status == null}">待审核</c:if>
       <br>
-      审核意见：
-      <textarea name="checkContent" readonly style="width: 99%;height: 80px;max-width: 99%">${checklList[0].check_content }</textarea>
+      审核意见：${checklList[0].check_content }
+      <%--<textarea name="checkContent" readonly style="width: 99%;height: 80px;max-width: 99%">${checklList[0].check_content }</textarea>--%>
       <div style="text-align: center;">
        <a href='javascript:void(0)' onclick="javascript:history.go(-1)" class="ace_button" target='_blank'>返回</a>
       </div>

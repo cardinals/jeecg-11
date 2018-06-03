@@ -9,7 +9,8 @@
    <t:dgCol title="并联业务流水号"  field="businessId" hidden="true" query="true" width="120"></t:dgCol>
    <t:dgCol title="子业务流水号"  field="childBusinessId"  query="true" width="150"></t:dgCol>
    <t:dgCol title="项目编号"  field="projectId"  hidden="true"  queryMode="group"  width="120"></t:dgCol>
-   <t:dgCol title="阶段编号"  field="phasesId"  hidden="true"  queryMode="group"  width="120"></t:dgCol>
+   <t:dgCol title="阶段编号"  field="phasesId"  funname="phaseName(phasesId)"  queryMode="group"  width="120"></t:dgCol>
+
    <t:dgCol title="事项编号"  field="itemsId"  hidden="true"  queryMode="group"  width="120"></t:dgCol>
    <t:dgCol title="事项名称"  field="itemsName"  queryMode="group"  width="180"></t:dgCol>
    <t:dgCol title="部门编号"  field="deptId"  hidden="true"  queryMode="group"  width="120"></t:dgCol>
@@ -48,7 +49,12 @@
  <script src = "webpage/com/jeecg/childbusiness/bChildBusinessList.js"></script>		
  <script type="text/javascript">
  $(document).ready(function(){
+     function phaseName(str){
+         alert(str);
+         return str.substr(str.length-3);
+     }
  });
+
 
 
 //查看
