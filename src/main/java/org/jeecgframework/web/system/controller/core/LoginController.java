@@ -21,6 +21,7 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.jeecgframework.core.common.controller.BaseController;
 import org.jeecgframework.core.common.model.json.AjaxJson;
+import org.jeecgframework.core.common.model.json.DataGrid;
 import org.jeecgframework.core.constant.Globals;
 import org.jeecgframework.core.enums.SysThemesEnum;
 import org.jeecgframework.core.util.ContextHolderUtils;
@@ -36,15 +37,9 @@ import org.jeecgframework.core.util.ResourceUtil;
 import org.jeecgframework.core.util.SysThemesUtil;
 import org.jeecgframework.core.util.oConvertUtils;
 import org.jeecgframework.web.system.manager.ClientManager;
-import org.jeecgframework.web.system.pojo.base.Client;
-import org.jeecgframework.web.system.pojo.base.TSDepart;
-import org.jeecgframework.web.system.pojo.base.TSFunction;
-import org.jeecgframework.web.system.pojo.base.TSPasswordResetkey;
-import org.jeecgframework.web.system.pojo.base.TSRole;
-import org.jeecgframework.web.system.pojo.base.TSRoleFunction;
-import org.jeecgframework.web.system.pojo.base.TSRoleUser;
-import org.jeecgframework.web.system.pojo.base.TSUser;
+import org.jeecgframework.web.system.pojo.base.*;
 import org.jeecgframework.web.system.service.MutiLangServiceI;
+import org.jeecgframework.web.system.service.NoticeService;
 import org.jeecgframework.web.system.service.SystemService;
 import org.jeecgframework.web.system.service.UserService;
 import org.jeecgframework.web.system.sms.util.MailUtil;
@@ -76,6 +71,8 @@ public class LoginController extends BaseController{
 	private SystemService systemService;
 	private UserService userService;
 
+	@Autowired
+	private NoticeService noticeService;
 	@Autowired
 	private MutiLangServiceI mutiLangService;
 	
@@ -776,6 +773,10 @@ public class LoginController extends BaseController{
 	public ModelAndView hplushome(HttpServletRequest request) {
 
 		SysThemesEnum sysTheme = SysThemesUtil.getSysTheme(request);
+		request.setAttribute("noticeCount",getNoticeCount("1"));
+		request.setAttribute("publicCount",getNoticeCount("2"));
+		request.setAttribute("witeCheckCount",getWaitCount("check"));
+		request.setAttribute("witeUploadCount",getWaitCount("upload"));
 		//ACE ACE2 DIY时需要在home.jsp头部引入依赖的js及css文件
 		/*if("ace".equals(sysTheme.getStyle())||"diy".equals(sysTheme.getStyle())||"acele".equals(sysTheme.getStyle())){
 			request.setAttribute("show", "1");
@@ -785,6 +786,42 @@ public class LoginController extends BaseController{
 
 		return new ModelAndView("main/hplushome");
 	}
+
+	/**
+	 * 首页获取通知公告未读数量
+	 */
+	@RequestMapping(params = "getNoticeCount")
+	public String getNoticeCount(String type) {
+		TSUser user = ResourceUtil.getSessionUser();
+		String getCountSql ="SELECT count(notice.id) as count FROM t_s_notice notice LEFT JOIN t_s_notice_read_user noticeRead ON  notice.id = noticeRead.notice_id "
+				+ "WHERE noticeRead.del_flag = 0 and noticeRead.user_id = '"+user.getId()+"' and notice.NOTICE_TYPE='"+type+"' and noticeRead.is_read = 0";
+		List<Map<String, Object>> resultList2 =  systemService.findForJdbc(getCountSql);
+		String count = resultList2.get(0).get("count") +"";
+		return count;
+	}
+
+	/**
+	 * 首页获取待审核数量
+	 */
+	@RequestMapping(params = "getWaitCount")
+	public String getWaitCount(String type) {
+		TSUser user = ResourceUtil.getSessionUser();
+		String getCountSql ="";
+		if("upload".equals(type)){
+			getCountSql ="select count(1) as count from  b_project_business a left join  B_CHILD_BUSINESS b on a.business_id= b.business_id " +
+					" where b.confirm_upload_time is null and substr(a.current_phases,-3) >=substr(b.phases_id,-3)";
+		}else if("check".equals(type)){
+			getCountSql =" select count(1) as count from B_CHILD_BUSINESS a" +
+					" where (a.confirm_upload_time is not null and a.check_status is null)" +
+					"    or (a.confirm_upload_time > a.check_time and a.check_status = '0')" +
+					"   and a.dept_id ='" +user.getDepartid() +"'";
+		}
+
+		List<Map<String, Object>> resultList2 =  systemService.findForJdbc(getCountSql);
+		String count = resultList2.get(0).get("count") +"";
+		return count;
+	}
+
 
 	/**
 	 * fineUI首页跳转

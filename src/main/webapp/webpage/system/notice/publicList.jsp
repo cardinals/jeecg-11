@@ -3,7 +3,7 @@
  <t:base type="jquery,easyui,tools"></t:base>
 <div class="easyui-layout" fit="true">
   <div region="center" style="padding:1px;">
-  <t:datagrid name="noticeList" title="通知" actionUrl="noticeController.do?datagrid" idField="id" fit="true" sortName="createTime" sortOrder="desc">
+  <t:datagrid name="noticeList" title="公告" actionUrl="noticeController.do?pubdatagrid" idField="id" fit="true" sortName="createTime" sortOrder="desc">
    <t:dgCol title="编号" field="id" hidden="true"></t:dgCol>
    <t:dgCol title="状态" field="isRead" width="40" replace="已读_1,未读_0"></t:dgCol>
    <t:dgCol title="标题" field="noticeTitle" width="120"></t:dgCol>
@@ -48,7 +48,7 @@
 	    	});
 	  }
 	  var addurl = "noticeController.do?goNotice&id="+id;
-		createdetailwindow("通知详情", addurl, 750, 500);
+		createdetailwindow("公告详情", addurl, 750, 500);
   }
   
  </script>

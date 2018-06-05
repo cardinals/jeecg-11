@@ -83,8 +83,10 @@
     <thead>
     <tr style="height: 42px;background: #e897ad;">
      <th align="center" style="width: 3%;">序号</th>
+     <c:if test="${role =='WINDOW_ACCEPT'}">
      <th align="center" style="width: 15%;">部门名称</th>
-     <%--<th align="center" style="width: 20%;">实际项目名称</th>--%>
+     </c:if>
+     <th align="center" style="width: 20%;">实际项目名称</th>
      <th align="center" style="width: 8%;">阶段</th>
      <th align="center" style="width: 25%;">事项名称</th>
      <%--<th style="width: 40%;">材料名称</th>--%>
@@ -104,12 +106,14 @@
       <td align="center"><div style="width: 25px;" name="xh">${stuts.index+1 }</div></td>
 
       <input name="certificateList[${stuts.index }].project_id" type="hidden" value="${certificate.project_id }"/>
+     <c:if test="${role =='WINDOW_ACCEPT'}">
      <td align="center">
        ${certificate.dept_name }
      </td>
-     <%--<td align="center">
+     </c:if>
+     <td align="center">
         ${certificate.reality_project_name }
-      </td>--%>
+      </td>
       <td align="center">
        <c:if test="${certificate.phases_id == '001' }">
          第一阶段

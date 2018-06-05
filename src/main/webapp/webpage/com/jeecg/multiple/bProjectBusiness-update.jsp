@@ -195,7 +195,7 @@
 				
 			</table>
 		</t:formvalid>
-		<a href="#" class="ace_button" onclick="window.open('bProjectBusinessController.do?loadBusinessLog&id=${bProjectBusinessPage.id }')">  <i class=" fa fa-copy"></i>并联流程图</a>
+		<%--<a href="#" class="ace_button" onclick="window.open('bProjectBusinessController.do?loadBusinessLog&id=${bProjectBusinessPage.id }')">  <i class=" fa fa-copy"></i>并联流程图</a>--%>
 		<%--<a href="bProjectBusinessController.do?loadBusinessLog&id=${bProjectBusinessPage.id }" target="_blank">并联流程图</a>--%>
  </body>
   <script src = "webpage/com/jeecg/multiple/bProjectBusiness.js"></script>		

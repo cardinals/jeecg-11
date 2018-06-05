@@ -277,6 +277,7 @@ public class BProjectBusinessController extends BaseController {
 		String condition = "" ;
 		TSUser user = ResourceUtil.getSessionUser();
 		if (ResourceUtil.getConfigByName("accept_deptid").equals(user.getCurrentDepart().getId())){
+			condition = "and substr(a.phases_id,-3) <='" +bProjectBusiness.getCurrentPhases().substring(bProjectBusiness.getCurrentPhases().length()-3) +"'";
 		}else{
 			condition = "and a.dept_id ='" +user.getDepartid() +"'";
 		}
@@ -478,7 +479,7 @@ public class BProjectBusinessController extends BaseController {
 
 //~~~~~~~~~~~~~~~~~~~~~~~~
 	/**
-	 * 并联业务信息列表 页面跳转
+	 * 材料上传/审核 页面跳转
 	 *
 	 * @return
 	 */
@@ -492,6 +493,20 @@ public class BProjectBusinessController extends BaseController {
 		return new ModelAndView("com/jeecg/multiple/bProjectBusinessList");
 	}
 
+    /**
+     * 并联业务信息列表 页面跳转
+     *
+     * @return
+     */
+    @RequestMapping(params = "businessLoglist")
+    public ModelAndView businessLoglist(HttpServletRequest request) {
+        TSUser user = ResourceUtil.getSessionUser();
+        //前台获取权限
+        if (ResourceUtil.getConfigByName("accept_deptid").equals(user.getCurrentDepart().getId())){
+            request.setAttribute("role", BusinessUtil.WINDOW_ACCEPT);
+        }
+        return new ModelAndView("com/jeecg/multiple/bProjectBusinessLogList");
+    }
 	/**
 	 * 证照管理列表 页面跳转
 	 *

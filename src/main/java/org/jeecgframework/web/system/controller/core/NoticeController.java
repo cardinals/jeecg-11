@@ -130,7 +130,7 @@ public class NoticeController extends BaseController{
 	}
 	
 	/**
-	 * 通知公告列表（阅读）
+	 * 通知通知列表
 	 * @param request
 	 * @return
 	 */
@@ -138,7 +138,18 @@ public class NoticeController extends BaseController{
 	public ModelAndView noticeList(HttpServletRequest request) {
 		return new ModelAndView("system/notice/noticeList");
 	}
-	
+
+	/**
+	 * 通知公告列表
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(params = "publicList")
+	public ModelAndView publicList(HttpServletRequest request) {
+		return new ModelAndView("system/notice/publicList");
+	}
+
+
 	/**
 	 * 通知公告详情
 	 * @param request
@@ -166,7 +177,7 @@ public class NoticeController extends BaseController{
 	}
 	
 	/**
-	 * easyui AJAX请求数据
+	 * easyui AJAX请求数据 通知列表
 	 * 构建列表数据
 	 * @param request
 	 * @param response
@@ -183,7 +194,7 @@ public class NoticeController extends BaseController{
 			TSUser user = ResourceUtil.getSessionUser();
 			String sql = "SELECT notice.*,noticeRead.is_read as is_read FROM t_s_notice notice "
 					+ " LEFT JOIN t_s_notice_read_user noticeRead ON  notice.id = noticeRead.notice_id "
-					+ " WHERE noticeRead.del_flag = 0 and noticeRead.user_id = '"+user.getId()+"' "
+					+ " WHERE noticeRead.del_flag = 0 and noticeRead.user_id = '"+user.getId()+"' and notice.NOTICE_TYPE='1'"
 					+ " ORDER BY noticeRead.is_read asc,noticeRead.create_time DESC ";
 			
 			List<Map<String, Object>> resultList =  systemService.findForJdbc(sql,dataGrid.getPage(),dataGrid.getRows());
@@ -203,16 +214,68 @@ public class NoticeController extends BaseController{
 				}
 			}
 
-	
+
 			dataGrid.setResults(noticeList);
 			String getCountSql ="SELECT count(notice.id) as count FROM t_s_notice notice LEFT JOIN t_s_notice_read_user noticeRead ON  notice.id = noticeRead.notice_id "
-					+ "WHERE noticeRead.del_flag = 0 and noticeRead.user_id = '"+user.getId()+"' and noticeRead.is_read = 0";
+					+ "WHERE noticeRead.del_flag = 0 and noticeRead.user_id = '"+user.getId()+"' and notice.NOTICE_TYPE='2'";
 			List<Map<String, Object>> resultList2 =  systemService.findForJdbc(getCountSql);
 			Object count = resultList2.get(0).get("count");
 
 			dataGrid.setTotal(Integer.valueOf(count.toString()));
 			TagUtil.datagrid(response, dataGrid);
 	}
+
+	/**
+	 * easyui AJAX请求数据 公告列表
+	 * 构建列表数据
+	 * @param request
+	 * @param response
+	 * @param dataGrid
+	 * @param user
+	 */
+	@RequestMapping(params = "pubdatagrid")
+	public void pubdatagrid(TSNotice notice,HttpServletRequest request, HttpServletResponse response, DataGrid dataGrid) {
+//			CriteriaQuery cq = new CriteriaQuery(TSNotice.class, dataGrid);
+//			//查询条件组装器
+//			org.jeecgframework.core.extend.hqlsearch.HqlGenerateUtil.installHql(cq, notice, request.getParameterMap());
+//			this.noticeService.getDataGridReturn(cq, true);
+
+			TSUser user = ResourceUtil.getSessionUser();
+			String sql = "SELECT notice.*,noticeRead.is_read as is_read FROM t_s_notice notice "
+					+ " LEFT JOIN t_s_notice_read_user noticeRead ON  notice.id = noticeRead.notice_id "
+					+ " WHERE noticeRead.del_flag = 0 and noticeRead.user_id = '"+user.getId()+"' and notice.NOTICE_TYPE='2'"
+					+ " ORDER BY noticeRead.is_read asc,noticeRead.create_time DESC ";
+
+			List<Map<String, Object>> resultList =  systemService.findForJdbc(sql,dataGrid.getPage(),dataGrid.getRows());
+			//将List转换成JSON存储
+
+			List<Map<String, Object>> noticeList = new ArrayList<Map<String, Object>>();
+			if(resultList!=null && resultList.size()>0){
+				for(int i=0;i<resultList.size();i++){
+					Map<String, Object> obj =  resultList.get(i);
+					Map<String, Object> n = new HashMap<String, Object>();
+					n.put("id",String.valueOf(obj.get("id")));
+					n.put("noticeTitle", String.valueOf(obj.get("notice_title")));
+					n.put("noticeContent", String.valueOf(obj.get("notice_content")));
+					n.put("createTime", String.valueOf(obj.get("create_time")));
+					n.put("isRead",String.valueOf(obj.get("is_read")));
+					noticeList.add(n);
+				}
+			}
+
+
+			dataGrid.setResults(noticeList);
+			String getCountSql ="SELECT count(notice.id) as count FROM t_s_notice notice LEFT JOIN t_s_notice_read_user noticeRead ON  notice.id = noticeRead.notice_id "
+					+ "WHERE noticeRead.del_flag = 0 and noticeRead.user_id = '"+user.getId()+"' and notice.NOTICE_TYPE='2'";
+			List<Map<String, Object>> resultList2 =  systemService.findForJdbc(getCountSql);
+			Object count = resultList2.get(0).get("count");
+
+			dataGrid.setTotal(Integer.valueOf(count.toString()));
+			TagUtil.datagrid(response, dataGrid);
+	}
+
+
+
 	/**
 	 * 阅读通知公告
 	 * @param user

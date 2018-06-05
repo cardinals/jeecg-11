@@ -1,17 +1,14 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" import="java.util.*" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@include file="/context/mytags.jsp"%>
 <!DOCTYPE html>
 <html>
-
 <head>
-
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!--360浏览器优先以webkit内核解析-->
-
-
     <title>郑东新区建设项目并联审批监管系统建设合同</title>
-
+    <t:base type="jquery,easyui,tools,DatePicker"></t:base>
     <link rel="shortcut icon" href="plug-in-ui/hplushome/images/favicon.ico">
     <link href="plug-in-ui/hplus/css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
     <link href="plug-in-ui/hplus/css/font-awesome.css?v=4.4.0" rel="stylesheet">
@@ -19,8 +16,16 @@
     <link href="plug-in-ui/hplus/css/animate.css" rel="stylesheet">
     <link href="plug-in-ui/hplus/css/style.css?v=4.1.0" rel="stylesheet">
     <link href="plug-in/hplushome/css/index.css" rel="stylesheet" type="text/css" />
-
-
+    <script type="text/javascript">
+        //通知
+        function notice(){
+            createdetailwindow("通知", "noticeController.do?noticeList","700","500");
+        }
+        //公告
+        function public(){
+            createdetailwindow("公告", "noticeController.do?publicList","700","500");
+        }
+    </script>
 </head>
 
 <body style="overflow: hidden">
@@ -33,9 +38,28 @@
         <div class="t2-neiye to_top">
             <h1 class="t2_nytitle">待处理业务</h1>
             <div class="gzzjgl_content block_icon clearfix">
-                <a href="#" class="t2-xuanzhuan"><span class="duigou t2-abs">12</span><img src="plug-in/hplushome/images/sx_img1.png" alt="" /><br />待预审</a>
-                <a href="#" class="t2-xuanzhuan"><img src="plug-in/hplushome/images/sx_img2.png" alt="" /><br />通知</a>
-                <a href="#" class="t2-xuanzhuan"><span class="duigou t2-abs">2</span><img src="plug-in/hplushome/images/sx_img3.png" alt="" /><br />公告</a>
+                <c:if test="${role =='WINDOW_ACCEPT'}">
+                    <a href="#" class="t2-xuanzhuan">
+                        <span class="duigou t2-abs">${witeUploadCount}</span>
+                        <img src="plug-in/hplushome/images/sx_img1.png" alt="" /><br />待上传
+                    </a>
+                </c:if>
+                <c:if test="${role =='DEPT_CHECK_ROLE'}">
+                    <a href="#" class="t2-xuanzhuan">
+                        <span class="duigou t2-abs">${witeCheckCount}</span>
+                        <img src="plug-in/hplushome/images/sx_img1.png" alt="" /><br />待审核
+                    </a>
+                </c:if>
+
+
+                <a href="javascript:void(0);" class="t2-xuanzhuan" onclick="notice()">
+                    <span class="duigou t2-abs"  >${noticeCount}</span>
+                    <img src="plug-in/hplushome/images/sx_img2.png" alt="" /><br />通知
+                </a>
+                <a href="javascript:void(0);" class="t2-xuanzhuan"onclick="public()">
+                    <span class="duigou t2-abs" >${publicCount}</span>
+                    <img src="plug-in/hplushome/images/sx_img3.png" alt="" /><br />公告
+                </a>
             </div>
             <div class="pull-left t2_common_lr_left">
                 <div class="panel panel-primary t2-delsb t2-panel t2-panel_style1">
@@ -86,7 +110,7 @@
 </div>
 
 <!-- 全局js -->
-<script src="plug-in-ui/hplus/js/jquery.min.js?v=2.1.4"></script>
+<%--<script src="plug-in-ui/hplus/js/jquery.min.js?v=2.1.4"></script>--%>
 <script src="plug-in-ui/hplus/js/bootstrap.min.js?v=3.3.6"></script>
 <script src="plug-in-ui/hplus/js/plugins/layer/layer.min.js"></script>
 
