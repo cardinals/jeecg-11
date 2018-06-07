@@ -100,6 +100,8 @@ public class BChildBusinessServiceImpl extends CommonServiceImpl implements BChi
 		map.put("certificate_name", t.getCertificateName());
 		map.put("certificate_path", t.getCertificatePath());
 		map.put("certificate_time", t.getCertificateTime());
+		map.put("check_status", t.getCheckStatus());
+		map.put("confirm_upload_time", t.getConfirmUploadTime());
 		map.put("create_by", t.getCreateBy());
 		return map;
 	}
@@ -135,6 +137,8 @@ public class BChildBusinessServiceImpl extends CommonServiceImpl implements BChi
  		sql  = sql.replace("#{certificate_name}",String.valueOf(t.getCertificateName()));
  		sql  = sql.replace("#{certificate_path}",String.valueOf(t.getCertificatePath()));
  		sql  = sql.replace("#{certificate_time}",String.valueOf(t.getCertificateTime()));
+ 		sql  = sql.replace("#{check_status}",String.valueOf(t.getCheckStatus()));
+ 		sql  = sql.replace("#{confirm_upload_time}",String.valueOf(t.getConfirmUploadTime()));
  		sql  = sql.replace("#{create_by}",String.valueOf(t.getCreateBy()));
  		sql  = sql.replace("#{UUID}",UUID.randomUUID().toString());
  		return sql;

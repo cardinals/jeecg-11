@@ -100,7 +100,15 @@ public class BChildBusinessEntity implements java.io.Serializable {
 	/**上传人*/
 	@Excel(name="上传人",width=15)
 	private String createBy;
-	
+
+	/**审核状态 （0：退回；1：通过）*/
+	@Excel(name="审核状态",width=15)
+	private String checkStatus;
+	/**确认上传时间*/
+	@Excel(name="确认上传时间",width=15,format = "yyyy-MM-dd")
+	private Date confirmUploadTime;
+
+
 	/**
 	 *方法: 取得java.lang.String
 	 *@return: java.lang.String  id
@@ -528,5 +536,23 @@ public class BChildBusinessEntity implements java.io.Serializable {
 	 */
 	public void setCreateBy(String createBy){
 		this.createBy = createBy;
+	}
+
+	@Column(name ="CHECK_STATUS",nullable=true,length=1)
+	public String getCheckStatus() {
+		return checkStatus;
+	}
+
+	public void setCheckStatus(String checkStatus) {
+		this.checkStatus = checkStatus;
+	}
+
+	@Column(name ="CONFIRM_UPLOAD_TIME",nullable=true)
+	public Date getConfirmUploadTime() {
+		return confirmUploadTime;
+	}
+
+	public void setConfirmUploadTime(Date confirmUploadTime) {
+		this.confirmUploadTime = confirmUploadTime;
 	}
 }

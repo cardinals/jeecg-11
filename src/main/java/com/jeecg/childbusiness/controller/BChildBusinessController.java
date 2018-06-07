@@ -112,6 +112,26 @@ public class BChildBusinessController extends BaseController {
 	}
 
 	/**
+	 * 子业务统计分析 页面跳转
+	 *
+	 * @return
+	 */
+	@RequestMapping(params = "statisticsList")
+	public ModelAndView statisticsList(HttpServletRequest request) {
+		return new ModelAndView("com/jeecg/childbusiness/bChildStatisticsList");
+	}
+
+	/**
+	 * 时限监控 页面跳转
+	 *
+	 * @return
+	 */
+	@RequestMapping(params = "limitList")
+	public ModelAndView limitList(HttpServletRequest request) {
+		return new ModelAndView("com/jeecg/childbusiness/bChildLimitList");
+	}
+
+	/**
 	 * easyui AJAX请求数据
 	 * 
 	 * @param request
@@ -139,7 +159,36 @@ public class BChildBusinessController extends BaseController {
 		this.bChildBusinessService.getDataGridReturn(cq, true);
 		TagUtil.datagrid(response, dataGrid);
 	}
-	
+
+	/**
+	 * easyui AJAX请求数据
+	 *
+	 * @param request
+	 * @param response
+	 * @param dataGrid
+	 * @param user
+	 */
+
+	@RequestMapping(params = "limitDatagrid")
+	public void limitDatagrid(BChildBusinessEntity bChildBusiness,HttpServletRequest request, HttpServletResponse response, DataGrid dataGrid) {
+		CriteriaQuery cq = new CriteriaQuery(BChildBusinessEntity.class, dataGrid);
+		//查询条件组装器
+		org.jeecgframework.core.extend.hqlsearch.HqlGenerateUtil.installHql(cq, bChildBusiness, request.getParameterMap());
+		TSUser user = ResourceUtil.getSessionUser();
+		if (ResourceUtil.getConfigByName("accept_deptid").equals(user.getCurrentDepart().getId())){
+		}else{
+			cq.eq("deptId",user.getDepartid());
+		}
+		try{
+			//自定义追加查询条件
+		}catch (Exception e) {
+			throw new BusinessException(e.getMessage());
+		}
+		cq.add();
+		this.bChildBusinessService.getDataGridReturn(cq, true);
+		TagUtil.datagrid(response, dataGrid);
+	}
+
 	/**
 	 * 删除B_CHILD_BUSINESS
 	 * 

@@ -154,7 +154,7 @@ function chooseText(temp,status) {
       <td align="center">
         <%--<span class="btn btn-success fileinput-button"><span>本地上传</span>--%>
          <span class="fileinput-button" style="background: #4eb110;;color: white;padding: 2px;width: 50px;height: 20px;"><font>本地上传</font>
-         <input class="materials" id="fileupload" type="file" name="files[]" data-url="aMaterialsUploadController.do?uploadFile&id=${material.id }&type=1"  >
+         <input class="materials" id="fileupload" type="file" name="files[]" data-url="aMaterialsUploadController.do?uploadFile&id=${material.id }&type=1" multiple="multiple" >
          &nbsp;&nbsp;  <input id="filePaths" name="filePaths" type="hidden" />
         </span>
 

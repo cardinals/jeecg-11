@@ -119,15 +119,15 @@
    <div class="timeline-icon"></div>
    <div class="timeline-content right">
     <c:if test="${childBusiness.status == '1'}">
-    <div class="timelines Two" onclick="javascript:window.location.href='bProjectBusinessController.do?loadChildLog&id=${childBusiness.id}'">
+    <div class="timelines Two" style="width: 50%;" onclick="javascript:window.location.href='bProjectBusinessController.do?loadChildLog&id=${childBusiness.id}'">
      </c:if>
      <c:if test="${childBusiness.status != '1'}">
-     <div class="timelines Two last" onclick="javascript:window.location.href='bProjectBusinessController.do?loadChildLog&id=${childBusiness.id}'">
+     <div class="timelines Two last" style="width: 50%;" onclick="javascript:window.location.href='bProjectBusinessController.do?loadChildLog&id=${childBusiness.id}'">
       </c:if>
       <div class="content-one"></div>
-      <div class="Two-title">
-       <p class="content-p iconfont icon-tongji">&nbsp;${childBusiness.dept_name}</p>
-       <p class="content-op">${childBusiness.items_name}</p>
+      <div class="Two-title" style="margin-top: 12%;">
+       <p class="content-p iconfont icon-tongji" style="margin-left: 0px;text-align: left;">&nbsp;${childBusiness.dept_name}</p>
+       <p class="content-op" style="margin-left: -30px; text-align: left; width: 130%;">${childBusiness.items_name}</p>
       </div>
      </div>
      <div class="content-right">
@@ -170,11 +170,11 @@
      <div class="timelines One" onclick="javascript:window.location.href='bProjectBusinessController.do?loadChildLog&id=${childBusiness.id}'">
       </c:if>
       <c:if test="${childBusiness.status != '1'}">
-      <div class="timelines One last" onclick="javascript:window.location.href='bProjectBusinessController.do?loadChildLog&id=${childBusiness.id}'">
+      <div class="timelines One last" style="width:50%" onclick="javascript:window.location.href='bProjectBusinessController.do?loadChildLog&id=${childBusiness.id}'">
        </c:if>
        <div class="content-one"></div>
-       <p class="content-p iconfont icon-zhiyeguihua">&nbsp;${childBusiness.dept_name}</p>
-       <p class="content-op">${childBusiness.items_name}</p>
+       <p class="content-p iconfont icon-zhiyeguihua" style="text-align: left;margin-top: 10px;">&nbsp;${childBusiness.dept_name}</p>
+       <p class="content-op" style="margin-left: 0px;text-align: left;">${childBusiness.items_name}</p>
       </div>
       <div class="content-right One-right" >
        <div class="conter-title">

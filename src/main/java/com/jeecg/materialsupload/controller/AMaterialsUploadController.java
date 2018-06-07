@@ -265,6 +265,19 @@ public class AMaterialsUploadController extends BaseController {
 		AMaterialsUploadEntity file = new AMaterialsUploadEntity();
 		file.setId(id);
 		file = aMaterialsUploadService.getEntity(AMaterialsUploadEntity.class, file.getId());
+		if(StringUtil.isNotEmpty(id) && StringUtil.isNotEmpty(file.getMaterialsPath())){
+			String getCountSql ="select count(1) as count from A_MATERIALS_UPLOAD where business_id = '"+file.getBusinessId()+"' and project_id='"+file.getProjectId()+"' " +
+					"and phases_id='"+file.getPhasesId()+"' and items_id='"+file.getItemsId()+"' and materials_id ='"+file.getMaterialsId()+"'";
+			List<Map<String, Object>> resultList2 =  systemService.findForJdbc(getCountSql);
+			Object count = resultList2.get(0).get("count");
+
+			String sql ="insert into a_materials_upload" +
+					"  (id, business_id, project_id, phases_id, items_id, materials_id, materials_path, status, create_time, update_time, remark, create_by, materials_name, materials_type)" +
+					"values  ('"+file.getId()+"_"+count+"', '"+file.getBusinessId()+"', '"+file.getProjectId()+"', '"+file.getPhasesId()+"', '"+file.getItemsId()+"'" +
+					", '"+file.getMaterialsId()+"', '', '1', '', '', '', '',  '"+file.getMaterialsName()+"','"+file.getMaterialsType()+"')";
+			int result =  systemService.updateBySqlString(sql);
+			file = aMaterialsUploadService.getEntity(AMaterialsUploadEntity.class, file.getId()+"_"+count);
+		}
 		//type==1 表示 上传的是材料 type==2 表示 上传的是证照
 //		if("1".equals(type)){
 			file.setCreateTime(new Date());

@@ -9,7 +9,7 @@
 							id="ScanCtrl" codebase="*.cab#version=1,0,0,1" width="600"
 							height="550"></object>
 					</div>
-                      
+
 					<form>
 						<table width="90%" border="0" cellspacing="0" cellpadding="0">
 							<tbody>
@@ -31,16 +31,16 @@
 								</tr>
 								<tr style="display: none;">
 								  <td>
-									  分辨率：<select id="selRes" style="width: 90px" name="selRes" onchange="changeresolution()"></select> 
+									  分辨率：<select id="selRes" style="width: 90px" name="selRes" onchange="changeresolution()"></select>
 									扫描尺寸：<select id="selScanSize" style="width: 90px" name="selScanSize" onchange="changescansize()"></select>
                                   </td>
 								</tr>
-							</tbody>							
+							</tbody>
 						</table>
 					</form>
 				</div>
 	</div>
-	<div style="float:left;width:50%;height:525px;overflow:auto;border:1px solid #CCC;padding-top: 20px;" id="imgDiv"></div> 
+	<div style="float:left;width:50%;height:525px;overflow:auto;border:1px solid #CCC;padding-top: 20px;" id="imgDiv"></div>
  <script language=JavaScript>
 $(function(){
 	contentLoad();
@@ -51,7 +51,7 @@ $(function(){
 	}else{
 		ScanCtrl.SetCurDev(0);
 		document.getElementById("selDev").value=0;
-	} 
+	}
 });
 
 function contentLoad(){
@@ -71,7 +71,7 @@ function fun(){
 	    	}
 		document.getElementById("selDev").value=iDevIndex;
 	}
-	
+
 	deloptionRotate();
 	var iRotateIndex = ScanCtrl.GetCurRotateAngle();
 	if(iRotateIndex != -1){
@@ -83,20 +83,20 @@ function fun(){
 	}
 }
 //开始预览
-function start_preview(url){   
+function start_preview(url){
 	ScanCtrl.StartPreviewEx();
 	fun();
  }
 //切换设备
 function changedev(){
     var num= ScanCtrl.GetDeviceCount();
-    var obj=document.getElementById("selDev").options; 
-    var x = obj.selectedIndex;    
-	ScanCtrl.SetCurDev(x); 
+    var obj=document.getElementById("selDev").options;
+    var x = obj.selectedIndex;
+	ScanCtrl.SetCurDev(x);
 	fun();
 }
 //停止预览
-function stop_preview(url){   
+function stop_preview(url){
 	ScanCtrl.StopPreviewEx();
 	fun();
 }
@@ -116,7 +116,7 @@ function get_name(){
 	//picName = caseCode+"_"+taskName
 	return picName;
 }
-//拍照   
+//拍照
 function TakePic(url){
 	var path="E:\\temp\\"+get_name()+".jpg";
 	ScanCtrl.EnableDateRecord(0);
@@ -176,7 +176,7 @@ function uploadImg(){
 			var a =ScanCtrl.UploadFileOfHTTP(url,objCheck[i].value ,"");
 			if(!a){
 				isSuccess=false;
-			}  
+			}
 		  }
 	  }
 	  if(isSuccess){
@@ -187,93 +187,93 @@ function uploadImg(){
 }
 //旋转角度
 function changerotate(){
-    var   obj=document.getElementById("selRotate").options; 
-    var   x = obj.selectedIndex;    
+    var   obj=document.getElementById("selRotate").options;
+    var   x = obj.selectedIndex;
     ScanCtrl.SetVideoRotate(x);
     fun();
 }
 //分辨率
 function changeresolution(){
     var num= ScanCtrl.GetResolutionCount();
-    var obj=document.getElementById("selRes").options; 
-    var x = obj.selectedIndex;    
-	ScanCtrl.SetResolution(x);  
+    var obj=document.getElementById("selRes").options;
+    var x = obj.selectedIndex;
+	ScanCtrl.SetResolution(x);
 	fun();
 
 }
 //扫描尺寸
 function changescansize(){
     var  num=ScanCtrl.GetScanSizeCount();
-    var  obj=document.getElementById("selScanSize").options; 
-    var  x = obj.selectedIndex;    
+    var  obj=document.getElementById("selScanSize").options;
+    var  x = obj.selectedIndex;
     ScanCtrl.SetScanSize(x);
     fun();
- }  
-function deloptionRes(){   
-    var obj=document.getElementById("selRes").options; 
+ }
+function deloptionRes(){
+    var obj=document.getElementById("selRes").options;
     while (obj.length > 0){
-        obj.options.remove(obj.length - 1);   
+        obj.options.remove(obj.length - 1);
     }
 }
 function addoptionRes(s){
-    var obj=document.getElementById("selRes").options; 
-    var opt = new Option(s, obj.length ); 
+    var obj=document.getElementById("selRes").options;
+    var opt = new Option(s, obj.length );
     obj.options.add(opt);
 }
 
-function deloptionScanSize(){   
-	var obj=document.getElementById("selScanSize").options; 
+function deloptionScanSize(){
+	var obj=document.getElementById("selScanSize").options;
 	while (obj.length > 0){
 	  obj.options.remove(obj.length - 1);
 	}
 }
 
 function addoptionScanSize(s){
-    var obj=document.getElementById("selScanSize").options; 
-    var opt = new Option(s, obj.length ); 
+    var obj=document.getElementById("selScanSize").options;
+    var opt = new Option(s, obj.length );
     obj.options.add(opt);
 }
 
-function deloptionColor(){   
-   var obj=document.getElementById("selColor").options; 
+function deloptionColor(){
+   var obj=document.getElementById("selColor").options;
    while (obj.length > 0){
-    obj.options.remove(obj.length - 1);   
+    obj.options.remove(obj.length - 1);
    }
 }
 
 function addoptionColor(s){
-   var obj=document.getElementById("selColor").options; 
-   var opt = new Option(s, obj.length ); 
+   var obj=document.getElementById("selColor").options;
+   var opt = new Option(s, obj.length );
    obj.options.add(opt);
 }
 
 
-function deloptionDev(){   
-   var obj=document.getElementById("selDev").options; 
+function deloptionDev(){
+   var obj=document.getElementById("selDev").options;
    while (obj.length > 0){
-    obj.options.remove(obj.length - 1);   
+    obj.options.remove(obj.length - 1);
    }
 }
 
 
 function addoptionDev(s){
-   var obj=document.getElementById("selDev").options; 
-   var opt = new Option(s, obj.length ); 
+   var obj=document.getElementById("selDev").options;
+   var opt = new Option(s, obj.length );
    obj.options.add(opt);
 }
 
 
-function deloptionRotate(){   
-   var obj=document.getElementById("selRotate").options; 
+function deloptionRotate(){
+   var obj=document.getElementById("selRotate").options;
    while (obj.length > 0)
    {
-    obj.options.remove(obj.length - 1);   
+    obj.options.remove(obj.length - 1);
    }
 }
 
 function addoptionRotate(s){
-   var obj=document.getElementById("selRotate").options; 
-   var opt = new Option(s, obj.length ); 
+   var obj=document.getElementById("selRotate").options;
+   var opt = new Option(s, obj.length );
    obj.options.add(opt);
 }
 </script>
