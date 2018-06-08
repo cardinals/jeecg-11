@@ -163,7 +163,8 @@ function chooseText(temp,status) {
        </td>
      </c:if>
       <td align="center" title="${material.file_name }">
-       <a href='aMaterialsUploadController.do?downloadFile&id=${material.id }&type=download' target='_blank'>${material.file_name }</a>
+       <%--<a href='aMaterialsUploadController.do?downloadFile&id=${material.id }&type=download' target='_blank'>${material.file_name }</a>--%>
+       <a href='bProjectBusinessController.do?fileView&id=${material.id }&type=download' target='_blank'>${material.file_name }...</a>
       </td>
       </tr>
     </c:forEach>

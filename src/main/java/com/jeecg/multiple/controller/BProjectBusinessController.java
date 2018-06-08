@@ -213,7 +213,7 @@ public class BProjectBusinessController extends BaseController {
 					" and f.business_id = e.business_id"+
 					" and f.items_id = c.items_id || c.items_child_id"+
 					" and f.materials_id = d.materials_id and f.materials_type = '1'" +
-					" and e.business_id = '"+bProjectBusiness.getBusinessId()+"' and d.items_id = '"+itemsId+"'  order by c.items_id || c.items_child_id";
+					" and e.business_id = '"+bProjectBusiness.getBusinessId()+"' and d.items_id = '"+itemsId+"' and length(f.id) = 32  order by c.items_id || c.items_child_id";
 			check_sql = "select dept_id,dept_name,items_name,items_id,check_content,check_time,check_status from B_CHILD_BUSINESS t " +
 					"where business_id ='"+bProjectBusiness.getBusinessId()+"' " +
 					"and items_id = '"+itemsId+"' order by items_id  ";
@@ -229,7 +229,7 @@ public class BProjectBusinessController extends BaseController {
 					" and f.items_id = c.items_id || c.items_child_id"+
 					" and f.materials_id = d.materials_id and f.materials_type = '1'" +
 					" and e.business_id = '"+bProjectBusiness.getBusinessId()+"'" +
-					" and c.dept_id = '"+user.getCurrentDepart().getId()+"' and d.items_id = '"+itemsId+"' order by c.items_id || c.items_child_id" ;
+					" and c.dept_id = '"+user.getCurrentDepart().getId()+"' and d.items_id = '"+itemsId+"' and length(f.id) = 32 order by c.items_id || c.items_child_id" ;
 			check_sql = "select dept_id,dept_name,items_name,items_id,check_content,check_time,check_status from B_CHILD_BUSINESS t " +
 					"where business_id ='"+bProjectBusiness.getBusinessId()+"' " +
 					" and items_id='"+itemsId+"'  order by items_id  ";
@@ -242,7 +242,37 @@ public class BProjectBusinessController extends BaseController {
 		req.setAttribute("checklList", checklList);
 		return new ModelAndView("com/jeecg/multiple/bBusinessMaterailList");
 	}
+	/**
+	 * 跳转至文件预览页面
+	 *
+	 * @return
+	 */
+	@RequestMapping(params = "fileView")
+	public ModelAndView fileView(AMaterialsUploadEntity file, HttpServletRequest req,DataGrid dataGrid) {
+		if (StringUtil.isNotEmpty(file.getId())) {
+			file = aMaterialsUploadService.getEntity(AMaterialsUploadEntity.class, file.getId());
+			req.setAttribute("file", file);
+		}
+		TSUser user = ResourceUtil.getSessionUser();
+		String sql ="";
 
+//		if (ResourceUtil.getConfigByName("accept_deptid").equals(user.getCurrentDepart().getId())){
+			sql = "select *" +
+					"  from A_MATERIALS_UPLOAD" +
+					" where business_id = '"+file.getBusinessId()+"'" +
+					"   and project_id = '"+file.getProjectId()+"'" +
+					"   and phases_id = '"+file.getPhasesId()+"'" +
+					"   and items_id = '"+file.getItemsId()+"'" +
+					"   and materials_id = '"+file.getMaterialsId()+"'";
+
+//		}else{
+//			sql = "" ;
+//		}
+
+		List<Map<String, Object>> fileList =  systemService.findForJdbc(sql);
+		req.setAttribute("fileList", fileList);
+		return new ModelAndView("com/jeecg/multiple/fileViewList");
+	}
 
 	/**
 	 * 跳转高拍仪页面

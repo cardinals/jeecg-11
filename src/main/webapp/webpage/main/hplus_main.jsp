@@ -111,6 +111,10 @@
         border-bottom: solid 2px #2f4050;
         background: #b9eaef;
     }
+    .nav-second-level li a {
+        padding: 7px 15px 7px 10px;
+        padding-left: 40px;
+    }
 </style>
 </head>
 

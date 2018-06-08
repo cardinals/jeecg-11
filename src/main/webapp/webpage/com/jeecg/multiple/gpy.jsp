@@ -15,8 +15,8 @@
 				<tbody>
 				<tr>
 					<td align="center">
-						<%--<button type="button" class="btn btn-default" onclick="start_preview()">开始预览</button>
-						<button type="button" class="btn btn-default" onclick="stop_preview()">停止预览</button>--%>
+						<button type="button" class="btn btn-default" onclick="start_preview()">开始预览</button>
+						<button type="button" class="btn btn-default" onclick="stop_preview()">停止预览</button>
 						<button type="button" class="btn btn-default" onclick="TakePic()">拍照</button>
 						<button type="button" class="btn btn-default" onclick="selectAll()">全选</button>
 						<button type="button" class="btn btn-default" onclick="unSelectAll()">反选</button>
@@ -42,17 +42,17 @@
 </div>
 <div style="float:left;width:50%;height:525px;overflow:auto;border:1px solid #CCC;padding-top: 20px;" id="imgDiv"></div>
 <script language=JavaScript>
+
     $(function(){
         contentLoad();
         var devName = ScanCtrl.GetDevName(1);
-//        if(devName=="GF810"){
+        if(devName=="GF810"){
             ScanCtrl.SetCurDev(1);
             document.getElementById("selDev").value=1;
-//        }else{
-//            ScanCtrl.SetCurDev(0);
-//            document.getElementById("selDev").value=0;
-//        }
-        start_preview();
+        }else{
+            ScanCtrl.SetCurDev(0);
+            document.getElementById("selDev").value=0;
+        }
     });
 
     function contentLoad(){
