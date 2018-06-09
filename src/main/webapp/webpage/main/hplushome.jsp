@@ -63,7 +63,7 @@
             </div>
             <div class="pull-left t2_common_lr_left">
                 <div class="panel panel-primary t2-delsb t2-panel t2-panel_style1">
-                    <div class="panel-heading"> <a href="javascript:void(0)" class="t2-panel-more">更多</a>
+                    <div class="panel-heading"> <a href="javascript:void(0)" style="line-height: 30px;" class="t2-panel-more">更多</a>
                         <h3 class="panel-title"><span><img src="plug-in/hplushome/images/index_icon4.png" alt="" style="margin-bottom:3px"/></span> 关注业务</h3>
                     </div>
                     <div class="panel-body">
@@ -80,9 +80,9 @@
             </div>
             <!--   t2_common_lmr_left end  -->
 
-            <div class="pull-right t2_common_lr_right">
+            <div class="pull-right t2_common_lr_right" style="margin-left: 8%;float: left!important;width:;40%;">
                 <div class="panel panel-primary t2-delsb t2-panel t2-panel_style1">
-                    <div class="panel-heading"> <a href="javascript:void(0)" class="t2-panel-more">更多</a>
+                    <div class="panel-heading"> <a href="javascript:void(0)" style="line-height: 30px;" class="t2-panel-more">更多</a>
                         <h3 class="panel-title"><span><img src="plug-in/hplushome/images/index_icon5.png" alt="" style="margin-bottom:3px"/></span> 系统公告</h3>
                     </div>
                     <div class="panel-body">

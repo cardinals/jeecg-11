@@ -812,8 +812,8 @@ public class LoginController extends BaseController{
 					" where b.confirm_upload_time is null and substr(a.current_phases,-3) >=substr(b.phases_id,-3)";
 		}else if("check".equals(type)){
 			getCountSql =" select count(1) as count from B_CHILD_BUSINESS a" +
-					" where (a.confirm_upload_time is not null and a.check_status is null)" +
-					"    or (a.confirm_upload_time > a.check_time and a.check_status = '0')" +
+					" where ((a.confirm_upload_time is not null and a.check_status is null)" +
+					"    or (a.confirm_upload_time > a.check_time and a.check_status = '0'))" +
 					"   and a.dept_id ='" +user.getDepartid() +"'";
 		}
 

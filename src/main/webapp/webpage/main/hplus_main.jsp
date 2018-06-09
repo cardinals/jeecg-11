@@ -40,7 +40,7 @@
         background-color: #0074d7;
     }
     .menu-text{
-        font-size: 17px;
+        font-size: 15px;
         color: white;
     }
     .slimScrollDiv{
@@ -55,12 +55,12 @@
         border-bottom: 1px #2020b3 solid;
     }
     .page-tabs a.active {
-        background: #ffb400;
-        color: #000000;
+        background: #0088fe;
+        color: #fff;
         font-size: 15px;
     }
     .page-tabs a.active:hover, .page-tabs a.active i:hover {
-        background: #8a8c0a;
+        background: #096bbf;
         color: #fff;
     }
     .page-tabs a {
@@ -81,7 +81,7 @@
     .nav > li.active {
         border-left: 4px solid #19aa8d;
         background: #0073d6;
-        opacity: 0.8;
+        opacity: 1;
     }
     .navbar .dropdown-menu {
         margin-top: 0px;
@@ -94,7 +94,7 @@
     .nav .open > a, .nav .open > a:hover, .nav .open > a:focus {
         background: #1965b3;
     }
-    .content-tabs .roll-left {
+    /*.content-tabs .roll-left {
         left: 0;
         background: #5ed3e6;
         border-right: solid 1px #eee;
@@ -102,15 +102,15 @@
     .roll-right.J_tabRight {
         right: 80px;
         background: #5ed3e6;
-    }
-    .roll-right.btn-group button {
+    }*/
+    /*.roll-right.btn-group button {
         width: 80px;
         background: #e88787;
-    }
-    .content-tabs {
+    }*/
+  /*  .content-tabs {
         border-bottom: solid 2px #2f4050;
-        background: #b9eaef;
-    }
+        background: #0072d4;
+    }*/
     .nav-second-level li a {
         padding: 7px 15px 7px 10px;
         padding-left: 40px;
@@ -121,9 +121,9 @@
 <body class="fixed-sidebar full-height-layout gray-bg" style="overflow:hidden">
 <div id="wrapper">
     <!--头部开始-->
-    <div style="height: 60px;width: 100%;">
-        <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0;background-image:url(plug-in/login_new/nav--One.png)">
-            <div class="navbar-header" style="height: 60px;">
+    <div style="height: 75px;width: 100%;">
+        <nav class="navbar navbar-static-top" role="navigation" style="height: 75px;margin-bottom: 0;background-image:url(plug-in/login_new/nav--One.png)">
+            <div class="navbar-header" style="height: 60px;margin-top: 9px;">
                 <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-bars"></i> </a>
                 <form role="search" style="width: 88%;" class="navbar-form-custom" method="post" action="search_results.html">
                     <div class="form-group" >
@@ -135,7 +135,7 @@
             </div>
 
 
-            <ul class="nav navbar-top-links navbar-right" style="width: 25%;">
+            <ul class="nav navbar-top-links navbar-right" style="width: 25%;margin-top: 14px;">
                  <%-- <li class="dropdown">
                      <a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">
                          <i class="fa fa-envelope"></i> <span class="label label-warning">0</span>
@@ -302,8 +302,8 @@
 		.proccess b{vertical-align:middle;background:url(plug-in/layer/skin/default/loading-0.gif) no-repeat 0 center;padding-left:55px;display:inline-block;}  
 		-->  
 		</style> 
-        <div class="row J_mainContent" id="content-main" style="margin-left:-13px;height: calc(100% - 103px);padding: 8px;">
-            <div class="proccess" id="panelloadingDiv"><b>&nbsp;</b></div> 
+        <div class="row J_mainContent" id="content-main" style="margin-left:-13px;height: calc(100% - 118px);padding: 8px;">
+            <div class="proccess" id="panelloadingDiv" style="margin-top: 9%;"><b>&nbsp;</b></div>
             <iframe class="J_iframe" name="iframe0" width="100%" height="100%" src="loginController.do?hplushome" frameborder="0" data-id="loginController.do?hplushome" seamless></iframe>
         </div>
         <%--<div class="footer" style="border-top:none;">

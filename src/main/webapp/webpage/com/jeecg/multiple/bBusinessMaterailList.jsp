@@ -105,7 +105,7 @@ function chooseText(temp,status) {
    <t:formvalid formid="formobj" dialog="true" usePlugin="password" layout="table" action="bProjectBusinessController.do?doCheck" >
    <table style="width: 100%;" cellpadding="0" cellspacing="1" class="formtable" >
     <thead>
-    <tr style="height: 42px;background: #e897ad;">
+    <tr style="height: 42px;background: #81b5e2">
      <th align="center" style="width: 4%;">序号</th>
      <%--<th align="center" style="width: 15%;">部门名称</th>
      <th align="center" style="width: 25%;">事项名称</th>--%>
@@ -131,7 +131,7 @@ function chooseText(temp,status) {
       <tr style="height: 42px;background: #ebecdb;">
      </c:if>
      <c:if test="${stuts.index % 2 != 0}">
-      <tr style="height: 42px;background: #d5d5e0;">
+      <tr style="height: 42px;background: #f8f8f9;">
      </c:if>
       <td align="center"><div style="width: 25px;" name="xh">${stuts.index+1 }</div></td>
 
@@ -164,7 +164,7 @@ function chooseText(temp,status) {
      </c:if>
       <td align="center" title="${material.file_name }">
        <%--<a href='aMaterialsUploadController.do?downloadFile&id=${material.id }&type=download' target='_blank'>${material.file_name }</a>--%>
-       <a href='bProjectBusinessController.do?fileView&id=${material.id }&type=download' target='_blank'>${material.file_name }...</a>
+       <a href='bProjectBusinessController.do?fileView&id=${material.id }&type=download' target='_blank'>${material.file_name }</a>
       </td>
       </tr>
     </c:forEach>
@@ -221,7 +221,7 @@ function chooseText(temp,status) {
       <tr style="height: 42px;background: #ebecdb;">
        </c:if>
        <c:if test="${stuts.index % 2 != 0}">
-      <tr style="height: 42px;background: #d5d5e0;">
+      <tr style="height: 42px;background: #f8f8f9;">
        </c:if>
          <td align="center"><div style="width: 25px;" name="xh">${stuts.index+1 }</div></td>
          <td align="center">

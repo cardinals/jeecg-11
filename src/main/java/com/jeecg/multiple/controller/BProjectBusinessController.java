@@ -355,7 +355,7 @@ public class BProjectBusinessController extends BaseController {
 				"      and a.phases_id = b.phases_id" +
 				"      and a.items_id = b.items_id" +
 				"      and b.materials_type = '2' and a.status = '1'" +
-				"      and a.business_id = '"+bProjectBusiness.getBusinessId()+"' order by a.phases_id ";
+				"      and a.business_id = '"+bProjectBusiness.getBusinessId()+"' and length(b.id) = 32 order by a.phases_id ";
 		List<Map<String, Object>> certificateList =  systemService.findForJdbc(sql);
 		req.setAttribute("certificateList", certificateList);
 		req.setAttribute("deptId", user.getDepartid());

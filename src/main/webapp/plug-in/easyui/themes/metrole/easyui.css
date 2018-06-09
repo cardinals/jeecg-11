@@ -1074,8 +1074,8 @@ a:hover.l-btn-disabled {
 .datagrid-header-row{
   font-weight: bold;
   height: 25px;
- background-color: #5bb5ea;
-  color: white;
+  background-color:#F9F9F9;
+  color: black;
 }
 /*update-end--Author:xuelin  Date:20170517 for：TASK#1969::【UI美化】h+风格下，列表整体风格有点灰------------------- */
 .datagrid-row {

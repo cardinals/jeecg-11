@@ -81,7 +81,7 @@
   <div region="center" style="padding:0px;border:0px">
    <table style="width: 100%;" cellpadding="0" cellspacing="1" class="formtable table table-hover" >
     <thead>
-    <tr style="height: 42px;background: #e897ad;">
+    <tr style="height: 42px;background: #81b5e2">
      <th align="center" style="width: 3%;">序号</th>
      <th align="center" style="width: 15%;">部门名称</th>
      <%--<th align="center" style="width: 20%;">实际项目名称</th>--%>
@@ -102,7 +102,7 @@
       <tr style="height: 42px;background: #ebecdb;">
      </c:if>
      <c:if test="${stuts.index % 2 != 0}">
-      <tr style="height: 42px;background: #d5d5e0;">
+      <tr style="height: 42px;background: #f8f8f9;">
      </c:if>
       <td align="center"><div style="width: 25px;" name="xh">${stuts.index+1 }</div></td>
 
@@ -168,7 +168,8 @@
 
 
       <td align="left" title="${certificate.file_name }">
-       <a href='aMaterialsUploadController.do?downloadFile&id=${certificate.id }&type=download' target='_blank'>${certificate.file_name }</a>
+       <%--<a href='aMaterialsUploadController.do?downloadFile&id=${certificate.id }&type=download' target='_blank'>${certificate.file_name }</a>--%>
+       <a href='bProjectBusinessController.do?fileView&id=${certificate.id }&type=download' target='_blank'>${certificate.file_name }</a>
       </td>
 
       </tr>

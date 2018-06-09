@@ -10,7 +10,18 @@
  <script type="text/javascript">
      $(function(){
      });
-
+     function deleteFile(fileId) {
+         debugger;
+         $.post("aMaterialsUploadController.do?delFile&fileId="+fileId,function(data){
+             var d = $.parseJSON(data);
+             if (d.success) {
+                 alert(d.msg);
+                 location.reload();
+             }else{
+                 alert(d.msg);
+             }
+         });
+     }
  </script>
 
 </head>
@@ -22,8 +33,14 @@
  <c:if test="${stuts.index % 2 != 0}">
 2222:${file.materials_name} ---<img src="${file.materials_path}">
  </c:if>--%>
- <a href='aMaterialsUploadController.do?downloadFile&id=${file.id }&type=download' target='_blank'>${fn:substring(file.materials_name, 36,-1)}</a><br>
- <img src="${file.materials_path}"><br>
+ <div style="height: 240px;width: 240px;float: left">
+  <img src="${file.materials_path}" style="width:180px;height: 180px "><br>
+  下载：<a href='aMaterialsUploadController.do?downloadFile&id=${file.id }&type=download' target='_blank'>${fn:substring(file.materials_name, 36,60)}</a><br>
+  删除：<a href='javascript:void(0)' onclick="deleteFile('${file.id }')">${fn:substring(file.materials_name, 36,60)}</a><br>
+ </div>
+
+ <%--下载：<a href='${file.materials_path}' target='_blank'>${fn:substring(file.materials_name, 36,-1)}</a><br>--%>
+
 
 </c:forEach>
 

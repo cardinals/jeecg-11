@@ -52,7 +52,7 @@ table.ui_border,table.ui_dialog{ width:auto;border-spacing:0;*border-collapse:co
 /*update--begin--author:zhangjiaqiang date:20170303 for:修订对话框风格 */
 /*==================================miller===============================*/ 
 /*.ui_lt,.ui_rt,.ui_lb,.ui_rb,.ui_t,.ui_b{ background-image:url(iblue/iblue_s.png);background-repeat:no-repeat; }*/
-.ui_lt,.ui_rt,.ui_lb,.ui_rb,.ui_t,.ui_b{background: #18a689!important;}
+.ui_lt,.ui_rt,.ui_lb,.ui_rb,.ui_t,.ui_b{background: #0088fe!important;}
 /*update--end--author:zhangjiaqiang date:20170303 for:修订对话框风格 */
 .ui_lt{ width:13px;height:36px;background-position:0 0;_png:iblue/ie6/ui_lt.png; }
 .ui_rt{ width:13px;height:36px;background-position:-13px 0;_png:iblue/ie6/ui_rt.png; }
