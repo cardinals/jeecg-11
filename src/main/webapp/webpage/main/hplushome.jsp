@@ -25,6 +25,14 @@
         function public(){
             createdetailwindow("公告", "noticeController.do?publicList","700","500");
         }
+        //待上传
+        function waitUpload(){
+            createdetailwindow("待上传", "bProjectBusinessController.do?list","1000","500");
+        }
+        //待审核
+        function waitCheck(){
+            createdetailwindow("待审核", "bProjectBusinessController.do?list","1000","500");
+        }
     </script>
 </head>
 
@@ -39,13 +47,13 @@
             <h1 class="t2_nytitle">待处理业务</h1>
             <div class="gzzjgl_content block_icon clearfix">
                 <c:if test="${role =='WINDOW_ACCEPT'}">
-                    <a href="#" class="t2-xuanzhuan">
+                    <a href="javascript:void(0);" class="t2-xuanzhuan" onclick="waitUpload()">
                         <span class="duigou t2-abs">${witeUploadCount}</span>
                         <img src="plug-in/hplushome/images/sx_img1.png" alt="" /><br />待上传
                     </a>
                 </c:if>
                 <c:if test="${role =='DEPT_CHECK_ROLE'}">
-                    <a href="#" class="t2-xuanzhuan">
+                    <a href="javascript:void(0);" class="t2-xuanzhuan" onclick="waitCheck()">
                         <span class="duigou t2-abs">${witeCheckCount}</span>
                         <img src="plug-in/hplushome/images/sx_img1.png" alt="" /><br />待审核
                     </a>

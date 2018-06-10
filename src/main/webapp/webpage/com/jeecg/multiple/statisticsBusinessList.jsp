@@ -3,13 +3,13 @@
 <t:base type="jquery,easyui,tools,DatePicker"></t:base>
 <div class="easyui-layout" fit="true">
   <div region="center" style="padding:0px;border:0px">
-  <t:datagrid name="bProjectBusinessList"  pagination="true" fitColumns="true" title="材料信息" actionUrl="bProjectBusinessController.do?datagrid" idField="id" fit="true" queryMode="group">
+  <t:datagrid name="bProjectBusinessList"  pagination="true" fitColumns="true" title="并联业务统计" actionUrl="bProjectBusinessController.do?datagrid" idField="id" fit="true" queryMode="group">
    <t:dgCol title="主键"  field="id"  hidden="true"  queryMode="group"  width="120"></t:dgCol>
    <t:dgCol title="业务流水号"  field="businessId"  query="true"  width="120"></t:dgCol>
    <t:dgCol title="项目名称"  field="realityProjectName"  query="true"  width="150"></t:dgCol>
    <t:dgCol title="项目id"  field="projectId"  hidden="true"  queryMode="group"  width="120"></t:dgCol>
    <t:dgCol title="用地类型"  field="projectName"  queryMode="group"  width="120"></t:dgCol>
-   <%--<t:dgCol title="项目状态"  field="projectStatus"  queryMode="group" replace="材料上传_1,材料审核_2" width="80"></t:dgCol>--%>
+   <t:dgCol title="项目状态"  field="projectStatus"  queryMode="group" replace="在办_0,办结_1" width="80"></t:dgCol>
    <t:dgCol title="证照上传状态"  field="certificateStatus"  hidden="true"  queryMode="group"  width="120"></t:dgCol>
    <t:dgCol title="当前阶段编号"  field="currentPhases" hidden="true"  queryMode="group"  width="80"></t:dgCol>
    <t:dgCol title="当前阶段状态"  field="currentPhasesStatus"  hidden="true"  queryMode="group"  width="120"></t:dgCol>
@@ -24,17 +24,18 @@
 
    <t:dgCol title="操作" field="opt" width="120"></t:dgCol>
    <t:dgFunOpt funname="accept(id)" title="查看"  urlclass="ace_button"  urlfont="fa-copy"></t:dgFunOpt>
+   <t:dgFunOpt funname="loadBusinessLog(id)" title="流程日志"  urlclass="ace_button"  urlfont="fa-copy"></t:dgFunOpt>
    <%--<t:dgFunOpt funname="uploadMaterial(id)" title="材料上传"  urlclass="ace_button"  urlfont="fa-copy"></t:dgFunOpt>
    <t:dgFunOpt funname="uploadCertificate(id)" title="证照上传"  urlclass="ace_button"  urlfont="fa-copy"></t:dgFunOpt>--%>
-
+<%--
    <c:if test="${role =='WINDOW_ACCEPT'}">
     <t:dgFunOpt funname="uploadcl(id)" title="材料上传"  urlclass="ace_button"  urlfont="fa-copy"></t:dgFunOpt>
-    <%--<t:dgDelOpt title="删除" url="bProjectBusinessController.do?doDel&id={id}" urlclass="ace_button"  urlfont="fa-trash-o"/>--%>
+    &lt;%&ndash;<t:dgDelOpt title="删除" url="bProjectBusinessController.do?doDel&id={id}" urlclass="ace_button"  urlfont="fa-trash-o"/>&ndash;%&gt;
    </c:if>
    <c:if test="${role =='DEPT_CHECK_ROLE'}">
     <t:dgFunOpt funname="uploadcl(id)" title="材料审核"  urlclass="ace_button"  urlfont="fa-copy"></t:dgFunOpt>
-   </c:if>
-   <%--<t:dgFunOpt funname="loadBusinessLog(id)" title="流程日志"  urlclass="ace_button"  urlfont="fa-copy"></t:dgFunOpt>--%>
+   </c:if>--%>
+
    <%--<t:dgDelOpt title="删除" url="bProjectBusinessController.do?doDel&id={id}" urlclass="ace_button"  urlfont="fa-trash-o"/>--%>
    <%--<t:dgToolBar title="录入" icon="icon-add" url="bProjectBusinessController.do?goAdd" funname="add"></t:dgToolBar>
    <t:dgToolBar title="编辑" icon="icon-edit" url="bProjectBusinessController.do?goUpdate" funname="update"></t:dgToolBar>
@@ -88,10 +89,10 @@ function uploadCertificate(id){
      }
 
  }
-////流程日志
-//function loadBusinessLog(id){
-//    window.open("bProjectBusinessController.do?loadBusinessLog&id="+id);
-//}
+//流程日志
+function loadBusinessLog(id){
+    window.open("bProjectBusinessController.do?loadBusinessLog&id="+id);
+}
 //导入
 function ImportXls() {
 	openuploadwin('Excel导入', 'bProjectBusinessController.do?upload', "bProjectBusinessList");

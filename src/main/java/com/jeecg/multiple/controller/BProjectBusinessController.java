@@ -309,7 +309,7 @@ public class BProjectBusinessController extends BaseController {
 		if (ResourceUtil.getConfigByName("accept_deptid").equals(user.getCurrentDepart().getId())){
 			condition = "and substr(a.phases_id,-3) <='" +bProjectBusiness.getCurrentPhases().substring(bProjectBusiness.getCurrentPhases().length()-3) +"'";
 		}else{
-			condition = "and a.dept_id ='" +user.getDepartid() +"'";
+			condition = "and a.dept_id ='" +user.getDepartid() +"'"+"and substr(a.phases_id,-3) <='" +bProjectBusiness.getCurrentPhases().substring(bProjectBusiness.getCurrentPhases().length()-3) +"'";
 		}
 		String sql = "select a.business_id,a.project_id,substr(a.phases_id,-3) as phases_id , a.items_id,a.items_name ,a.dept_id,a.dept_name,a.reality_project_name,b.id, " +
 				" a.check_status, a.confirm_upload_time, CASE" +
@@ -524,19 +524,34 @@ public class BProjectBusinessController extends BaseController {
 	}
 
     /**
-     * 并联业务信息列表 页面跳转
+     * 并联业务统计列表 页面跳转
      *
      * @return
      */
-    @RequestMapping(params = "businessLoglist")
-    public ModelAndView businessLoglist(HttpServletRequest request) {
+    @RequestMapping(params = "statisticsBusinessList")
+    public ModelAndView statisticsBusinessList(HttpServletRequest request) {
         TSUser user = ResourceUtil.getSessionUser();
         //前台获取权限
         if (ResourceUtil.getConfigByName("accept_deptid").equals(user.getCurrentDepart().getId())){
             request.setAttribute("role", BusinessUtil.WINDOW_ACCEPT);
         }
-        return new ModelAndView("com/jeecg/multiple/bProjectBusinessLogList");
+        return new ModelAndView("com/jeecg/multiple/statisticsBusinessList");
     }
+
+	/**
+	 *并联业务日志信息列表 页面跳转
+	 *
+	 * @return
+	 */
+	@RequestMapping(params = "businessLoglist")
+	public ModelAndView businessLoglist(HttpServletRequest request) {
+		TSUser user = ResourceUtil.getSessionUser();
+		//前台获取权限
+		if (ResourceUtil.getConfigByName("accept_deptid").equals(user.getCurrentDepart().getId())){
+			request.setAttribute("role", BusinessUtil.WINDOW_ACCEPT);
+		}
+		return new ModelAndView("com/jeecg/multiple/bProjectBusinessLogList");
+	}
 	/**
 	 * 证照管理列表 页面跳转
 	 *
@@ -662,7 +677,8 @@ public class BProjectBusinessController extends BaseController {
 		message = "并联业务信息添加成功";
 		try{
 			bProjectBusiness.setCurrentPhases(bProjectBusiness.getProjectId() + "-001");
-			bProjectBusiness.setProjectStatus("1");
+			//ProjectStatus 0 ：在办  ； 1：办结
+			bProjectBusiness.setProjectStatus("0");
 			bProjectBusinessService.save(bProjectBusiness);
 			systemService.addLog(message, Globals.Log_Type_INSERT, Globals.Log_Leavel_INFO);
 			//1.插入子项业务信息

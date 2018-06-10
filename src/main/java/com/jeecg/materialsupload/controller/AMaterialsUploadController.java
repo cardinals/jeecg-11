@@ -185,7 +185,9 @@ public class AMaterialsUploadController extends BaseController {
 		String id = request.getParameter("id");
 		String type = request.getParameter("type");
 		AMaterialsUploadEntity file = systemService.getEntity(AMaterialsUploadEntity.class,id);
+		String rootPath = request.getSession().getServletContext().getRealPath("/");
 		String filePath = file.getMaterialsPath();
+		filePath = rootPath + filePath;
 		String name = file.getMaterialsName();
 		if("download".equals(type)){
 			name = new String(name.getBytes("GBK"),"ISO-8859-1");

@@ -145,7 +145,7 @@
 							<label class="Validform_label" style="display: none;">所剩时限</label>
 						</td>
 					</tr>
-					<%--<tr>
+					<tr>
 						<td align="right">
 							<label class="Validform_label">
 								业务状态:
@@ -158,81 +158,83 @@
 						</td>
 						<td align="right">
 							<label class="Validform_label">
-								预审内容:
-							</label>
-						</td>
-						<td class="value">
-						    <input id="checkContent" name="checkContent" type="text" style="width: 150px" class="inputxt"  ignore="ignore"  value='${bChildBusinessPage.checkContent}'/>
-							<span class="Validform_checktip"></span>
-							<label class="Validform_label" style="display: none;">预审内容</label>
-						</td>
-					</tr>
-					<tr>
-						<td align="right">
-							<label class="Validform_label">
-								预审时间:
-							</label>
-						</td>
-						<td class="value">
-									  <input id="checkTime" name="checkTime" type="text" style="width: 150px"  class="Wdate" onClick="WdatePicker()"  ignore="ignore" value='<fmt:formatDate value='${bChildBusinessPage.checkTime}' type="date" pattern="yyyy-MM-dd"/>'/>
-							<span class="Validform_checktip"></span>
-							<label class="Validform_label" style="display: none;">预审时间</label>
-						</td>
-						<td align="right">
-							<label class="Validform_label">
 								remark:
 							</label>
 						</td>
 						<td class="value">
-						    <input id="remark" name="remark" type="text" style="width: 150px" class="inputxt"  ignore="ignore"  value='${bChildBusinessPage.remark}'/>
+							<input id="remark" name="remark" type="text" style="width: 150px" class="inputxt"  ignore="ignore"  value='${bChildBusinessPage.remark}'/>
 							<span class="Validform_checktip"></span>
 							<label class="Validform_label" style="display: none;">remark</label>
 						</td>
 					</tr>
-					<tr>
-						<td align="right">
-							<label class="Validform_label">
-								证照名称:
-							</label>
-						</td>
-						<td class="value">
-						    <input id="certificateName" name="certificateName" type="text" style="width: 150px" class="inputxt"  ignore="ignore"  value='${bChildBusinessPage.certificateName}'/>
-							<span class="Validform_checktip"></span>
-							<label class="Validform_label" style="display: none;">证照名称</label>
-						</td>
-						<td align="right">
-							<label class="Validform_label">
-								证照路径:
-							</label>
-						</td>
-						<td class="value">
-						    <input id="certificatePath" name="certificatePath" type="text" style="width: 150px" class="inputxt"  ignore="ignore"  value='${bChildBusinessPage.certificatePath}'/>
-							<span class="Validform_checktip"></span>
-							<label class="Validform_label" style="display: none;">证照路径</label>
-						</td>
-					</tr>
-					<tr>
-						<td align="right">
-							<label class="Validform_label">
-								证照上传时间:
-							</label>
-						</td>
-						<td class="value">
-									  <input id="certificateTime" name="certificateTime" type="text" style="width: 150px"  class="Wdate" onClick="WdatePicker()"  ignore="ignore" value='<fmt:formatDate value='${bChildBusinessPage.certificateTime}' type="date" pattern="yyyy-MM-dd"/>'/>
-							<span class="Validform_checktip"></span>
-							<label class="Validform_label" style="display: none;">证照上传时间</label>
-						</td>
-						<td align="right">
-							<label class="Validform_label">
-								上传人:
-							</label>
-						</td>
-						<td class="value">
-						    <input id="createBy" name="createBy" type="text" style="width: 150px" class="inputxt"  ignore="ignore"  value='${bChildBusinessPage.createBy}'/>
-							<span class="Validform_checktip"></span>
-							<label class="Validform_label" style="display: none;">上传人</label>
-						</td>
-					</tr>--%>
+				<%--
+                        <tr>
+                            <td align="right">
+                                <label class="Validform_label">
+                                    预审时间:
+                                </label>
+                            </td>
+                            <td class="value">
+                                          <input id="checkTime" name="checkTime" type="text" style="width: 150px"  class="Wdate" onClick="WdatePicker()"  ignore="ignore" value='<fmt:formatDate value='${bChildBusinessPage.checkTime}' type="date" pattern="yyyy-MM-dd"/>'/>
+                                <span class="Validform_checktip"></span>
+                                <label class="Validform_label" style="display: none;">预审时间</label>
+                            </td>
+                            <td align="right">
+								<label class="Validform_label">
+									预审内容:
+								</label>
+							</td>
+							<td class="value">
+								<input id="checkContent" name="checkContent" type="text" style="width: 150px" class="inputxt"  ignore="ignore"  value='${bChildBusinessPage.checkContent}'/>
+								<span class="Validform_checktip"></span>
+								<label class="Validform_label" style="display: none;">预审内容</label>
+							</td>
+
+                        </tr>
+                        <tr>
+                            <td align="right">
+                                <label class="Validform_label">
+                                    证照名称:
+                                </label>
+                            </td>
+                            <td class="value">
+                                <input id="certificateName" name="certificateName" type="text" style="width: 150px" class="inputxt"  ignore="ignore"  value='${bChildBusinessPage.certificateName}'/>
+                                <span class="Validform_checktip"></span>
+                                <label class="Validform_label" style="display: none;">证照名称</label>
+                            </td>
+                            <td align="right">
+                                <label class="Validform_label">
+                                    证照路径:
+                                </label>
+                            </td>
+                            <td class="value">
+                                <input id="certificatePath" name="certificatePath" type="text" style="width: 150px" class="inputxt"  ignore="ignore"  value='${bChildBusinessPage.certificatePath}'/>
+                                <span class="Validform_checktip"></span>
+                                <label class="Validform_label" style="display: none;">证照路径</label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="right">
+                                <label class="Validform_label">
+                                    证照上传时间:
+                                </label>
+                            </td>
+                            <td class="value">
+                                          <input id="certificateTime" name="certificateTime" type="text" style="width: 150px"  class="Wdate" onClick="WdatePicker()"  ignore="ignore" value='<fmt:formatDate value='${bChildBusinessPage.certificateTime}' type="date" pattern="yyyy-MM-dd"/>'/>
+                                <span class="Validform_checktip"></span>
+                                <label class="Validform_label" style="display: none;">证照上传时间</label>
+                            </td>
+                            <td align="right">
+                                <label class="Validform_label">
+                                    上传人:
+                                </label>
+                            </td>
+                            <td class="value">
+                                <input id="createBy" name="createBy" type="text" style="width: 150px" class="inputxt"  ignore="ignore"  value='${bChildBusinessPage.createBy}'/>
+                                <span class="Validform_checktip"></span>
+                                <label class="Validform_label" style="display: none;">上传人</label>
+                            </td>
+                        </tr>--%>
 				
 			</table>
 		</t:formvalid>

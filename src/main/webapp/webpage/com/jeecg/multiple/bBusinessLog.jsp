@@ -59,7 +59,7 @@
       <div class="round"><div class="circle"><p class="circle-title">${phase.phases_sort}</p><p class="circle-p">阶段</p></div></div>
      </c:if>
      <dt class="section-dt"></dt>
-     <div class="dt-title">${phase.phases_name}</div>
+     <div class="dt-title" style="text-align: left">${phase.phases_name}</div>
     </dl>
    </c:if>
    <c:if test="${stuts.index % 2 != 0}">

@@ -15,7 +15,7 @@
 		<table style="width: 600px;" cellpadding="0" cellspacing="1" class="formtable">
 					<tr>
 
-						<td align="right">
+						<%--<td align="right">
 							<label class="Validform_label">
 								项目id:
 							</label>
@@ -24,16 +24,26 @@
 						    <input id="projectId" name="projectId" type="text" style="width: 150px" class="inputxt"  ignore="ignore" readonly="readonly" value='${bProjectBusinessPage.projectId}'/>
 							<span class="Validform_checktip"></span>
 							<label class="Validform_label" style="display: none;">项目id</label>
+						</td>--%>
+						<td align="right">
+							<label class="Validform_label">
+								业务流水号:
+							</label>
+						</td>
+						<td class="value">
+							<input id="businessId" name="businessId" type="text" style="width: 150px" class="inputxt"  ignore="ignore" readonly="readonly" value='${bProjectBusinessPage.businessId}'/>
+							<span class="Validform_checktip"></span>
+							<label class="Validform_label" style="display: none;">业务流水号</label>
 						</td>
 						<td align="right">
 							<label class="Validform_label">
-								项目名称:
+								用地类型:
 							</label>
 						</td>
 						<td class="value">
 							<input id="projectName" name="projectName" type="text" style="width: 150px" class="inputxt"  ignore="ignore" readonly="readonly" value='${bProjectBusinessPage.projectName}'/>
 							<span class="Validform_checktip"></span>
-							<label class="Validform_label" style="display: none;">项目名称</label>
+							<label class="Validform_label" style="display: none;">用地类型</label>
 						</td>
 
 					</tr>
@@ -107,13 +117,13 @@
 						</td>--%>
 						<td align="right">
 							<label class="Validform_label">
-								实际项目名称:
+								项目名称:
 							</label>
 						</td>
 						<td class="value">
 							<input id="realityProjectName" name="realityProjectName" type="text" style="width: 150px" class="inputxt"  ignore="ignore"  value='${bProjectBusinessPage.realityProjectName}'/>
 							<span class="Validform_checktip"></span>
-							<label class="Validform_label" style="display: none;">实际项目名称</label>
+							<label class="Validform_label" style="display: none;">项目名称</label>
 						</td>
 						<td align="right">
 							<label class="Validform_label">
@@ -183,13 +193,13 @@
 						</td>
 						<td align="right">
 							<label class="Validform_label">
-								业务流水号:
+								用地类型编号:
 							</label>
 						</td>
 						<td class="value">
-							<input id="businessId" name="businessId" type="text" style="width: 150px" class="inputxt"  ignore="ignore" readonly="readonly" value='${bProjectBusinessPage.businessId}'/>
+							<input id="projectId" name="projectId" type="text" style="width: 150px" class="inputxt"  ignore="ignore" readonly="readonly" value='${bProjectBusinessPage.projectId}'/>
 							<span class="Validform_checktip"></span>
-							<label class="Validform_label" style="display: none;">业务流水号</label>
+							<label class="Validform_label" style="display: none;">用地类型编号</label>
 						</td>
 					</tr>
 				

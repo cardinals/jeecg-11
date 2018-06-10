@@ -3,13 +3,13 @@
 <t:base type="jquery,easyui,tools,DatePicker"></t:base>
 <div class="easyui-layout" fit="true">
   <div region="center" style="padding:0px;border:0px">
-  <t:datagrid name="bProjectBusinessList"  pagination="true" fitColumns="true" title="并联业务信息" actionUrl="bProjectBusinessController.do?datagrid" idField="id" fit="true" queryMode="group">
+  <t:datagrid name="bProjectBusinessList"  pagination="true" fitColumns="true" title="证照信息" actionUrl="bProjectBusinessController.do?datagrid" idField="id" fit="true" queryMode="group">
    <t:dgCol title="主键"  field="id"  hidden="true"  queryMode="group"  width="120"></t:dgCol>
    <t:dgCol title="业务流水号"  field="businessId"  query="true"  width="120"></t:dgCol>
-   <t:dgCol title="实际项目名称"  field="realityProjectName"  query="true"  width="150"></t:dgCol>
-   <t:dgCol title="项目id"  field="projectId"  hidden="true"  queryMode="group"  width="120"></t:dgCol>
-   <t:dgCol title="项目名称"  field="projectName"  queryMode="group"  width="120"></t:dgCol>
-   <t:dgCol title="项目状态"  field="projectStatus"  queryMode="group" replace="证照上传_1,证照查看_2" width="80"></t:dgCol>
+   <t:dgCol title="项目名称"  field="realityProjectName"  query="true"  width="150"></t:dgCol>
+   <t:dgCol title="项目编号"  field="projectId"  hidden="true"  queryMode="group"  width="120"></t:dgCol>
+   <t:dgCol title="用地类型"  field="projectName"  queryMode="group"  width="120"></t:dgCol>
+   <%--<t:dgCol title="项目状态"  field="projectStatus"  queryMode="group" replace="证照上传_1,证照查看_2" width="80"></t:dgCol>--%>
    <t:dgCol title="证照上传状态"  field="certificateStatus"  hidden="true"  queryMode="group"  width="120"></t:dgCol>
    <t:dgCol title="当前阶段编号"  field="currentPhases" hidden="true"  queryMode="group"  width="80"></t:dgCol>
    <t:dgCol title="当前阶段状态"  field="currentPhasesStatus"  hidden="true"  queryMode="group"  width="120"></t:dgCol>
