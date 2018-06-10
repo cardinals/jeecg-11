@@ -150,7 +150,8 @@
 						</label>
 					</td>
 					<td class="value">
-						<input id="realityProjectName" name="realityProjectName" type="text" style="width: 150px" class="inputxt"  ignore="ignore" />
+
+						<input type="text" name="realityProjectName" id="realityProjectName" style="width: 150px" class="inputxt" datatype="*" errormsg="该字段不为空">
 						<span class="Validform_checktip"></span>
 						<label class="Validform_label" style="display: none;">项目名称</label>
 					</td>
@@ -160,7 +161,7 @@
 						</label>
 					</td>
 					<td class="value">
-					     	 <input id="applyName" name="applyName" type="text" style="width: 150px" class="inputxt"  ignore="ignore" />
+					     	 <input id="applyName" name="applyName" type="text" style="width: 150px" class="inputxt"  datatype="*" errormsg="该字段不为空" />
 							<span class="Validform_checktip"></span>
 							<label class="Validform_label" style="display: none;">申请人</label>
 						</td>
@@ -172,7 +173,7 @@
 						</label>
 					</td>
 					<td class="value">
-					     	 <input id="applyCompany" name="applyCompany" type="text" style="width: 150px" class="inputxt"  ignore="ignore" />
+					     	 <input id="applyCompany" name="applyCompany" type="text" style="width: 150px" class="inputxt"  datatype="*" errormsg="该字段不为空" />
 							<span class="Validform_checktip"></span>
 							<label class="Validform_label" style="display: none;">申请公司</label>
 						</td>
@@ -182,7 +183,7 @@
 						</label>
 					</td>
 					<td class="value">
-					     	 <input id="businessLicenseId" name="businessLicenseId" type="text" style="width: 150px" class="inputxt"  ignore="ignore" />
+					     	 <input id="businessLicenseId" name="businessLicenseId" type="text" style="width: 150px" class="inputxt"  datatype="*" errormsg="该字段不为空"/>
 							<span class="Validform_checktip"></span>
 							<label class="Validform_label" style="display: none;">公司营业执照编号</label>
 						</td>
@@ -194,7 +195,7 @@
 						</label>
 					</td>
 					<td class="value">
-					     	 <input id="legalPersonCard" name="legalPersonCard" type="text" style="width: 150px" class="inputxt"  ignore="ignore" />
+					     	 <input id="legalPersonCard" name="legalPersonCard" type="text" style="width: 150px" class="inputxt"  datatype="*" errormsg="该字段不为空" />
 							<span class="Validform_checktip"></span>
 							<label class="Validform_label" style="display: none;">法人身份证号码</label>
 						</td>
@@ -204,7 +205,7 @@
 						</label>
 					</td>
 					<td class="value">
-					     	 <input id="applyIdentityCard" name="applyIdentityCard" type="text" style="width: 150px" class="inputxt"  ignore="ignore" />
+					     	 <input id="applyIdentityCard" name="applyIdentityCard" type="text" style="width: 150px" class="inputxt"  datatype="*" errormsg="该字段不为空" />
 							<span class="Validform_checktip"></span>
 							<label class="Validform_label" style="display: none;">申请人身份证号</label>
 						</td>
@@ -216,7 +217,7 @@
 						</label>
 					</td>
 					<td class="value">
-					     	 <input id="applyPhone" name="applyPhone" type="text" style="width: 150px" class="inputxt"  ignore="ignore" />
+					     	 <input id="applyPhone" name="applyPhone" type="text" style="width: 150px" class="inputxt"  datatype="m" errormsg="手机号不符合标准"/>
 							<span class="Validform_checktip"></span>
 							<label class="Validform_label" style="display: none;">申请人电话</label>
 						</td>
