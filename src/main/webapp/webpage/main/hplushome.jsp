@@ -27,7 +27,7 @@
         }
         //待上传
         function waitUpload(){
-            createdetailwindow("待上传", "bProjectBusinessController.do?list","1000","500");
+            createdetailwindow("待上传", "loginController.do?waitUploadCl","1000","500");
         }
         //待审核
         function waitCheck(){

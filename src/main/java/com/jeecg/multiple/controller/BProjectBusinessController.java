@@ -294,22 +294,33 @@ public class BProjectBusinessController extends BaseController {
 		return new ModelAndView("com/jeecg/multiple/gpy");
 	}
 	/**
-	 * 并联业务跳转至证照上传页面
+	 * 并联业务跳转至材料上传页面
 	 *
 	 * @return
 	 */
 	@RequestMapping(params = "uploadcl")
-	public ModelAndView uploadcl(BProjectBusinessEntity bProjectBusiness, HttpServletRequest req,DataGrid dataGrid) {
+	public ModelAndView uploadcl(BProjectBusinessEntity bProjectBusiness, HttpServletRequest req,DataGrid dataGrid,String phasesId) {
 		if (StringUtil.isNotEmpty(bProjectBusiness.getId())) {
 			bProjectBusiness = bProjectBusinessService.getEntity(BProjectBusinessEntity.class, bProjectBusiness.getId());
 			req.setAttribute("bProjectBusinessPage", bProjectBusiness);
 		}
+		//阶段查询条件
 		String condition = "" ;
+		if (StringUtil.isNotEmpty(phasesId)) {
+			condition += "and substr(a.phases_id, -3) = '"+phasesId+"'";
+			req.setAttribute("phasesId", phasesId);
+		}
 		TSUser user = ResourceUtil.getSessionUser();
 		if (ResourceUtil.getConfigByName("accept_deptid").equals(user.getCurrentDepart().getId())){
-			condition = "and substr(a.phases_id,-3) <='" +bProjectBusiness.getCurrentPhases().substring(bProjectBusiness.getCurrentPhases().length()-3) +"'";
+			//材料信息只加载当前所在阶段以前的
+//			condition += "and substr(a.phases_id,-3) <='" +bProjectBusiness.getCurrentPhases().substring(bProjectBusiness.getCurrentPhases().length()-3) +"'";
+			//材料信息加载所有阶段事项的
+//			condition += "and substr(a.phases_id,-3) <='" +bProjectBusiness.getCurrentPhases().substring(bProjectBusiness.getCurrentPhases().length()-3) +"'";
 		}else{
-			condition = "and a.dept_id ='" +user.getDepartid() +"'"+"and substr(a.phases_id,-3) <='" +bProjectBusiness.getCurrentPhases().substring(bProjectBusiness.getCurrentPhases().length()-3) +"'";
+			//材料信息只加载当前所在阶段以前的
+//			condition += "and a.dept_id ='" +user.getDepartid() +"'"+"and substr(a.phases_id,-3) <='" +bProjectBusiness.getCurrentPhases().substring(bProjectBusiness.getCurrentPhases().length()-3) +"'";
+			//材料信息加载所有阶段事项的
+			condition += "and a.dept_id ='" +user.getDepartid() +"'";
 		}
 		String sql = "select a.business_id,a.project_id,substr(a.phases_id,-3) as phases_id , a.items_id,a.items_name ,a.dept_id,a.dept_name,a.reality_project_name,b.id, " +
 				" a.check_status, a.confirm_upload_time, CASE" +
@@ -354,7 +365,8 @@ public class BProjectBusinessController extends BaseController {
 				"      and a.project_id = b.project_id" +
 				"      and a.phases_id = b.phases_id" +
 				"      and a.items_id = b.items_id" +
-				"      and b.materials_type = '2' and a.status = '1'" +
+				"      and b.materials_type = '2' " +
+//				"      and b.materials_type = '2' and a.status = '1'" +
 				"      and a.business_id = '"+bProjectBusiness.getBusinessId()+"' and length(b.id) = 32 order by a.phases_id ";
 		List<Map<String, Object>> certificateList =  systemService.findForJdbc(sql);
 		req.setAttribute("certificateList", certificateList);

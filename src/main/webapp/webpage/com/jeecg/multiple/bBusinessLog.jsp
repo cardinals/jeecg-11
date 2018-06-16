@@ -132,7 +132,17 @@
      </div>
      <div class="content-right">
       <div class="conter-title">
-       <span class="conter-span">${childBusiness.status  == '1' ? '已办结' : '审核中'}</span>
+       <span class="conter-span">
+        <c:if test="${childBusiness.status == '' || childBusiness.status == null}">
+         未受理
+        </c:if>
+        <c:if test="${childBusiness.status != '1' && childBusiness.status != '' && childBusiness.status != null}">
+         审核中
+        </c:if>
+        <c:if test="${childBusiness.status == '1'}">
+         已办结
+        </c:if>
+       </span>
        <c:if test="${childBusiness.ssgzr >= 4}">
          <img src="plug-in/businessLog/img/ssgzr4.png" />
        </c:if>
@@ -155,7 +165,11 @@
         <img src="plug-in/businessLog/img/red.png" />
        </c:if>
       </div>
-      <div class="bottom-title">剩余<span class="bottom-span">${childBusiness.ssgzr}</span>工作日</div>
+
+      <c:if test="${childBusiness.status != '' && childBusiness.status != null}">
+       <div class="bottom-title">剩余<span class="bottom-span">${childBusiness.ssgzr}</span>工作日</div>
+      </c:if>
+
      </div>
     </div>
    </div>
@@ -178,7 +192,17 @@
       </div>
       <div class="content-right One-right" >
        <div class="conter-title">
-        <span class="conter-span">${childBusiness.status  == '1' ? '已办结' : '审核中'}
+        <span class="conter-span">
+          <%--${childBusiness.status  == '1' ? '已办结' : '审核中'}--%>
+          <c:if test="${childBusiness.status == '' || childBusiness.status == null}">
+           未受理
+          </c:if>
+        <c:if test="${childBusiness.status != '1' && childBusiness.status != '' && childBusiness.status != null}">
+         审核中
+        </c:if>
+        <c:if test="${childBusiness.status == '1'}">
+         已办结
+        </c:if>
          <c:if test="${childBusiness.status == 1}">
           <%--<br/><a href="${childBusiness.materials_path }">证照查看</a><img src="${childBusiness.materials_path }" />--%>
          </c:if>

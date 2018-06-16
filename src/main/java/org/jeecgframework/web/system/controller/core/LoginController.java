@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.jeecg.multiple.entity.BProjectBusinessEntity;
 import com.jeecg.util.BusinessUtil;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
@@ -24,18 +25,7 @@ import org.jeecgframework.core.common.model.json.AjaxJson;
 import org.jeecgframework.core.common.model.json.DataGrid;
 import org.jeecgframework.core.constant.Globals;
 import org.jeecgframework.core.enums.SysThemesEnum;
-import org.jeecgframework.core.util.ContextHolderUtils;
-import org.jeecgframework.core.util.IpUtil;
-import org.jeecgframework.core.util.JSONHelper;
-import org.jeecgframework.core.util.ListtoMenu;
-import org.jeecgframework.core.util.LogUtil;
-import org.jeecgframework.core.util.MutiLangUtil;
-import org.jeecgframework.core.util.NumberComparator;
-import org.jeecgframework.core.util.PasswordUtil;
-import org.jeecgframework.core.util.PropertiesUtil;
-import org.jeecgframework.core.util.ResourceUtil;
-import org.jeecgframework.core.util.SysThemesUtil;
-import org.jeecgframework.core.util.oConvertUtils;
+import org.jeecgframework.core.util.*;
 import org.jeecgframework.web.system.manager.ClientManager;
 import org.jeecgframework.web.system.pojo.base.*;
 import org.jeecgframework.web.system.service.MutiLangServiceI;
@@ -808,8 +798,12 @@ public class LoginController extends BaseController{
 		TSUser user = ResourceUtil.getSessionUser();
 		String getCountSql ="";
 		if("upload".equals(type)){
+			//材料信息只加载当前所在阶段以前的
 			getCountSql ="select count(1) as count from  b_project_business a left join  B_CHILD_BUSINESS b on a.business_id= b.business_id " +
 					" where b.confirm_upload_time is null and substr(a.current_phases,-3) >=substr(b.phases_id,-3)";
+			//材料信息加载所有阶段事项的
+			getCountSql ="select count(1) as count from  b_project_business a left join  B_CHILD_BUSINESS b on a.business_id= b.business_id " +
+					" where b.confirm_upload_time is null ";
 		}else if("check".equals(type)){
 			getCountSql =" select count(1) as count from B_CHILD_BUSINESS a" +
 					" where ((a.confirm_upload_time is not null and a.check_status is null)" +
@@ -822,6 +816,59 @@ public class LoginController extends BaseController{
 		return count;
 	}
 
+	/**
+	 * 首页材料待上传（审核）跳转页面
+	 *
+	 * @return
+	 */
+	@RequestMapping(params = "waitUploadCl")
+	public ModelAndView waitUploadCl(BProjectBusinessEntity bProjectBusiness, HttpServletRequest req, DataGrid dataGrid, String phasesId,String realityProjectName) {
+//		if (StringUtil.isNotEmpty(bProjectBusiness.getId())) {
+//			bProjectBusiness = bProjectBusinessService.getEntity(BProjectBusinessEntity.class, bProjectBusiness.getId());
+//			req.setAttribute("bProjectBusinessPage", bProjectBusiness);
+//		}
+		//阶段查询条件
+		String condition = "" ;
+		if (StringUtil.isNotEmpty(phasesId)) {
+			condition += "and substr(a.phases_id, -3) = '"+phasesId+"'";
+			req.setAttribute("phasesId", phasesId);
+		}
+		if (StringUtil.isNotEmpty(realityProjectName)) {
+			condition += "and a.reality_project_name like '%"+realityProjectName+"%'";
+			req.setAttribute("realityProjectName", realityProjectName);
+		}
+		TSUser user = ResourceUtil.getSessionUser();
+		if (ResourceUtil.getConfigByName("accept_deptid").equals(user.getCurrentDepart().getId())){
+			//材料信息只加载当前所在阶段以前的
+//			condition += "and substr(a.phases_id,-3) <='" +bProjectBusiness.getCurrentPhases().substring(bProjectBusiness.getCurrentPhases().length()-3) +"'";
+			//材料信息加载所有阶段事项的
+//			condition += "and substr(a.phases_id,-3) <='" +bProjectBusiness.getCurrentPhases().substring(bProjectBusiness.getCurrentPhases().length()-3) +"'";
+		}else{
+			//材料信息只加载当前所在阶段以前的
+//			condition += "and a.dept_id ='" +user.getDepartid() +"'"+"and substr(a.phases_id,-3) <='" +bProjectBusiness.getCurrentPhases().substring(bProjectBusiness.getCurrentPhases().length()-3) +"'";
+			//材料信息加载所有阶段事项的
+			condition += "and a.dept_id ='" +user.getDepartid() +"'";
+		}
+		String sql = "select a.business_id,a.project_id,substr(a.phases_id,-3) as phases_id , a.items_id,a.items_name ,a.dept_id,a.dept_name,a.reality_project_name,b.id, " +
+				" a.check_status, a.confirm_upload_time, CASE" +
+				"        WHEN a.confirm_upload_time is null THEN '待上传' " +
+				"        WHEN (a.confirm_upload_time is not null and a.check_status is null) " +
+				"           or (a.confirm_upload_time > a.check_time and a.check_status = '0') THEN '待审核'" +
+				"        WHEN  a.confirm_upload_time is not null and a.check_status ='1' THEN '审核通过'" +
+				"        WHEN  a.confirm_upload_time is not null and a.check_status ='0' THEN '审核退回'" +
+				"        ELSE '其他' END as status," +
+				" substr(b.materials_name,37) as file_name from B_CHILD_BUSINESS a, A_MATERIALS_UPLOAD b " +
+				" where   a.business_id = b.business_id" +
+				"      and a.project_id = b.project_id" +
+				"      and a.phases_id = b.phases_id" +
+				"      and a.items_id = b.items_id" +
+				"      and b.materials_type = '2'" + condition +
+				"      and a.confirm_upload_time is null order by a.business_id,a.phases_id ";
+		List<Map<String, Object>> certificateList =  systemService.findForJdbc(sql);
+		req.setAttribute("certificateList", certificateList);
+		req.setAttribute("deptId", user.getDepartid());
+		return new ModelAndView("com/jeecg/multiple/waitUploadOrCheckList");
+	}
 
 	/**
 	 * fineUI首页跳转
