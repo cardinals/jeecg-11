@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.jeecg.util.BusinessUtil;
+import com.jeecg.util.SmsUitl;
 import org.apache.log4j.Logger;
 import org.jeecgframework.core.util.*;
 import org.jeecgframework.web.system.pojo.base.TSUser;
@@ -75,6 +76,7 @@ import org.jeecgframework.jwt.util.GsonUtil;
 import org.jeecgframework.jwt.util.ResponseMessage;
 import org.jeecgframework.jwt.util.Result;
 import com.alibaba.fastjson.JSONArray;
+import net.sf.json.JSONObject;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiOperation;
@@ -480,6 +482,39 @@ public class BProjectBusinessController extends BaseController {
 					" and a.items_id = '"+itemsId+"'";
 			int result =  systemService.updateBySqlString(sql);
 //			bChildBusinessService.saveOrUpdate(bChildBusiness);
+			//调用短信接口
+			String chlidBusinessSql = "select a.*,decode(a.check_status,'0','退回','1','通过') as check_status from  b_child_business a "+
+					" where a.business_id ='"+businessId+"' " +
+					" and a.project_id ='"+projectId+"' " +
+					" and a.phases_id ='"+phasesId+"' " +
+					" and a.items_id = '"+itemsId+"'";
+			List<Map<String, Object>> chlidBusiness =  systemService.findForJdbc(chlidBusinessSql);
+			String userSql = "select a.mobilephone, b.realname" +
+					"  from t_s_user a, t_s_base_user b" +
+					" where  a.id = b.id and b.username ='"+chlidBusiness.get(0).get("create_by")+"'";
+			List<Map<String, Object>> user =  systemService.findForJdbc(userSql);
+			Map param = new HashMap();
+			if(StringUtil.isNotEmpty(user) && user.size() > 0){
+				JSONObject json = new JSONObject();
+				json.put("name", user.get(0).get("realname"));
+				json.put("reality_project_name", chlidBusiness.get(0).get("reality_project_name"));
+				json.put("item_name", chlidBusiness.get(0).get("items_name"));
+				json.put("check_status", chlidBusiness.get(0).get("check_status"));
+//			System.out.println("====="+json.toString());
+//			System.out.println("_____"+"{\"name\":\"Tom\", \"reality_project_name\":\"XX集团\", \"item_name\":\"小项名称\"}");
+				param.put("json",json.toString());
+				param.put("templateCode",ResourceUtil.getConfigByName("checktemplateCode"));
+				param.put("phoneNo",user.get(0).get("mobilephone"));
+				String resultSms = SmsUitl.check(param);
+				if("OK".equals(resultSms)){
+					message += " （短息发送成功）";
+				}else{
+					message += " （短息发送失败）";
+				}
+
+			}else{
+				message += " （窗口人员没有预留手机号，提示短信无法发送）";
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			message = "审核意见提交失败";
@@ -510,6 +545,44 @@ public class BProjectBusinessController extends BaseController {
 					" and a.items_id = '"+itemsId+"'";
 			int result =  systemService.updateBySqlString(sql);
 //			bChildBusinessService.saveOrUpdate(bChildBusiness);
+			//调用短信接口
+			String chlidBusinessSql = "select * from  b_child_business a "+
+					" where a.business_id ='"+businessId+"' " +
+					" and a.project_id ='"+projectId+"' " +
+					" and a.phases_id ='"+phasesId+"' " +
+					" and a.items_id = '"+itemsId+"'";
+			List<Map<String, Object>> chlidBusiness =  systemService.findForJdbc(chlidBusinessSql);
+			String userSql = "select a.mobilephone, b.realname" +
+					"  from t_s_user a, t_s_base_user b" +
+					" where a.id in" +
+					"       (select user_id" +
+					"          from t_s_user_org" +
+					"         where org_id in ('"+chlidBusiness.get(0).get("dept_id")+"'))" +
+					"   and a.officephone = '666666'" +
+					"   and a.id = b.id";
+			List<Map<String, Object>> user =  systemService.findForJdbc(userSql);
+			Map param = new HashMap();
+			if(StringUtil.isNotEmpty(user) && user.size() > 0){
+				JSONObject json = new JSONObject();
+				json.put("name", user.get(0).get("realname"));
+				json.put("reality_project_name", chlidBusiness.get(0).get("reality_project_name"));
+				json.put("item_name", chlidBusiness.get(0).get("items_name"));
+//			System.out.println("====="+json.toString());
+//			System.out.println("_____"+"{\"name\":\"Tom\", \"reality_project_name\":\"XX集团\", \"item_name\":\"小项名称\"}");
+				param.put("json",json.toString());
+				param.put("templateCode",ResourceUtil.getConfigByName("checktemplateCode"));
+				param.put("phoneNo",user.get(0).get("mobilephone"));
+				String resultSms = SmsUitl.check(param);
+				if("OK".equals(resultSms)){
+					message += " （短息发送成功）";
+				}else{
+					message += " （短息发送失败）";
+				}
+
+			}else{
+				message += " （该部门首席代表没有预留手机号，提示短信无法发送）";
+			}
+
 		} catch (Exception e) {
 			e.printStackTrace();
 			message = "确认材料提交失败";

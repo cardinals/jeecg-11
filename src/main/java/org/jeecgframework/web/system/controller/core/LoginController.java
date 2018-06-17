@@ -799,8 +799,8 @@ public class LoginController extends BaseController{
 		String getCountSql ="";
 		if("upload".equals(type)){
 			//材料信息只加载当前所在阶段以前的
-			getCountSql ="select count(1) as count from  b_project_business a left join  B_CHILD_BUSINESS b on a.business_id= b.business_id " +
-					" where b.confirm_upload_time is null and substr(a.current_phases,-3) >=substr(b.phases_id,-3)";
+//			getCountSql ="select count(1) as count from  b_project_business a left join  B_CHILD_BUSINESS b on a.business_id= b.business_id " +
+//					" where b.confirm_upload_time is null and substr(a.current_phases,-3) >=substr(b.phases_id,-3)";
 			//材料信息加载所有阶段事项的
 			getCountSql ="select count(1) as count from  b_project_business a left join  B_CHILD_BUSINESS b on a.business_id= b.business_id " +
 					" where b.confirm_upload_time is null ";
@@ -843,13 +843,16 @@ public class LoginController extends BaseController{
 //			condition += "and substr(a.phases_id,-3) <='" +bProjectBusiness.getCurrentPhases().substring(bProjectBusiness.getCurrentPhases().length()-3) +"'";
 			//材料信息加载所有阶段事项的
 //			condition += "and substr(a.phases_id,-3) <='" +bProjectBusiness.getCurrentPhases().substring(bProjectBusiness.getCurrentPhases().length()-3) +"'";
+			condition += "and a.confirm_upload_time is null";
 		}else{
 			//材料信息只加载当前所在阶段以前的
 //			condition += "and a.dept_id ='" +user.getDepartid() +"'"+"and substr(a.phases_id,-3) <='" +bProjectBusiness.getCurrentPhases().substring(bProjectBusiness.getCurrentPhases().length()-3) +"'";
 			//材料信息加载所有阶段事项的
-			condition += "and a.dept_id ='" +user.getDepartid() +"'";
+			condition += "and a.dept_id ='" +user.getDepartid() +"' ";
+			condition += " and ((a.confirm_upload_time is not null and a.check_status is null)" +
+					"    or (a.confirm_upload_time > a.check_time and a.check_status = '0'))" ;
 		}
-		String sql = "select a.business_id,a.project_id,substr(a.phases_id,-3) as phases_id , a.items_id,a.items_name ,a.dept_id,a.dept_name,a.reality_project_name,b.id, " +
+		String sql = "select c.id as bid,a.business_id,a.project_id,substr(a.phases_id,-3) as phases_id , a.items_id,a.items_name ,a.dept_id,a.dept_name,a.reality_project_name,b.id, " +
 				" a.check_status, a.confirm_upload_time, CASE" +
 				"        WHEN a.confirm_upload_time is null THEN '待上传' " +
 				"        WHEN (a.confirm_upload_time is not null and a.check_status is null) " +
@@ -857,13 +860,13 @@ public class LoginController extends BaseController{
 				"        WHEN  a.confirm_upload_time is not null and a.check_status ='1' THEN '审核通过'" +
 				"        WHEN  a.confirm_upload_time is not null and a.check_status ='0' THEN '审核退回'" +
 				"        ELSE '其他' END as status," +
-				" substr(b.materials_name,37) as file_name from B_CHILD_BUSINESS a, A_MATERIALS_UPLOAD b " +
+				" substr(b.materials_name,37) as file_name from B_CHILD_BUSINESS a, A_MATERIALS_UPLOAD b ,b_project_business c" +
 				" where   a.business_id = b.business_id" +
 				"      and a.project_id = b.project_id" +
 				"      and a.phases_id = b.phases_id" +
 				"      and a.items_id = b.items_id" +
-				"      and b.materials_type = '2'" + condition +
-				"      and a.confirm_upload_time is null order by a.business_id,a.phases_id ";
+				"      and b.materials_type = '2' and c.business_id = a.business_id " + condition +
+				"       order by a.business_id,a.phases_id ";
 		List<Map<String, Object>> certificateList =  systemService.findForJdbc(sql);
 		req.setAttribute("certificateList", certificateList);
 		req.setAttribute("deptId", user.getDepartid());
