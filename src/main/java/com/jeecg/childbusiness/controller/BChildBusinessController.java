@@ -171,21 +171,45 @@ public class BChildBusinessController extends BaseController {
 
 	@RequestMapping(params = "limitDatagrid")
 	public void limitDatagrid(BChildBusinessEntity bChildBusiness,HttpServletRequest request, HttpServletResponse response, DataGrid dataGrid) {
-		CriteriaQuery cq = new CriteriaQuery(BChildBusinessEntity.class, dataGrid);
-		//查询条件组装器
-		org.jeecgframework.core.extend.hqlsearch.HqlGenerateUtil.installHql(cq, bChildBusiness, request.getParameterMap());
+//		CriteriaQuery cq = new CriteriaQuery(BChildBusinessEntity.class, dataGrid);
+//		//查询条件组装器
+//		org.jeecgframework.core.extend.hqlsearch.HqlGenerateUtil.installHql(cq, bChildBusiness, request.getParameterMap());
+//		TSUser user = ResourceUtil.getSessionUser();
+//		if (ResourceUtil.getConfigByName("accept_deptid").equals(user.getCurrentDepart().getId())){
+//		}else{
+//			cq.eq("deptId",user.getDepartid());
+//		}
+//		try{
+//			//自定义追加查询条件
+//		}catch (Exception e) {
+//			throw new BusinessException(e.getMessage());
+//		}
+//		cq.add();
+//		this.bChildBusinessService.getDataGridReturn(cq, true);
+//		TagUtil.datagrid(response, dataGrid);
 		TSUser user = ResourceUtil.getSessionUser();
+		String condition ="";
 		if (ResourceUtil.getConfigByName("accept_deptid").equals(user.getCurrentDepart().getId())){
 		}else{
-			cq.eq("deptId",user.getDepartid());
+			condition += "and a.dept_id ='" +user.getDepartid() +"'";
 		}
-		try{
-			//自定义追加查询条件
-		}catch (Exception e) {
-			throw new BusinessException(e.getMessage());
-		}
-		cq.add();
-		this.bChildBusinessService.getDataGridReturn(cq, true);
+		String sql = "select func_getLimitDate(a.confirm_upload_time,'G',2) AS ENDTIME," +
+				"case when SYSDATE > func_getLimitDate(a.confirm_upload_time,'G',1) AND a.CHECK_TIME is NULL then '超期'" +
+				"     when SYSDATE > func_getLimitDate(a.confirm_upload_time,'G',1) AND a.CHECK_TIME >func_getLimitDate(a.confirm_upload_time,'G',1) then '超期'" +
+				"     when a.check_status ='0' and SYSDATE > func_getLimitDate(a.confirm_upload_time,'G',1) " +
+				"       and a.CHECK_TIME < a.confirm_upload_time then '超期'  " +
+				"     else '正常' end jcstatus ,a.*" +
+				"from B_CHILD_BUSINESS a where 1=1 " +condition;
+
+
+		List<Map<String, Object>> resultList =  systemService.findForJdbc(sql,dataGrid.getPage(),dataGrid.getRows());
+		//将List转换成JSON存储
+		dataGrid.setResults(resultList);
+		String getCountSql ="SELECT count(1) as count from B_CHILD_BUSINESS a where 1=1 " + condition;
+		List<Map<String, Object>> resultList2 =  systemService.findForJdbc(getCountSql);
+		Object count = resultList2.get(0).get("count");
+
+		dataGrid.setTotal(Integer.valueOf(count.toString()));
 		TagUtil.datagrid(response, dataGrid);
 	}
 
