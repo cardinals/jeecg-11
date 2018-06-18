@@ -1,6 +1,6 @@
-package com.jeecg.items.controller;
-import com.jeecg.items.entity.AItemsInfoEntity;
-import com.jeecg.items.service.AItemsInfoServiceI;
+package com.jeecg.material.controller;
+import com.jeecg.material.entity.AMaterialsInfoEntity;
+import com.jeecg.material.service.AMaterialsInfoServiceI;
 import java.util.ArrayList;
 import java.util.List;
 import java.text.SimpleDateFormat;
@@ -77,23 +77,23 @@ import io.swagger.annotations.ApiParam;
 
 /**   
  * @Title: Controller  
- * @Description: A_ITEMS_INFO
+ * @Description: A_MATERIALS_INFO
  * @author onlineGenerator
- * @date 2018-05-26 19:36:32
+ * @date 2018-06-18 21:04:56
  * @version V1.0   
  *
  */
-@Api(value="AItemsInfo",description="A_ITEMS_INFO",tags="aItemsInfoController")
+@Api(value="AMaterialsInfo",description="A_MATERIALS_INFO",tags="aMaterialsInfoController")
 @Controller
-@RequestMapping("/aItemsInfoController")
-public class AItemsInfoController extends BaseController {
+@RequestMapping("/aMaterialsInfoController")
+public class AMaterialsInfoController extends BaseController {
 	/**
 	 * Logger for this class
 	 */
-	private static final Logger logger = Logger.getLogger(AItemsInfoController.class);
+	private static final Logger logger = Logger.getLogger(AMaterialsInfoController.class);
 
 	@Autowired
-	private AItemsInfoServiceI aItemsInfoService;
+	private AMaterialsInfoServiceI aMaterialsInfoService;
 	@Autowired
 	private SystemService systemService;
 	@Autowired
@@ -102,13 +102,13 @@ public class AItemsInfoController extends BaseController {
 
 
 	/**
-	 * A_ITEMS_INFO列表 页面跳转
+	 * A_MATERIALS_INFO列表 页面跳转
 	 * 
 	 * @return
 	 */
 	@RequestMapping(params = "list")
 	public ModelAndView list(HttpServletRequest request) {
-		return new ModelAndView("com/jeecg/items/aItemsInfoList");
+		return new ModelAndView("com/jeecg/material/aMaterialsInfoList");
 	}
 
 	/**
@@ -121,56 +121,39 @@ public class AItemsInfoController extends BaseController {
 	 */
 
 	@RequestMapping(params = "datagrid")
-	public void datagrid(AItemsInfoEntity aItemsInfo,HttpServletRequest request, HttpServletResponse response, DataGrid dataGrid) {
-		CriteriaQuery cq = new CriteriaQuery(AItemsInfoEntity.class, dataGrid);
+	public void datagrid(AMaterialsInfoEntity aMaterialsInfo,HttpServletRequest request, HttpServletResponse response, DataGrid dataGrid) {
+		CriteriaQuery cq = new CriteriaQuery(AMaterialsInfoEntity.class, dataGrid);
 		//查询条件组装器
-		org.jeecgframework.core.extend.hqlsearch.HqlGenerateUtil.installHql(cq, aItemsInfo, request.getParameterMap());
+		org.jeecgframework.core.extend.hqlsearch.HqlGenerateUtil.installHql(cq, aMaterialsInfo, request.getParameterMap());
 		try{
 		//自定义追加查询条件
-		String query_itemsChildName_begin = request.getParameter("itemsChildName_begin");
-		String query_itemsChildName_end = request.getParameter("itemsChildName_end");
-		if(StringUtil.isNotEmpty(query_itemsChildName_begin)){
-			cq.ge("itemsChildName", Integer.parseInt(query_itemsChildName_begin));
-		}
-		if(StringUtil.isNotEmpty(query_itemsChildName_end)){
-			cq.le("itemsChildName", Integer.parseInt(query_itemsChildName_end));
-		}
-		cq.addOrder("projectId", SortDirection.desc);
-		cq.addOrder("phasesId", SortDirection.asc);
-//		String query_deptName_begin = request.getParameter("deptName_begin");
-//		String query_deptName_end = request.getParameter("deptName_end");
-//		if(StringUtil.isNotEmpty(query_deptName_begin)){
-//			cq.ge("deptName", Integer.parseInt(query_deptName_begin));
-//		}
-//		if(StringUtil.isNotEmpty(query_deptName_end)){
-//			cq.le("deptName", Integer.parseInt(query_deptName_end));
-//		}
 		}catch (Exception e) {
 			throw new BusinessException(e.getMessage());
 		}
+		cq.addOrder("itemsId", SortDirection.asc);
 		cq.add();
-		this.aItemsInfoService.getDataGridReturn(cq, true);
+		this.aMaterialsInfoService.getDataGridReturn(cq, true);
 		TagUtil.datagrid(response, dataGrid);
 	}
 	
 	/**
-	 * 删除A_ITEMS_INFO
+	 * 删除A_MATERIALS_INFO
 	 * 
 	 * @return
 	 */
 	@RequestMapping(params = "doDel")
 	@ResponseBody
-	public AjaxJson doDel(AItemsInfoEntity aItemsInfo, HttpServletRequest request) {
+	public AjaxJson doDel(AMaterialsInfoEntity aMaterialsInfo, HttpServletRequest request) {
 		String message = null;
 		AjaxJson j = new AjaxJson();
-		aItemsInfo = systemService.getEntity(AItemsInfoEntity.class, aItemsInfo.getId());
-		message = "A_ITEMS_INFO删除成功";
+		aMaterialsInfo = systemService.getEntity(AMaterialsInfoEntity.class, aMaterialsInfo.getId());
+		message = "A_MATERIALS_INFO删除成功";
 		try{
-			aItemsInfoService.delete(aItemsInfo);
+			aMaterialsInfoService.delete(aMaterialsInfo);
 			systemService.addLog(message, Globals.Log_Type_DEL, Globals.Log_Leavel_INFO);
 		}catch(Exception e){
 			e.printStackTrace();
-			message = "A_ITEMS_INFO删除失败";
+			message = "A_MATERIALS_INFO删除失败";
 			throw new BusinessException(e.getMessage());
 		}
 		j.setMsg(message);
@@ -178,7 +161,7 @@ public class AItemsInfoController extends BaseController {
 	}
 	
 	/**
-	 * 批量删除A_ITEMS_INFO
+	 * 批量删除A_MATERIALS_INFO
 	 * 
 	 * @return
 	 */
@@ -187,18 +170,18 @@ public class AItemsInfoController extends BaseController {
 	public AjaxJson doBatchDel(String ids,HttpServletRequest request){
 		String message = null;
 		AjaxJson j = new AjaxJson();
-		message = "A_ITEMS_INFO删除成功";
+		message = "A_MATERIALS_INFO删除成功";
 		try{
 			for(String id:ids.split(",")){
-				AItemsInfoEntity aItemsInfo = systemService.getEntity(AItemsInfoEntity.class, 
+				AMaterialsInfoEntity aMaterialsInfo = systemService.getEntity(AMaterialsInfoEntity.class, 
 				id
 				);
-				aItemsInfoService.delete(aItemsInfo);
+				aMaterialsInfoService.delete(aMaterialsInfo);
 				systemService.addLog(message, Globals.Log_Type_DEL, Globals.Log_Leavel_INFO);
 			}
 		}catch(Exception e){
 			e.printStackTrace();
-			message = "A_ITEMS_INFO删除失败";
+			message = "A_MATERIALS_INFO删除失败";
 			throw new BusinessException(e.getMessage());
 		}
 		j.setMsg(message);
@@ -207,23 +190,23 @@ public class AItemsInfoController extends BaseController {
 
 
 	/**
-	 * 添加A_ITEMS_INFO
+	 * 添加A_MATERIALS_INFO
 	 * 
 	 * @param ids
 	 * @return
 	 */
 	@RequestMapping(params = "doAdd")
 	@ResponseBody
-	public AjaxJson doAdd(AItemsInfoEntity aItemsInfo, HttpServletRequest request) {
+	public AjaxJson doAdd(AMaterialsInfoEntity aMaterialsInfo, HttpServletRequest request) {
 		String message = null;
 		AjaxJson j = new AjaxJson();
-		message = "A_ITEMS_INFO添加成功";
+		message = "A_MATERIALS_INFO添加成功";
 		try{
-			aItemsInfoService.save(aItemsInfo);
+			aMaterialsInfoService.save(aMaterialsInfo);
 			systemService.addLog(message, Globals.Log_Type_INSERT, Globals.Log_Leavel_INFO);
 		}catch(Exception e){
 			e.printStackTrace();
-			message = "A_ITEMS_INFO添加失败";
+			message = "A_MATERIALS_INFO添加失败";
 			throw new BusinessException(e.getMessage());
 		}
 		j.setMsg(message);
@@ -231,25 +214,25 @@ public class AItemsInfoController extends BaseController {
 	}
 	
 	/**
-	 * 更新A_ITEMS_INFO
+	 * 更新A_MATERIALS_INFO
 	 * 
 	 * @param ids
 	 * @return
 	 */
 	@RequestMapping(params = "doUpdate")
 	@ResponseBody
-	public AjaxJson doUpdate(AItemsInfoEntity aItemsInfo, HttpServletRequest request) {
+	public AjaxJson doUpdate(AMaterialsInfoEntity aMaterialsInfo, HttpServletRequest request) {
 		String message = null;
 		AjaxJson j = new AjaxJson();
-		message = "A_ITEMS_INFO更新成功";
-		AItemsInfoEntity t = aItemsInfoService.get(AItemsInfoEntity.class, aItemsInfo.getId());
+		message = "A_MATERIALS_INFO更新成功";
+		AMaterialsInfoEntity t = aMaterialsInfoService.get(AMaterialsInfoEntity.class, aMaterialsInfo.getId());
 		try {
-			MyBeanUtils.copyBeanNotNull2Bean(aItemsInfo, t);
-			aItemsInfoService.saveOrUpdate(t);
+			MyBeanUtils.copyBeanNotNull2Bean(aMaterialsInfo, t);
+			aMaterialsInfoService.saveOrUpdate(t);
 			systemService.addLog(message, Globals.Log_Type_UPDATE, Globals.Log_Leavel_INFO);
 		} catch (Exception e) {
 			e.printStackTrace();
-			message = "A_ITEMS_INFO更新失败";
+			message = "A_MATERIALS_INFO更新失败";
 			throw new BusinessException(e.getMessage());
 		}
 		j.setMsg(message);
@@ -258,30 +241,30 @@ public class AItemsInfoController extends BaseController {
 	
 
 	/**
-	 * A_ITEMS_INFO新增页面跳转
+	 * A_MATERIALS_INFO新增页面跳转
 	 * 
 	 * @return
 	 */
 	@RequestMapping(params = "goAdd")
-	public ModelAndView goAdd(AItemsInfoEntity aItemsInfo, HttpServletRequest req) {
-		if (StringUtil.isNotEmpty(aItemsInfo.getId())) {
-			aItemsInfo = aItemsInfoService.getEntity(AItemsInfoEntity.class, aItemsInfo.getId());
-			req.setAttribute("aItemsInfoPage", aItemsInfo);
+	public ModelAndView goAdd(AMaterialsInfoEntity aMaterialsInfo, HttpServletRequest req) {
+		if (StringUtil.isNotEmpty(aMaterialsInfo.getId())) {
+			aMaterialsInfo = aMaterialsInfoService.getEntity(AMaterialsInfoEntity.class, aMaterialsInfo.getId());
+			req.setAttribute("aMaterialsInfoPage", aMaterialsInfo);
 		}
-		return new ModelAndView("com/jeecg/items/aItemsInfo-add");
+		return new ModelAndView("com/jeecg/material/aMaterialsInfo-add");
 	}
 	/**
-	 * A_ITEMS_INFO编辑页面跳转
+	 * A_MATERIALS_INFO编辑页面跳转
 	 * 
 	 * @return
 	 */
 	@RequestMapping(params = "goUpdate")
-	public ModelAndView goUpdate(AItemsInfoEntity aItemsInfo, HttpServletRequest req) {
-		if (StringUtil.isNotEmpty(aItemsInfo.getId())) {
-			aItemsInfo = aItemsInfoService.getEntity(AItemsInfoEntity.class, aItemsInfo.getId());
-			req.setAttribute("aItemsInfoPage", aItemsInfo);
+	public ModelAndView goUpdate(AMaterialsInfoEntity aMaterialsInfo, HttpServletRequest req) {
+		if (StringUtil.isNotEmpty(aMaterialsInfo.getId())) {
+			aMaterialsInfo = aMaterialsInfoService.getEntity(AMaterialsInfoEntity.class, aMaterialsInfo.getId());
+			req.setAttribute("aMaterialsInfoPage", aMaterialsInfo);
 		}
-		return new ModelAndView("com/jeecg/items/aItemsInfo-update");
+		return new ModelAndView("com/jeecg/material/aMaterialsInfo-update");
 	}
 	
 	/**
@@ -291,7 +274,7 @@ public class AItemsInfoController extends BaseController {
 	 */
 	@RequestMapping(params = "upload")
 	public ModelAndView upload(HttpServletRequest req) {
-		req.setAttribute("controller_name","aItemsInfoController");
+		req.setAttribute("controller_name","aMaterialsInfoController");
 		return new ModelAndView("common/upload/pub_excel_upload");
 	}
 	
@@ -302,16 +285,16 @@ public class AItemsInfoController extends BaseController {
 	 * @param response
 	 */
 	@RequestMapping(params = "exportXls")
-	public String exportXls(AItemsInfoEntity aItemsInfo,HttpServletRequest request,HttpServletResponse response
+	public String exportXls(AMaterialsInfoEntity aMaterialsInfo,HttpServletRequest request,HttpServletResponse response
 			, DataGrid dataGrid,ModelMap modelMap) {
-		CriteriaQuery cq = new CriteriaQuery(AItemsInfoEntity.class, dataGrid);
-		org.jeecgframework.core.extend.hqlsearch.HqlGenerateUtil.installHql(cq, aItemsInfo, request.getParameterMap());
-		List<AItemsInfoEntity> aItemsInfos = this.aItemsInfoService.getListByCriteriaQuery(cq,false);
-		modelMap.put(NormalExcelConstants.FILE_NAME,"A_ITEMS_INFO");
-		modelMap.put(NormalExcelConstants.CLASS,AItemsInfoEntity.class);
-		modelMap.put(NormalExcelConstants.PARAMS,new ExportParams("A_ITEMS_INFO列表", "导出人:"+ResourceUtil.getSessionUser().getRealName(),
+		CriteriaQuery cq = new CriteriaQuery(AMaterialsInfoEntity.class, dataGrid);
+		org.jeecgframework.core.extend.hqlsearch.HqlGenerateUtil.installHql(cq, aMaterialsInfo, request.getParameterMap());
+		List<AMaterialsInfoEntity> aMaterialsInfos = this.aMaterialsInfoService.getListByCriteriaQuery(cq,false);
+		modelMap.put(NormalExcelConstants.FILE_NAME,"A_MATERIALS_INFO");
+		modelMap.put(NormalExcelConstants.CLASS,AMaterialsInfoEntity.class);
+		modelMap.put(NormalExcelConstants.PARAMS,new ExportParams("A_MATERIALS_INFO列表", "导出人:"+ResourceUtil.getSessionUser().getRealName(),
 			"导出信息"));
-		modelMap.put(NormalExcelConstants.DATA_LIST,aItemsInfos);
+		modelMap.put(NormalExcelConstants.DATA_LIST,aMaterialsInfos);
 		return NormalExcelConstants.JEECG_EXCEL_VIEW;
 	}
 	/**
@@ -321,11 +304,11 @@ public class AItemsInfoController extends BaseController {
 	 * @param response
 	 */
 	@RequestMapping(params = "exportXlsByT")
-	public String exportXlsByT(AItemsInfoEntity aItemsInfo,HttpServletRequest request,HttpServletResponse response
+	public String exportXlsByT(AMaterialsInfoEntity aMaterialsInfo,HttpServletRequest request,HttpServletResponse response
 			, DataGrid dataGrid,ModelMap modelMap) {
-    	modelMap.put(NormalExcelConstants.FILE_NAME,"A_ITEMS_INFO");
-    	modelMap.put(NormalExcelConstants.CLASS,AItemsInfoEntity.class);
-    	modelMap.put(NormalExcelConstants.PARAMS,new ExportParams("A_ITEMS_INFO列表", "导出人:"+ResourceUtil.getSessionUser().getRealName(),
+    	modelMap.put(NormalExcelConstants.FILE_NAME,"A_MATERIALS_INFO");
+    	modelMap.put(NormalExcelConstants.CLASS,AMaterialsInfoEntity.class);
+    	modelMap.put(NormalExcelConstants.PARAMS,new ExportParams("A_MATERIALS_INFO列表", "导出人:"+ResourceUtil.getSessionUser().getRealName(),
     	"导出信息"));
     	modelMap.put(NormalExcelConstants.DATA_LIST,new ArrayList());
     	return NormalExcelConstants.JEECG_EXCEL_VIEW;
@@ -346,9 +329,9 @@ public class AItemsInfoController extends BaseController {
 			params.setHeadRows(1);
 			params.setNeedSave(true);
 			try {
-				List<AItemsInfoEntity> listAItemsInfoEntitys = ExcelImportUtil.importExcel(file.getInputStream(),AItemsInfoEntity.class,params);
-				for (AItemsInfoEntity aItemsInfo : listAItemsInfoEntitys) {
-					aItemsInfoService.save(aItemsInfo);
+				List<AMaterialsInfoEntity> listAMaterialsInfoEntitys = ExcelImportUtil.importExcel(file.getInputStream(),AMaterialsInfoEntity.class,params);
+				for (AMaterialsInfoEntity aMaterialsInfo : listAMaterialsInfoEntitys) {
+					aMaterialsInfoService.save(aMaterialsInfo);
 				}
 				j.setMsg("文件导入成功！");
 			} catch (Exception e) {
@@ -367,68 +350,68 @@ public class AItemsInfoController extends BaseController {
 	
 	@RequestMapping(method = RequestMethod.GET)
 	@ResponseBody
-	@ApiOperation(value="A_ITEMS_INFO列表信息",produces="application/json",httpMethod="GET")
-	public ResponseMessage<List<AItemsInfoEntity>> list() {
-		List<AItemsInfoEntity> listAItemsInfos=aItemsInfoService.getList(AItemsInfoEntity.class);
-		return Result.success(listAItemsInfos);
+	@ApiOperation(value="A_MATERIALS_INFO列表信息",produces="application/json",httpMethod="GET")
+	public ResponseMessage<List<AMaterialsInfoEntity>> list() {
+		List<AMaterialsInfoEntity> listAMaterialsInfos=aMaterialsInfoService.getList(AMaterialsInfoEntity.class);
+		return Result.success(listAMaterialsInfos);
 	}
 	
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	@ResponseBody
-	@ApiOperation(value="根据ID获取A_ITEMS_INFO信息",notes="根据ID获取A_ITEMS_INFO信息",httpMethod="GET",produces="application/json")
+	@ApiOperation(value="根据ID获取A_MATERIALS_INFO信息",notes="根据ID获取A_MATERIALS_INFO信息",httpMethod="GET",produces="application/json")
 	public ResponseMessage<?> get(@ApiParam(required=true,name="id",value="ID")@PathVariable("id") String id) {
-		AItemsInfoEntity task = aItemsInfoService.get(AItemsInfoEntity.class, id);
+		AMaterialsInfoEntity task = aMaterialsInfoService.get(AMaterialsInfoEntity.class, id);
 		if (task == null) {
-			return Result.error("根据ID获取A_ITEMS_INFO信息为空");
+			return Result.error("根据ID获取A_MATERIALS_INFO信息为空");
 		}
 		return Result.success(task);
 	}
 
 	@RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	@ApiOperation(value="创建A_ITEMS_INFO")
-	public ResponseMessage<?> create(@ApiParam(name="A_ITEMS_INFO对象")@RequestBody AItemsInfoEntity aItemsInfo, UriComponentsBuilder uriBuilder) {
+	@ApiOperation(value="创建A_MATERIALS_INFO")
+	public ResponseMessage<?> create(@ApiParam(name="A_MATERIALS_INFO对象")@RequestBody AMaterialsInfoEntity aMaterialsInfo, UriComponentsBuilder uriBuilder) {
 		//调用JSR303 Bean Validator进行校验，如果出错返回含400错误码及json格式的错误信息.
-		Set<ConstraintViolation<AItemsInfoEntity>> failures = validator.validate(aItemsInfo);
+		Set<ConstraintViolation<AMaterialsInfoEntity>> failures = validator.validate(aMaterialsInfo);
 		if (!failures.isEmpty()) {
 			return Result.error(JSONArray.toJSONString(BeanValidators.extractPropertyAndMessage(failures)));
 		}
 
 		//保存
 		try{
-			aItemsInfoService.save(aItemsInfo);
+			aMaterialsInfoService.save(aMaterialsInfo);
 		} catch (Exception e) {
 			e.printStackTrace();
-			return Result.error("A_ITEMS_INFO信息保存失败");
+			return Result.error("A_MATERIALS_INFO信息保存失败");
 		}
-		return Result.success(aItemsInfo);
+		return Result.success(aMaterialsInfo);
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	@ApiOperation(value="更新A_ITEMS_INFO",notes="更新A_ITEMS_INFO")
-	public ResponseMessage<?> update(@ApiParam(name="A_ITEMS_INFO对象")@RequestBody AItemsInfoEntity aItemsInfo) {
+	@ApiOperation(value="更新A_MATERIALS_INFO",notes="更新A_MATERIALS_INFO")
+	public ResponseMessage<?> update(@ApiParam(name="A_MATERIALS_INFO对象")@RequestBody AMaterialsInfoEntity aMaterialsInfo) {
 		//调用JSR303 Bean Validator进行校验，如果出错返回含400错误码及json格式的错误信息.
-		Set<ConstraintViolation<AItemsInfoEntity>> failures = validator.validate(aItemsInfo);
+		Set<ConstraintViolation<AMaterialsInfoEntity>> failures = validator.validate(aMaterialsInfo);
 		if (!failures.isEmpty()) {
 			return Result.error(JSONArray.toJSONString(BeanValidators.extractPropertyAndMessage(failures)));
 		}
 
 		//保存
 		try{
-			aItemsInfoService.saveOrUpdate(aItemsInfo);
+			aMaterialsInfoService.saveOrUpdate(aMaterialsInfo);
 		} catch (Exception e) {
 			e.printStackTrace();
-			return Result.error("更新A_ITEMS_INFO信息失败");
+			return Result.error("更新A_MATERIALS_INFO信息失败");
 		}
 
 		//按Restful约定，返回204状态码, 无内容. 也可以返回200状态码.
-		return Result.success("更新A_ITEMS_INFO信息成功");
+		return Result.success("更新A_MATERIALS_INFO信息成功");
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
 	@ResponseStatus(HttpStatus.NO_CONTENT)
-	@ApiOperation(value="删除A_ITEMS_INFO")
+	@ApiOperation(value="删除A_MATERIALS_INFO")
 	public ResponseMessage<?> delete(@ApiParam(name="id",value="ID",required=true)@PathVariable("id") String id) {
 		logger.info("delete[{}]" + id);
 		// 验证
@@ -436,10 +419,10 @@ public class AItemsInfoController extends BaseController {
 			return Result.error("ID不能为空");
 		}
 		try {
-			aItemsInfoService.deleteEntityById(AItemsInfoEntity.class, id);
+			aMaterialsInfoService.deleteEntityById(AMaterialsInfoEntity.class, id);
 		} catch (Exception e) {
 			e.printStackTrace();
-			return Result.error("A_ITEMS_INFO删除失败");
+			return Result.error("A_MATERIALS_INFO删除失败");
 		}
 
 		return Result.success();

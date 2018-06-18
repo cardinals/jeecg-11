@@ -170,7 +170,7 @@ public class BChildBusinessController extends BaseController {
 	 */
 
 	@RequestMapping(params = "limitDatagrid")
-	public void limitDatagrid(BChildBusinessEntity bChildBusiness,HttpServletRequest request, HttpServletResponse response, DataGrid dataGrid) {
+	public void limitDatagrid(BChildBusinessEntity bChildBusiness,String jcstatus,HttpServletRequest request, HttpServletResponse response, DataGrid dataGrid) {
 //		CriteriaQuery cq = new CriteriaQuery(BChildBusinessEntity.class, dataGrid);
 //		//查询条件组装器
 //		org.jeecgframework.core.extend.hqlsearch.HqlGenerateUtil.installHql(cq, bChildBusiness, request.getParameterMap());
@@ -187,25 +187,54 @@ public class BChildBusinessController extends BaseController {
 //		cq.add();
 //		this.bChildBusinessService.getDataGridReturn(cq, true);
 //		TagUtil.datagrid(response, dataGrid);
+		String condition = "";
+//		if (StringUtil.isNotEmpty(bChildBusiness.getBusinessId())) {
+//			condition += " and a.business_id ='" +bChildBusiness.getBusinessId()+"'";
+//		}
+		if (StringUtil.isNotEmpty(bChildBusiness.getRealityProjectName())) {
+			condition += " and b.realityProjectName ='" +bChildBusiness.getRealityProjectName()+"'";
+		}
+		if (StringUtil.isNotEmpty(bChildBusiness.getChildBusinessId())) {
+			condition += " and b.childBusinessId ='" +bChildBusiness.getChildBusinessId()+"'";
+		}
+		if (StringUtil.isNotEmpty(bChildBusiness.getItemsName())) {
+			condition += " and b.itemsName ='" +bChildBusiness.getItemsName()+"'";
+		}
+		if (StringUtil.isNotEmpty(jcstatus)) {
+			condition += " and b.jcstatus ='" + jcstatus +"'";
+		}
 		TSUser user = ResourceUtil.getSessionUser();
-		String condition ="";
+//		String condition ="";
 		if (ResourceUtil.getConfigByName("accept_deptid").equals(user.getCurrentDepart().getId())){
 		}else{
-			condition += "and a.dept_id ='" +user.getDepartid() +"'";
+			condition += "and b.deptId ='" +user.getDepartid() +"'";
 		}
-		String sql = "select func_getLimitDate(a.confirm_upload_time,'G',2) AS ENDTIME," +
+		String sql = "select * from (select func_getLimitDate(a.confirm_upload_time,'G',2) AS ENDTIME," +
 				"case when SYSDATE > func_getLimitDate(a.confirm_upload_time,'G',1) AND a.CHECK_TIME is NULL then '超期'" +
 				"     when SYSDATE > func_getLimitDate(a.confirm_upload_time,'G',1) AND a.CHECK_TIME >func_getLimitDate(a.confirm_upload_time,'G',1) then '超期'" +
 				"     when a.check_status ='0' and SYSDATE > func_getLimitDate(a.confirm_upload_time,'G',1) " +
 				"       and a.CHECK_TIME < a.confirm_upload_time then '超期'  " +
-				"     else '正常' end jcstatus ,a.*" +
-				"from B_CHILD_BUSINESS a where 1=1 " +condition;
+				"     else '正常' end jcstatus ,a.CHILD_BUSINESS_ID as childBusinessId ,a.REALITY_PROJECT_NAME as realityProjectName," +
+				"	a.BUSINESS_ID as businessId , a.PROJECT_ID as projectId ,a.items_Id as itemsId ,a.items_Name as itemsName," +
+				"	a.check_Content as checkContent ,a.confirm_Upload_Time as confirmUploadTime,a.check_Time as checkTime," +
+				"	a.check_Status as checkStatus,a.dept_id as deptId " +
+				" from B_CHILD_BUSINESS a order by jcstatus) b where 1=1  " +condition ;
 
 
 		List<Map<String, Object>> resultList =  systemService.findForJdbc(sql,dataGrid.getPage(),dataGrid.getRows());
 		//将List转换成JSON存储
 		dataGrid.setResults(resultList);
-		String getCountSql ="SELECT count(1) as count from B_CHILD_BUSINESS a where 1=1 " + condition;
+		String getCountSql ="select count(1) as count from (SELECT " +
+				"case when SYSDATE > func_getLimitDate(a.confirm_upload_time,'G',1) AND a.CHECK_TIME is NULL then '超期'" +
+				"     when SYSDATE > func_getLimitDate(a.confirm_upload_time,'G',1) AND a.CHECK_TIME >func_getLimitDate(a.confirm_upload_time,'G',1) then '超期'" +
+				"     when a.check_status ='0' and SYSDATE > func_getLimitDate(a.confirm_upload_time,'G',1) " +
+				"       and a.CHECK_TIME < a.confirm_upload_time then '超期'  " +
+				"     else '正常' end jcstatus ,a.CHILD_BUSINESS_ID as childBusinessId ,a.REALITY_PROJECT_NAME as realityProjectName," +
+				"	a.BUSINESS_ID as businessId , a.PROJECT_ID as projectId ,a.items_Id as itemsId ,a.items_Name as itemsName," +
+				"	a.check_Content as checkContent ,a.confirm_Upload_Time as confirmUploadTime,a.check_Time as checkTime," +
+				"	a.check_Status as checkStatus ,a.dept_id as deptId " +
+				" from B_CHILD_BUSINESS a ) b where 1=1 "
+				+ condition;
 		List<Map<String, Object>> resultList2 =  systemService.findForJdbc(getCountSql);
 		Object count = resultList2.get(0).get("count");
 

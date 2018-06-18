@@ -5,19 +5,19 @@
   <div region="center" style="padding:0px;border:0px">
   <t:datagrid name="aItemsInfoList" checkbox="true" pagination="true" fitColumns="true" title="A_ITEMS_INFO" actionUrl="aItemsInfoController.do?datagrid" idField="id" fit="true" queryMode="group">
    <t:dgCol title="主键"  field="id"  hidden="true"  queryMode="group"  width="120"></t:dgCol>
-   <t:dgCol title="项目id"  field="projectId"  hidden="true"  queryMode="group"  width="120"></t:dgCol>
-   <t:dgCol title="阶段id"  field="phasesId"  hidden="true"  queryMode="group"  width="120"></t:dgCol>
-   <t:dgCol title="事项编号"  field="itemsId"  hidden="true"  queryMode="group"  width="120"></t:dgCol>
-   <t:dgCol title="事项子项编号"  field="itemsChildId"  hidden="true"  queryMode="group"  width="120"></t:dgCol>
-   <t:dgCol title="事项名称"  field="itemsName"  queryMode="group"  width="120"></t:dgCol>
+   <t:dgCol title="项目id"  field="projectId"  queryMode="group"  width="120"></t:dgCol>
+   <t:dgCol title="阶段id"  field="phasesId"  queryMode="group"  width="120"></t:dgCol>
+   <t:dgCol title="事项编号"  field="itemsId"   queryMode="group"  width="120"></t:dgCol>
+   <t:dgCol title="事项子项编号"  field="itemsChildId"  queryMode="group"  width="120"></t:dgCol>
+   <t:dgCol title="事项名称"  field="itemsName" hidden="true" queryMode="group"  width="120"></t:dgCol>
    <t:dgCol title="事项子项名称"  field="itemsChildName"  query="true"   width="120"></t:dgCol>
    <t:dgCol title="部门编号"  field="deptId"  hidden="true"  queryMode="group"   width="120"></t:dgCol>
    <t:dgCol title="部门名称"  field="deptName"  query="true"  width="120"></t:dgCol>
    <t:dgCol title="承诺时限"  field="limitDays"  queryMode="group"  width="120"></t:dgCol>
    <t:dgCol title="createTime"  field="createTime"  formatter="yyyy-MM-dd"  hidden="true"  queryMode="group"  width="120"></t:dgCol>
    <t:dgCol title="updateTime"  field="updateTime"  formatter="yyyy-MM-dd"  hidden="true"  queryMode="group"  width="120"></t:dgCol>
-   <t:dgCol title="status"  field="status"  queryMode="group"  width="120"></t:dgCol>
-   <t:dgCol title="remark"  field="remark"  queryMode="group"  width="120"></t:dgCol>
+   <t:dgCol title="status"  field="status" hidden="true" queryMode="group"  width="120"></t:dgCol>
+   <t:dgCol title="备注"  field="remark" hidden="true" queryMode="group"  width="120"></t:dgCol>
    <t:dgCol title="delFlag"  field="delFlag"  hidden="true"  queryMode="group"  width="120"></t:dgCol>
    <t:dgCol title="操作" field="opt" width="100"></t:dgCol>
    <t:dgDelOpt title="删除" url="aItemsInfoController.do?doDel&id={id}" urlclass="ace_button"  urlfont="fa-trash-o"/>
