@@ -444,4 +444,75 @@ public class AItemsInfoController extends BaseController {
 
 		return Result.success();
 	}
+
+
+	@RequestMapping(params = "getItemsInfo")
+	@ResponseBody
+	public AjaxJson getItemsInfo(HttpServletRequest request, HttpServletResponse response){
+
+		AjaxJson j = new AjaxJson();
+
+		String orgIds = request.getParameter("orgIds");
+
+		String[] ids = new String[]{};
+		if(org.apache.commons.lang.StringUtils.isNotBlank(orgIds)){
+			orgIds = orgIds.substring(0, orgIds.length()-1);
+			ids = orgIds.split("\\,");
+		}
+
+		String parentid = request.getParameter("parentid");
+
+		List<TSDepart> tSDeparts = new ArrayList<TSDepart>();
+
+		StringBuffer hql = new StringBuffer(" from TSDepart t where 1=1 ");
+		if(org.apache.commons.lang.StringUtils.isNotBlank(parentid)){
+
+			TSDepart dePart = this.systemService.getEntity(TSDepart.class, parentid);
+
+			hql.append(" and TSPDepart = ?");
+			tSDeparts = this.systemService.findHql(hql.toString(), dePart);
+		} else {
+			hql.append(" and t.orgType = ?");
+			tSDeparts = this.systemService.findHql(hql.toString(), "1");
+		}
+		List<Map<String,Object>> dateList = new ArrayList<Map<String,Object>>();
+		if(tSDeparts.size()>0){
+			Map<String,Object> map = null;
+			String sql = null;
+			Object[] params = null;
+			for(TSDepart depart:tSDeparts){
+				map = new HashMap<String,Object>();
+				map.put("id", depart.getId());
+				map.put("name", depart.getDepartname());
+
+				map.put("code",depart.getOrgCode());
+
+				if(ids.length>0){
+					for(String id:ids){
+						if(id.equals(depart.getId())){
+							map.put("checked", true);
+						}
+					}
+				}
+
+				if(org.apache.commons.lang.StringUtils.isNotBlank(parentid)){
+					map.put("pId", parentid);
+				} else{
+					map.put("pId", "1");
+				}
+				//根据id判断是否有子节点
+				sql = "select count(1) from t_s_depart t where t.parentdepartid = ?";
+				params = new Object[]{depart.getId()};
+				long count = this.systemService.getCountForJdbcParam(sql, params);
+				if(count>0){
+					map.put("isParent",true);
+				}
+				dateList.add(map);
+			}
+		}
+		net.sf.json.JSONArray jsonArray = net.sf.json.JSONArray.fromObject(dateList);
+		System.out.println(jsonArray.toString());
+		j.setMsg(jsonArray.toString());
+		return j;
+	}
 }

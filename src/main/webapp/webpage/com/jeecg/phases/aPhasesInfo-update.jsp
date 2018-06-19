@@ -20,7 +20,8 @@
 							</label>
 						</td>
 						<td class="value">
-									<t:dictSelect field="projectId" type="list" 		datatype="*" typeGroupCode=""   defaultVal="${aPhasesInfoPage.projectId}" hasLabel="false"  title="项目编号" ></t:dictSelect>     
+							<input id="phasesId" name="phasesId" type="text" style="width: 150px" class="inputxt" 		datatype="*" ignore="checked"  value='${aPhasesInfoPage.projectId}'/>
+									<%--<t:dictSelect field="projectId" type="list" 		datatype="*" typeGroupCode=""   defaultVal="${aPhasesInfoPage.projectId}" hasLabel="false"  title="项目编号" ></t:dictSelect>--%>
 							<span class="Validform_checktip"></span>
 							<label class="Validform_label" style="display: none;">项目编号</label>
 						</td>

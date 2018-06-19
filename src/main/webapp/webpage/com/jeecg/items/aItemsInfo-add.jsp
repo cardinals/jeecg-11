@@ -142,7 +142,7 @@
 				<tr>
 					<td align="right" >
 						<label class="Validform_label">
-							部门编号:
+							部门名称:
 						</label>
 					</td>
 					<td class="value" colspan="3">
