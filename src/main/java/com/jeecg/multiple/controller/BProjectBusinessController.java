@@ -18,6 +18,7 @@ import com.jeecg.util.BusinessUtil;
 import com.jeecg.util.SmsUitl;
 import org.apache.log4j.Logger;
 import org.jeecgframework.core.util.*;
+import org.jeecgframework.tag.vo.datatable.SortDirection;
 import org.jeecgframework.web.system.pojo.base.TSUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -215,7 +216,7 @@ public class BProjectBusinessController extends BaseController {
 					" and f.business_id = e.business_id"+
 					" and f.items_id = c.items_id || c.items_child_id"+
 					" and f.materials_id = d.materials_id and f.materials_type = '1'" +
-					" and e.business_id = '"+bProjectBusiness.getBusinessId()+"' and d.items_id = '"+itemsId+"' and length(f.id) = 32  order by c.items_id || c.items_child_id";
+					" and e.business_id = '"+bProjectBusiness.getBusinessId()+"' and d.items_id = '"+itemsId+"' and length(f.id) = 32  order by c.items_id || c.items_child_id ,d.materials_id";
 			check_sql = "select dept_id,dept_name,items_name,items_id,check_content,check_time,check_status from B_CHILD_BUSINESS t " +
 					"where business_id ='"+bProjectBusiness.getBusinessId()+"' " +
 					"and items_id = '"+itemsId+"' order by items_id  ";
@@ -231,7 +232,7 @@ public class BProjectBusinessController extends BaseController {
 					" and f.items_id = c.items_id || c.items_child_id"+
 					" and f.materials_id = d.materials_id and f.materials_type = '1'" +
 					" and e.business_id = '"+bProjectBusiness.getBusinessId()+"'" +
-					" and c.dept_id = '"+user.getCurrentDepart().getId()+"' and d.items_id = '"+itemsId+"' and length(f.id) = 32 order by c.items_id || c.items_child_id" ;
+					" and c.dept_id = '"+user.getCurrentDepart().getId()+"' and d.items_id = '"+itemsId+"' and length(f.id) = 32 order by c.items_id || c.items_child_id,d.materials_id" ;
 			check_sql = "select dept_id,dept_name,items_name,items_id,check_content,check_time,check_status from B_CHILD_BUSINESS t " +
 					"where business_id ='"+bProjectBusiness.getBusinessId()+"' " +
 					" and items_id='"+itemsId+"'  order by items_id  ";
@@ -689,6 +690,7 @@ public class BProjectBusinessController extends BaseController {
 		}catch (Exception e) {
 			throw new BusinessException(e.getMessage());
 		}
+		cq.addOrder("createTime", SortDirection.desc);
 		cq.add();
 		this.bProjectBusinessService.getDataGridReturn(cq, true);
 		TagUtil.datagrid(response, dataGrid);
