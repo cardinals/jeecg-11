@@ -3,6 +3,9 @@ import com.jeecg.business.entity.AProjectInfoEntity;
 import com.jeecg.business.service.AProjectInfoServiceI;
 import com.jeecg.childbusiness.entity.BChildBusinessEntity;
 import com.jeecg.childbusiness.service.BChildBusinessServiceI;
+import com.jeecg.emay.EMSmsUitl;
+import com.jeecg.emay.eucp.inter.http.v1.dto.response.ResponseData;
+import com.jeecg.emay.eucp.inter.http.v1.dto.response.SmsResponse;
 import com.jeecg.materialsupload.entity.AMaterialsUploadEntity;
 import com.jeecg.materialsupload.service.AMaterialsUploadServiceI;
 import com.jeecg.multiple.entity.BProjectBusinessEntity;
@@ -496,22 +499,38 @@ public class BProjectBusinessController extends BaseController {
 			List<Map<String, Object>> user =  systemService.findForJdbc(userSql);
 			Map param = new HashMap();
 			if(StringUtil.isNotEmpty(user) && user.size() > 0){
-				JSONObject json = new JSONObject();
-				json.put("name", user.get(0).get("realname"));
-				json.put("reality_project_name", chlidBusiness.get(0).get("reality_project_name"));
-				json.put("item_name", chlidBusiness.get(0).get("items_name"));
-				json.put("check_status", chlidBusiness.get(0).get("check_status"));
-//			System.out.println("====="+json.toString());
-//			System.out.println("_____"+"{\"name\":\"Tom\", \"reality_project_name\":\"XX集团\", \"item_name\":\"小项名称\"}");
-				param.put("json",json.toString());
-				param.put("templateCode",ResourceUtil.getConfigByName("checktemplateCode"));
-				param.put("phoneNo",user.get(0).get("mobilephone"));
-				String resultSms = SmsUitl.check(param);
-				if("OK".equals(resultSms)){
+//				String content= ResourceUtil.getConfigByName("sign") + "尊敬的"+user.get(0).get("realname")+
+//						",您有一条项目名称为"+chlidBusiness.get(0).get("reality_project_name")
+//						+",事项名称为"+chlidBusiness.get(0).get("items_name")+"的业务已审核完成，审核结果为"
+//						+chlidBusiness.get(0).get("check_status")+" ，详情关注系统中具体内容。";
+				String content= "【郑东新区行政审批中心】 尊敬的 "+user.get(0).get("realname")+
+						",您有一条项目名称为 "+chlidBusiness.get(0).get("reality_project_name")
+						+" ,事项名称为 "+chlidBusiness.get(0).get("items_name")+" 的业务已审核完成，审核结果为 "
+						+chlidBusiness.get(0).get("check_status")+" ，详情关注系统中具体内容。";
+				param.put(user.get(0).get("mobilephone"),content);
+				ResponseData<SmsResponse[]> data =EMSmsUitl.setPersonalitySms(param,"","","");
+//				JSONObject json = JSONObject.fromObject(SmsResult);
+				if("SUCCESS".equals(data.getCode())){
 					message += " （短息发送成功）";
 				}else{
-					message += " （短息发送失败）";
+					message += " （短息发送失败）" +data.getCode()+data.getData();
 				}
+//				JSONObject json = new JSONObject();
+//				json.put("name", user.get(0).get("realname"));
+//				json.put("reality_project_name", chlidBusiness.get(0).get("reality_project_name"));
+//				json.put("item_name", chlidBusiness.get(0).get("items_name"));
+//				json.put("check_status", chlidBusiness.get(0).get("check_status"));
+////			System.out.println("====="+json.toString());
+////			System.out.println("_____"+"{\"name\":\"Tom\", \"reality_project_name\":\"XX集团\", \"item_name\":\"小项名称\"}");
+//				param.put("json",json.toString());
+//				param.put("templateCode",ResourceUtil.getConfigByName("checktemplateCode"));
+//				param.put("phoneNo",user.get(0).get("mobilephone"));
+//				String resultSms = SmsUitl.check(param);
+//				if("OK".equals(resultSms)){
+//					message += " （短息发送成功）";
+//				}else{
+//					message += " （短息发送失败）";
+//				}
 
 			}else{
 				message += " （窗口人员没有预留手机号，提示短信无法发送）";
@@ -559,26 +578,37 @@ public class BProjectBusinessController extends BaseController {
 					"       (select user_id" +
 					"          from t_s_user_org" +
 					"         where org_id in ('"+chlidBusiness.get(0).get("dept_id")+"'))" +
-					"   and a.officephone = '666666'" +
+					"   and a.memo = '1'" +
 					"   and a.id = b.id";
 			List<Map<String, Object>> user =  systemService.findForJdbc(userSql);
 			Map param = new HashMap();
 			if(StringUtil.isNotEmpty(user) && user.size() > 0){
-				JSONObject json = new JSONObject();
-				json.put("name", user.get(0).get("realname"));
-				json.put("reality_project_name", chlidBusiness.get(0).get("reality_project_name"));
-				json.put("item_name", chlidBusiness.get(0).get("items_name"));
-//			System.out.println("====="+json.toString());
-//			System.out.println("_____"+"{\"name\":\"Tom\", \"reality_project_name\":\"XX集团\", \"item_name\":\"小项名称\"}");
-				param.put("json",json.toString());
-				param.put("templateCode",ResourceUtil.getConfigByName("checktemplateCode"));
-				param.put("phoneNo",user.get(0).get("mobilephone"));
-				String resultSms = SmsUitl.check(param);
-				if("OK".equals(resultSms)){
+				String content= "【郑东新区行政审批中心】 尊敬的 "+user.get(0).get("realname")+
+						",您有一条项目名称为 "+chlidBusiness.get(0).get("reality_project_name")
+						+" ,事项名称为 "+chlidBusiness.get(0).get("items_name")+" 待审核业务,请尽快审核。";
+				param.put(user.get(0).get("mobilephone"),content);
+				ResponseData<SmsResponse[]> data =EMSmsUitl.setPersonalitySms(param,"","","");
+//				JSONObject json = JSONObject.fromObject(SmsResult);
+				if("SUCCESS".equals(data.getCode())){
 					message += " （短息发送成功）";
 				}else{
-					message += " （短息发送失败）";
+					message += " （短息发送失败）" +data.getCode()+data.getData();
 				}
+//				JSONObject json = new JSONObject();
+//				json.put("name", user.get(0).get("realname"));
+//				json.put("reality_project_name", chlidBusiness.get(0).get("reality_project_name"));
+//				json.put("item_name", chlidBusiness.get(0).get("items_name"));
+////			System.out.println("====="+json.toString());
+////			System.out.println("_____"+"{\"name\":\"Tom\", \"reality_project_name\":\"XX集团\", \"item_name\":\"小项名称\"}");
+//				param.put("json",json.toString());
+//				param.put("templateCode",ResourceUtil.getConfigByName("checktemplateCode"));
+//				param.put("phoneNo",user.get(0).get("mobilephone"));
+//				String resultSms = SmsUitl.check(param);
+//				if("OK".equals(resultSms)){
+//					message += " （短息发送成功）";
+//				}else{
+//					message += " （短息发送失败）";
+//				}
 
 			}else{
 				message += " （该部门首席代表没有预留手机号，提示短信无法发送）";
@@ -853,6 +883,23 @@ public class BProjectBusinessController extends BaseController {
 				}
 			}
 
+			Map param = new HashMap();
+			if(StringUtil.isNotEmpty(bProjectBusiness.getApplyPhone()) ){
+				String content= "【郑东新区行政审批中心】 尊敬的 "+bProjectBusiness.getApplyName()+
+						",您有一条用地类型为 "+bProjectBusiness.getProjectName()
+						+" , 项目名称为 "+bProjectBusiness.getRealityProjectName()+" 的业务已受理成功。";
+				param.put(bProjectBusiness.getApplyPhone(),content);
+				ResponseData<SmsResponse[]> data =EMSmsUitl.setPersonalitySms(param,"","","");
+//				JSONObject json = JSONObject.fromObject(SmsResult);
+				if("SUCCESS".equals(data.getCode())){
+					message += " （申请人短息发送成功）";
+				}else{
+					message += " （申请人短息发送失败）" +data.getCode()+data.getData();
+				}
+
+			}else{
+				message += " （申请人没有预留手机号，提示短信无法发送）";
+			}
 
 		}catch(Exception e){
 			e.printStackTrace();

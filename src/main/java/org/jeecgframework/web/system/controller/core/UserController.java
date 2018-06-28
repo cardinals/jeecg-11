@@ -661,6 +661,7 @@ public class UserController extends BaseController {
 			users.setRealName(user.getRealName());
 			users.setStatus(Globals.User_Normal);
 			users.setActivitiSync(user.getActivitiSync());
+			users.setMemo(user.getMemo());
 			this.userService.saveOrUpdate(users, orgid.split(","), roleid.split(","));
 			message = "用户: " + users.getUserName() + "更新成功";
 		} else {

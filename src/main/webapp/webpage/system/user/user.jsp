@@ -72,7 +72,8 @@
     </script>
     <%--update-end--Author:jg_renjie  Date:20160320 for：#942 【组件封装】组织机构弹出模式，目前是列表，得改造成树方式--%>
 </head>
-<body style="overflow-y: hidden" scroll="no">
+<%--<body style="overflow-y: hidden" scroll="no">--%>
+<body scroll="no">
 <%--update-start--Author:zhangguoming  Date:20140825 for：格式化页面代码 并 添加组织机构combobox多选框--%>
 <t:formvalid formid="formobj" dialog="true" usePlugin="password" layout="table" action="userController.do?saveUser" beforeSubmit="setOrgIds">
 	<input id="id" name="id" type="hidden" value="${user.id }"/>
@@ -177,6 +178,15 @@
             <td class="value">
 
                 <t:dictSelect id="devFlag" field="devFlag" typeGroupCode="dev_flag" hasLabel="false" defaultVal="${user.devFlag==null?'0':(user.devFlag)}" type="radio"></t:dictSelect>
+                <span class="Validform_checktip"></span>
+            </td>
+
+        </tr>
+        <tr>
+            <td align="right"><label class="Validform_label"> 是否为首席代表: </label></td>
+
+            <td class="value">
+                <input type="radio" name="memo" value="1"   ${user.memo== "1"?'checked':''} >是<input type="radio" name="memo" ${user.memo== "0"?'checked':''} value="0"  >否
                 <span class="Validform_checktip"></span>
             </td>
         </tr>
