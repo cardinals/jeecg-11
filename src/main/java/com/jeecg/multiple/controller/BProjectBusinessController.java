@@ -358,12 +358,17 @@ public class BProjectBusinessController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping(params = "certificateList")
-	public ModelAndView certificateList(BProjectBusinessEntity bProjectBusiness, HttpServletRequest req,DataGrid dataGrid) {
+	public ModelAndView certificateList(BProjectBusinessEntity bProjectBusiness, HttpServletRequest req,DataGrid dataGrid,String phasesId) {
 		if (StringUtil.isNotEmpty(bProjectBusiness.getId())) {
 			bProjectBusiness = bProjectBusinessService.getEntity(BProjectBusinessEntity.class, bProjectBusiness.getId());
 			req.setAttribute("bProjectBusinessPage", bProjectBusiness);
 		}
-
+		//阶段查询条件
+		String condition = "" ;
+		if (StringUtil.isNotEmpty(phasesId)) {
+			condition += "and substr(a.phases_id, -3) = '"+phasesId+"'";
+			req.setAttribute("phasesId", phasesId);
+		}
 		TSUser user = ResourceUtil.getSessionUser();
 		String sql = "select a.business_id,a.project_id,substr(a.phases_id,-3) as phases_id , a.items_id,a.items_name ,a.dept_id,a.dept_name,a.reality_project_name,b.id, " +
 				" substr(b.materials_name,37) as file_name from B_CHILD_BUSINESS a, A_MATERIALS_UPLOAD b " +
@@ -621,6 +626,67 @@ public class BProjectBusinessController extends BaseController {
 		}
 		j.setMsg(message);
 		return j;
+	}
+
+	/**
+	 * 并联业务跳转至材料上传页面
+	 *
+	 * @return
+	 */
+	@RequestMapping(params = "printHzd")
+	public ModelAndView printHzd(BProjectBusinessEntity bProjectBusiness, HttpServletRequest req,DataGrid dataGrid) {
+		if (StringUtil.isNotEmpty(bProjectBusiness.getId())) {
+			bProjectBusiness = bProjectBusinessService.getEntity(BProjectBusinessEntity.class, bProjectBusiness.getId());
+			req.setAttribute("bProjectBusinessPage", bProjectBusiness);
+		}
+		TSUser user = ResourceUtil.getSessionUser();
+		String deptName = req.getParameter("deptName");
+		String itemsName = req.getParameter("itemsName");
+		String sql ="";
+//		String check_sql ="";
+		String itemsId= req.getParameter("itemsId");
+		if (ResourceUtil.getConfigByName("accept_deptid").equals(user.getCurrentDepart().getId())){
+			sql = "select f.id,substr(f.materials_name,37) as file_name, f.materials_path,e.business_id,a.project_id, a.project_name, b.phases_id, b.phases_name, c.items_id || c.items_child_id as items_id, " +
+					"c.items_child_name, d.materials_id, d.materials_name, c.dept_id, c.dept_name ,c.limit_days from A_PROJECT_INFO a, " +
+					"A_PHASES_INFO b, A_ITEMS_INFO c, A_materials_INFO d, b_project_business e, a_materials_upload f where " +
+					"a.project_id = b.project_id and b.phases_id = c.phases_id and c.items_id || c.items_child_id = d.items_id " +
+					" and e.project_id = a.project_id"+
+					" and f.project_id = a.project_id"+
+					" and f.phases_id = b.phases_id"+
+					" and f.business_id = e.business_id"+
+					" and f.items_id = c.items_id || c.items_child_id"+
+					" and f.materials_id = d.materials_id and f.materials_type = '1'" +
+					" and e.business_id = '"+bProjectBusiness.getBusinessId()+"' and d.items_id = '"+itemsId+"' and length(f.id) = 32  and f.materials_path is not null " +
+					"order by c.items_id || c.items_child_id ,d.materials_id";
+//			check_sql = "select dept_id,dept_name,items_name,items_id,check_content,check_time,check_status from B_CHILD_BUSINESS t " +
+//					"where business_id ='"+bProjectBusiness.getBusinessId()+"' " +
+//					"and items_id = '"+itemsId+"' order by items_id  ";
+		}else{
+			sql = "select f.id,substr(f.materials_name,37) as file_name, f.materials_path,e.business_id,a.project_id, a.project_name, b.phases_id, b.phases_name, c.items_id || c.items_child_id as items_id, " +
+					"c.items_child_name, d.materials_id, d.materials_name, c.dept_id, c.dept_name from A_PROJECT_INFO a, " +
+					"A_PHASES_INFO b, A_ITEMS_INFO c, A_materials_INFO d, b_project_business e, a_materials_upload f where " +
+					"a.project_id = b.project_id and b.phases_id = c.phases_id and c.items_id || c.items_child_id = d.items_id " +
+					" and e.project_id = a.project_id"+
+					" and f.project_id = a.project_id"+
+					" and f.phases_id = b.phases_id"+
+					" and f.business_id = e.business_id"+
+					" and f.items_id = c.items_id || c.items_child_id"+
+					" and f.materials_id = d.materials_id and f.materials_type = '1'" +
+					" and e.business_id = '"+bProjectBusiness.getBusinessId()+"'" +
+					" and c.dept_id = '"+user.getCurrentDepart().getId()+"' and d.items_id = '"+itemsId+"' and length(f.id) = 32 order by c.items_id || c.items_child_id,d.materials_id" ;
+//			check_sql = "select dept_id,dept_name,items_name,items_id,check_content,check_time,check_status from B_CHILD_BUSINESS t " +
+//					"where business_id ='"+bProjectBusiness.getBusinessId()+"' " +
+//					" and items_id='"+itemsId+"'  order by items_id  ";
+			req.setAttribute("role", BusinessUtil.DEPT_CHECK_ROLE);
+		}
+
+		List<Map<String, Object>> materialList =  systemService.findForJdbc(sql);
+//		List<Map<String, Object>> checklList =  systemService.findForJdbc(check_sql);
+		req.setAttribute("materialList", materialList);
+		req.setAttribute("itemsName", itemsName);
+		req.setAttribute("deptName", deptName);
+//		req.setAttribute("checklList", checklList);
+		return new ModelAndView("com/jeecg/multiple/hzd");
 	}
 
 //~~~~~~~~~~~~~~~~~~~~~~~~

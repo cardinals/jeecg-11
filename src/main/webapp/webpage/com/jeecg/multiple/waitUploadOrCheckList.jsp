@@ -85,6 +85,7 @@
 
 <div class="easyui-layout" fit="true">
   <div region="center" style="padding:0px;border:0px;padding-top: 10px">
+
    <span style="display:-moz-inline-box;display:inline-block;margin-bottom:2px;text-align:justify;">
     <span style="vertical-align:middle;display:-moz-inline-box;display:inline-block;width: 90px;text-align:right;text-overflow:ellipsis;-o-text-overflow:ellipsis; overflow: hidden;white-space:nowrap; " title="项目名称">项目名称：</span>
     <input onkeypress="EnterPress(event)" onkeydown="EnterPress()" type="text" name="realityProjectName" id="realityProjectName" style="width: 120px" class="inuptxt">
@@ -104,6 +105,7 @@
     <a href="#" class="easyui-linkbutton l-btn" iconcls="icon-search" onclick="sub()">查询</a>
     </span>
    </span>
+
    <table style="width: 100%;" cellpadding="0" cellspacing="1" class="formtable table table-hover" >
     <thead>
     <tr style="height: 42px;background: #81b5e2">

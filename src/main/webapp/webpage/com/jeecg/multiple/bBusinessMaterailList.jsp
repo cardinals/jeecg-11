@@ -90,9 +90,12 @@ function chooseText(temp,status) {
     }else{
         $('#checkStatus').val(status);
     }
-
-
 }
+//打印回执单
+function printHzd(){
+    window.open("bProjectBusinessController.do?printHzd&id=${bProjectBusinessPage.id }&itemsId=${materialList[0].items_id }&deptName=${materialList[0].dept_name}&itemsName=${materialList[0].items_child_name}");
+}
+
  </script>
 
 </head>
@@ -174,7 +177,7 @@ function chooseText(temp,status) {
 
     <c:if test="${role =='WINDOW_ACCEPT'}">
     <div style="text-align: center; margin-top: 5px;">
-     <a href='javascript:void(0)' onclick="confirmUpload()" class="ace_button" target='_blank'>材料确认进入审核</a>
+     <a href='javascript:void(0)' onclick="printHzd();confirmUpload()" class="ace_button" target='_blank'>材料确认进入审核</a>
     </div>
     </c:if>
 

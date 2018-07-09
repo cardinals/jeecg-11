@@ -8,6 +8,10 @@
  <%-- <script src = "plug-in/fileupload/js/myuploadfunction.js"></script>--%>
  <script type="text/javascript">
      $(function(){
+         $("#change_phases").change(function(){
+             var opt=$("#change_phases").val();
+             window.location.href="bProjectBusinessController.do?uploadcl&id=${bProjectBusinessPage.id}&phasesId="+opt;
+         });
          $('input.materials').fileupload({
              dataType: 'json',
              acceptFileTypes: /(\.|\/)(gif|jpe?g|png|pdf|txt|doc|docx|xls|xlsx|ppt)$/i,
@@ -79,6 +83,19 @@
 
 <div class="easyui-layout" fit="true">
   <div region="center" style="padding:0px;border:0px">
+
+   <span style="display:-moz-inline-box;display:inline-block;margin-bottom:2px;text-align:justify;">
+   <span style="vertical-align:middle;display:-moz-inline-box;display:inline-block;width: 90px;text-align:right;text-overflow:ellipsis;-o-text-overflow:ellipsis; overflow: hidden;white-space:nowrap; " title="选择阶段">选择阶段：</span>
+   <select name="change_phases" id="change_phases"  width="120" style="width: 120px">
+    <option value="">-- 所有阶段 --</option>
+    <option value="001" <c:if test="${phasesId=='001'}">selected="selected"</c:if>>第一阶段</option>
+    <option value="002" <c:if test="${phasesId=='002'}">selected="selected"</c:if>>第二阶段</option>
+    <option value="003" <c:if test="${phasesId=='003'}">selected="selected"</c:if>>第三阶段</option>
+    <option value="004" <c:if test="${phasesId=='004'}">selected="selected"</c:if>>第四阶段</option>
+    <option value="005" <c:if test="${phasesId=='005'}">selected="selected"</c:if>>第五阶段</option>
+   </select>
+  </span>
+
    <table style="width: 100%;" cellpadding="0" cellspacing="1" class="formtable table table-hover" >
     <thead>
     <tr style="height: 42px;background: #81b5e2">
