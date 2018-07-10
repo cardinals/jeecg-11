@@ -162,6 +162,7 @@ function printHzd(){
         </span>
 
          <span class="fileinput-button" style="cursor:pointer;background: #498bdc;color: white;padding: 2px;width: 50px;height: 20px;" onclick="javascript:window.open('bProjectBusinessController.do?gpy&id=${bProjectBusinessPage.id}&itemsId=${certificate.items_id}&materialId=${material.id }&type=1 ')"><font>拍照上传</font>
+          <%--<span class="fileinput-button" style="cursor:pointer;background: #498bdc;color: white;padding: 2px;width: 50px;height: 20px;" onclick="location.href='bProjectBusinessController.do?gpy&id=${bProjectBusinessPage.id}&itemsId=${certificate.items_id}&materialId=${material.id }&type=1'"><font>拍照上传</font>--%>
         </span>
        </td>
      </c:if>

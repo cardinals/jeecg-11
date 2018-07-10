@@ -69,7 +69,7 @@
                     <img src="plug-in/hplushome/images/sx_img3.png" alt="" /><br />公告
                 </a>
             </div>
-            <div class="pull-left t2_common_lr_left">
+            <%--<div class="pull-left t2_common_lr_left">
                 <div class="panel panel-primary t2-delsb t2-panel t2-panel_style1">
                     <div class="panel-heading"> <a href="javascript:void(0)" style="line-height: 30px;" class="t2-panel-more">更多</a>
                         <h3 class="panel-title"><span><img src="plug-in/hplushome/images/index_icon4.png" alt="" style="margin-bottom:3px"/></span> 关注业务</h3>
@@ -104,7 +104,7 @@
                         </ul>
                     </div>
                 </div>
-            </div>
+            </div>--%>
 
             <div class="clearfix"></div>
         </div>
