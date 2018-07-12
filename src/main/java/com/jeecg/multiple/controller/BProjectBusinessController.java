@@ -761,6 +761,9 @@ public class BProjectBusinessController extends BaseController {
 	@RequestMapping(params = "datagrid")
 	public void datagrid(BProjectBusinessEntity bProjectBusiness,HttpServletRequest request, HttpServletResponse response, DataGrid dataGrid) {
 		TSUser user = ResourceUtil.getSessionUser();
+		if (StringUtil.isNotEmpty(bProjectBusiness.getRealityProjectName())) {
+			bProjectBusiness.setRealityProjectName("*"+bProjectBusiness.getRealityProjectName()+"*");
+		}
 		CriteriaQuery cq = new CriteriaQuery(BProjectBusinessEntity.class, dataGrid);
 		//查询条件组装器
 		org.jeecgframework.core.extend.hqlsearch.HqlGenerateUtil.installHql(cq, bProjectBusiness, request.getParameterMap());

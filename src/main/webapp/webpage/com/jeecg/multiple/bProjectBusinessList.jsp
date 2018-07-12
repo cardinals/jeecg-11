@@ -3,12 +3,12 @@
 <t:base type="jquery,easyui,tools,DatePicker"></t:base>
 <div class="easyui-layout" fit="true">
   <div region="center" style="padding:0px;border:0px">
-  <t:datagrid name="bProjectBusinessList"  pagination="true" fitColumns="true" title="材料信息" actionUrl="bProjectBusinessController.do?datagrid" idField="id" fit="true" queryMode="group">
+  <t:datagrid name="bProjectBusinessList"  pagination="true" fitColumns="true" title="预受理" actionUrl="bProjectBusinessController.do?datagrid" idField="id" fit="true" queryMode="group">
    <t:dgCol title="主键"  field="id"  hidden="true"  queryMode="group"  width="120"></t:dgCol>
    <t:dgCol title="业务流水号"  field="businessId"  query="true"  width="120"></t:dgCol>
    <t:dgCol title="项目名称"  field="realityProjectName"  query="true"  width="150"></t:dgCol>
    <t:dgCol title="项目id"  field="projectId"  hidden="true"  queryMode="group"  width="120"></t:dgCol>
-   <t:dgCol title="用地类型"  field="projectName"  queryMode="group"  width="120"></t:dgCol>
+   <t:dgCol title="用地类型"  field="projectName"  query="true" replace="社会投资项目-招拍挂类_社会投资项目-招拍挂类,社会投资项目-协议出让类_社会投资项目-协议出让类,政府投资项目-划拨类_政府投资项目-划拨类"  width="120"></t:dgCol>
    <%--<t:dgCol title="项目状态"  field="projectStatus"  queryMode="group" replace="材料上传_1,材料审核_2" width="80"></t:dgCol>--%>
    <t:dgCol title="证照上传状态"  field="certificateStatus"  hidden="true"  queryMode="group"  width="120"></t:dgCol>
    <t:dgCol title="当前阶段编号"  field="currentPhases" hidden="true"  queryMode="group"  width="80"></t:dgCol>
@@ -82,9 +82,9 @@ function uploadCertificate(id){
  //材料上传
  function uploadcl(id){
      if("WINDOW_ACCEPT"=="${role}"){
-         createdetailwindow("材料上传", "bProjectBusinessController.do?uploadcl&id="+id,"1000","500");
+         createdetailwindow("材料上传", "bProjectBusinessController.do?uploadcl&id="+id,"100%","100%");
      }else{
-         createdetailwindow("材料审核", "bProjectBusinessController.do?uploadcl&id="+id,"1000","500");
+         createdetailwindow("材料审核", "bProjectBusinessController.do?uploadcl&id="+id,"100%","100%");
      }
 
  }

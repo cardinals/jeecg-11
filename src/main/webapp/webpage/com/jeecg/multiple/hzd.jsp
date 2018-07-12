@@ -23,13 +23,13 @@
 </head>
 <body>
 <div align="center" id="hz_div" style="margin-top: 10px;">
-    <div  style="width: 600px;" id="hz_div_zs" class="item-sel" title="受理回执单（申请人）">
+    <div  style="width: 600px;" id="hz_div_zs" class="item-sel" title="预受理回执单（申请人）">
         <div align="center" >
         <div style="width: 100%;">
             <div>
                 <strong><font style="font-size:20px;" class="systitle">郑东新区建设项目并联审批监管系统</font></strong>
                 <br>
-                <strong>业务受理回执单</strong>
+                <strong>业务预受理回执单</strong>
             </div>
         </div>
         <div style="text-align:right;margin:0;padding:0;height:20px;width: 600px; ">
@@ -54,7 +54,7 @@
                 <th>业务部门</th>
                 <td>${materialList[0].dept_name}</td>
                 <th>咨询电话</th>
-                <td>0371-66666666</td>
+                <td></td>
             </tr>
             <tr>
                 <th width="15%">受理时间</th>
@@ -135,7 +135,7 @@
                 <th>业务部门</th>
                 <td>${materialList[0].dept_name}</td>
                 <th>咨询电话</th>
-                <td>0371-66666666</td>
+                <td></td>
             </tr>
             <tr>
                 <th>材料接收人</th>
@@ -147,7 +147,7 @@
                 <th width="15%">受理时间</th>
                 <td width="35%">${bProjectBusinessPage.createTime}</td>
                 <th width="15%">承诺时间</th>
-                <td>66666666
+                <td>${materialList[0].limit_days}
                     工作日
                 </td>
             </tr>

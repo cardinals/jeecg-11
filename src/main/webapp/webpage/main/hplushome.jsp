@@ -27,11 +27,11 @@
         }
         //待上传
         function waitUpload(){
-            createdetailwindow("待上传", "loginController.do?waitUploadCl","1000","500");
+            createdetailwindow("待上传", "loginController.do?waitUploadCl","100%","100%");
         }
         //待审核
         function waitCheck(){
-            createdetailwindow("待审核", "loginController.do?waitUploadCl","1000","500");
+            createdetailwindow("待审核", "loginController.do?waitUploadCl","100%","100%");
         }
     </script>
 </head>

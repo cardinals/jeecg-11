@@ -161,14 +161,18 @@ function printHzd(){
          &nbsp;&nbsp;  <input id="filePaths" name="filePaths" type="hidden" />
         </span>
 
-         <span class="fileinput-button" style="cursor:pointer;background: #498bdc;color: white;padding: 2px;width: 50px;height: 20px;" onclick="javascript:window.open('bProjectBusinessController.do?gpy&id=${bProjectBusinessPage.id}&itemsId=${certificate.items_id}&materialId=${material.id }&type=1 ')"><font>拍照上传</font>
-          <%--<span class="fileinput-button" style="cursor:pointer;background: #498bdc;color: white;padding: 2px;width: 50px;height: 20px;" onclick="location.href='bProjectBusinessController.do?gpy&id=${bProjectBusinessPage.id}&itemsId=${certificate.items_id}&materialId=${material.id }&type=1'"><font>拍照上传</font>--%>
+         <%--<span class="fileinput-button" style="cursor:pointer;background: #498bdc;color: white;padding: 2px;width: 50px;height: 20px;" onclick="javascript:window.open('bProjectBusinessController.do?gpy&id=${bProjectBusinessPage.id}&itemsId=${certificate.items_id}&materialId=${material.id }&type=1 ')"><font>拍照上传</font>--%>
+          <span class="fileinput-button" style="cursor:pointer;background: #498bdc;color: white;padding: 2px;width: 50px;height: 20px;" onclick="location.href='bProjectBusinessController.do?gpy&id=${bProjectBusinessPage.id}&itemsId=${certificate.items_id}&materialId=${material.id }&type=1'"><font>拍照上传</font>
         </span>
        </td>
      </c:if>
+
       <td align="center" title="${material.file_name }">
+       <c:if test="${material.file_name !='' && material.file_name !=null}">
        <%--<a href='aMaterialsUploadController.do?downloadFile&id=${material.id }&type=download' target='_blank'>${material.file_name }</a>--%>
-       <a href='bProjectBusinessController.do?fileView&id=${material.id }&type=download' target='_blank'>${material.file_name }</a>
+       <%--<a href='bProjectBusinessController.do?fileView&id=${material.id }&type=download' target='_blank'>${material.file_name }</a>--%>
+       <a href='bProjectBusinessController.do?fileView&id=${material.id }&type=download' target='_blank'>查看</a>
+     </c:if>
       </td>
       </tr>
     </c:forEach>

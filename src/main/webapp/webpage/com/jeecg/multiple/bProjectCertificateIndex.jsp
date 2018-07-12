@@ -8,7 +8,7 @@
    <t:dgCol title="业务流水号"  field="businessId"  query="true"  width="120"></t:dgCol>
    <t:dgCol title="项目名称"  field="realityProjectName"  query="true"  width="150"></t:dgCol>
    <t:dgCol title="项目编号"  field="projectId"  hidden="true"  queryMode="group"  width="120"></t:dgCol>
-   <t:dgCol title="用地类型"  field="projectName"  query="true" replace="郑东新区招拍挂类建设项目_郑东新区招拍挂类建设项目,招拍挂类项目(测试)_招拍挂类项目(测试),3_3" width="120"></t:dgCol>
+   <t:dgCol title="用地类型"  field="projectName"  query="true" replace="社会投资项目-招拍挂类_社会投资项目-招拍挂类,社会投资项目-协议出让类_社会投资项目-协议出让类,政府投资项目-划拨类_政府投资项目-划拨类" width="120"></t:dgCol>
    <%--<t:dgCol title="项目状态"  field="projectStatus"  queryMode="group" replace="证照上传_1,证照查看_2" width="80"></t:dgCol>--%>
    <t:dgCol title="证照上传状态"  field="certificateStatus"  hidden="true"  queryMode="group"  width="120"></t:dgCol>
    <t:dgCol title="当前阶段编号"  field="currentPhases" hidden="true"  queryMode="group"  width="80"></t:dgCol>
