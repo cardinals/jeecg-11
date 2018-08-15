@@ -7,6 +7,7 @@ import java.text.SimpleDateFormat;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.jeecg.util.BusinessUtil;
 import org.apache.log4j.Logger;
 import org.jeecgframework.web.system.pojo.base.TSUser;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -118,6 +119,14 @@ public class BChildBusinessController extends BaseController {
 	 */
 	@RequestMapping(params = "statisticsList")
 	public ModelAndView statisticsList(HttpServletRequest request) {
+		TSUser user = ResourceUtil.getSessionUser();
+		if (ResourceUtil.getConfigByName("accept_deptid").equals(user.getCurrentDepart().getId()) ) {
+			request.setAttribute("role", BusinessUtil.WINDOW_ACCEPT);
+		}else if(ResourceUtil.getConfigByName("admin_deptid").equals(user.getCurrentDepart().getId())){
+			request.setAttribute("role", BusinessUtil.ADMIN);
+		}else{
+			request.setAttribute("role", BusinessUtil.DEPT_CHECK_ROLE);
+		}
 		return new ModelAndView("com/jeecg/childbusiness/bChildStatisticsList");
 	}
 
@@ -131,6 +140,15 @@ public class BChildBusinessController extends BaseController {
 		return new ModelAndView("com/jeecg/childbusiness/bChildLimitList");
 	}
 
+	/**
+	 * 市直综合查询 页面跳转
+	 *
+	 * @return
+	 */
+	@RequestMapping(params = "cityQuery")
+	public ModelAndView cityQuery(HttpServletRequest request) {
+		return new ModelAndView("com/jeecg/childbusiness/cityQueryList");
+	}
 	/**
 	 * easyui AJAX请求数据
 	 * 
@@ -146,7 +164,10 @@ public class BChildBusinessController extends BaseController {
 		//查询条件组装器
 		org.jeecgframework.core.extend.hqlsearch.HqlGenerateUtil.installHql(cq, bChildBusiness, request.getParameterMap());
 		TSUser user = ResourceUtil.getSessionUser();
-		if (ResourceUtil.getConfigByName("accept_deptid").equals(user.getCurrentDepart().getId())){
+		if (ResourceUtil.getConfigByName("accept_deptid").equals(user.getCurrentDepart().getId()) ) {
+
+		}else if(ResourceUtil.getConfigByName("admin_deptid").equals(user.getCurrentDepart().getId())){
+			request.setAttribute("role", BusinessUtil.ADMIN);
 		}else{
 			cq.eq("deptId",user.getDepartid());
 		}
@@ -253,13 +274,13 @@ public class BChildBusinessController extends BaseController {
 		String message = null;
 		AjaxJson j = new AjaxJson();
 		bChildBusiness = systemService.getEntity(BChildBusinessEntity.class, bChildBusiness.getId());
-		message = "B_CHILD_BUSINESS删除成功";
+		message = "子业务删除成功";
 		try{
 			bChildBusinessService.delete(bChildBusiness);
 			systemService.addLog(message, Globals.Log_Type_DEL, Globals.Log_Leavel_INFO);
 		}catch(Exception e){
 			e.printStackTrace();
-			message = "B_CHILD_BUSINESS删除失败";
+			message = "子业务删除失败";
 			throw new BusinessException(e.getMessage());
 		}
 		j.setMsg(message);
@@ -276,7 +297,7 @@ public class BChildBusinessController extends BaseController {
 	public AjaxJson doBatchDel(String ids,HttpServletRequest request){
 		String message = null;
 		AjaxJson j = new AjaxJson();
-		message = "B_CHILD_BUSINESS删除成功";
+		message = "子业务删除成功";
 		try{
 			for(String id:ids.split(",")){
 				BChildBusinessEntity bChildBusiness = systemService.getEntity(BChildBusinessEntity.class, 
@@ -287,7 +308,7 @@ public class BChildBusinessController extends BaseController {
 			}
 		}catch(Exception e){
 			e.printStackTrace();
-			message = "B_CHILD_BUSINESS删除失败";
+			message = "子业务删除失败";
 			throw new BusinessException(e.getMessage());
 		}
 		j.setMsg(message);
@@ -306,13 +327,13 @@ public class BChildBusinessController extends BaseController {
 	public AjaxJson doAdd(BChildBusinessEntity bChildBusiness, HttpServletRequest request) {
 		String message = null;
 		AjaxJson j = new AjaxJson();
-		message = "B_CHILD_BUSINESS添加成功";
+		message = "子业务添加成功";
 		try{
 			bChildBusinessService.save(bChildBusiness);
 			systemService.addLog(message, Globals.Log_Type_INSERT, Globals.Log_Leavel_INFO);
 		}catch(Exception e){
 			e.printStackTrace();
-			message = "B_CHILD_BUSINESS添加失败";
+			message = "子业务添加失败";
 			throw new BusinessException(e.getMessage());
 		}
 		j.setMsg(message);
@@ -330,7 +351,7 @@ public class BChildBusinessController extends BaseController {
 	public AjaxJson doUpdate(BChildBusinessEntity bChildBusiness, HttpServletRequest request) {
 		String message = null;
 		AjaxJson j = new AjaxJson();
-		message = "B_CHILD_BUSINESS更新成功";
+		message = "子业务更新成功";
 		BChildBusinessEntity t = bChildBusinessService.get(BChildBusinessEntity.class, bChildBusiness.getId());
 		try {
 			MyBeanUtils.copyBeanNotNull2Bean(bChildBusiness, t);
@@ -338,7 +359,7 @@ public class BChildBusinessController extends BaseController {
 			systemService.addLog(message, Globals.Log_Type_UPDATE, Globals.Log_Leavel_INFO);
 		} catch (Exception e) {
 			e.printStackTrace();
-			message = "B_CHILD_BUSINESS更新失败";
+			message = "子业务更新失败";
 			throw new BusinessException(e.getMessage());
 		}
 		j.setMsg(message);

@@ -15,35 +15,37 @@
    <t:dgCol title="当前阶段状态"  field="currentPhasesStatus"  hidden="true"  queryMode="group"  width="120"></t:dgCol>
    <t:dgCol title="创建时间"  field="createTime"  formatter="yyyy-MM-dd"  queryMode="group"  width="120"></t:dgCol>
    <t:dgCol title="完结时间"  field="completeTime" hidden="true" formatter="yyyy-MM-dd"  queryMode="group"  width="120"></t:dgCol>
-   <t:dgCol title="申请人"  field="applyName"  queryMode="group"  width="120"></t:dgCol>
+   <t:dgCol title="申请人"  field="applyName"  queryMode="group"  width="60"></t:dgCol>
    <t:dgCol title="申请公司"  field="applyCompany"  hidden="true"  queryMode="group"  width="120"></t:dgCol>
    <t:dgCol title="公司营业执照编号"  field="businessLicenseId"  hidden="true"  queryMode="group"  width="120"></t:dgCol>
    <t:dgCol title="法人身份证号码"  field="legalPersonCard"  hidden="true"  queryMode="group"  width="120"></t:dgCol>
    <t:dgCol title="申请人身份证号"  field="applyIdentityCard"  hidden="true"  queryMode="group"  width="120"></t:dgCol>
    <t:dgCol title="申请人电话"  field="applyPhone"  hidden="true"  queryMode="group"  width="120"></t:dgCol>
 
-   <t:dgCol title="操作" field="opt" width="120"></t:dgCol>
+   <t:dgCol title="操作" field="opt" width="80"></t:dgCol>
    <t:dgFunOpt funname="accept(id)" title="查看"  urlclass="ace_button"  urlfont="fa-copy"></t:dgFunOpt>
    <t:dgFunOpt funname="loadBusinessLog(id)" title="流程日志"  urlclass="ace_button"  urlfont="fa-copy"></t:dgFunOpt>
    <%--<t:dgFunOpt funname="uploadMaterial(id)" title="材料上传"  urlclass="ace_button"  urlfont="fa-copy"></t:dgFunOpt>
    <t:dgFunOpt funname="uploadCertificate(id)" title="证照上传"  urlclass="ace_button"  urlfont="fa-copy"></t:dgFunOpt>--%>
-<%--
-   <c:if test="${role =='WINDOW_ACCEPT'}">
-    <t:dgFunOpt funname="uploadcl(id)" title="材料上传"  urlclass="ace_button"  urlfont="fa-copy"></t:dgFunOpt>
-    &lt;%&ndash;<t:dgDelOpt title="删除" url="bProjectBusinessController.do?doDel&id={id}" urlclass="ace_button"  urlfont="fa-trash-o"/>&ndash;%&gt;
-   </c:if>
-   <c:if test="${role =='DEPT_CHECK_ROLE'}">
-    <t:dgFunOpt funname="uploadcl(id)" title="材料审核"  urlclass="ace_button"  urlfont="fa-copy"></t:dgFunOpt>
-   </c:if>--%>
+<%--&lt;%&ndash;--%>
+   <%--<c:if test="${role =='WINDOW_ACCEPT'}">--%>
+    <%--<t:dgFunOpt funname="uploadcl(id)" title="材料上传"  urlclass="ace_button"  urlfont="fa-copy"></t:dgFunOpt>--%>
+    <%--&lt;%&ndash;<t:dgDelOpt title="删除" url="bProjectBusinessController.do?doDel&id={id}" urlclass="ace_button"  urlfont="fa-trash-o"/>&ndash;%&gt;--%>
+   <%--</c:if>--%>
+   <%--<c:if test="${role =='DEPT_CHECK_ROLE'}">--%>
+    <%--<t:dgFunOpt funname="uploadcl(id)" title="材料审核"  urlclass="ace_button"  urlfont="fa-copy"></t:dgFunOpt>--%>
+   <%--</c:if>&ndash;%&gt;--%>
+   <%--&lt;%&ndash;<t:dgToolBar title="录入" icon="icon-add" url="bProjectBusinessController.do?goAdd" funname="add"></t:dgToolBar>--%>
+   <%--<t:dgToolBar title="批量删除"  icon="icon-remove" url="bProjectBusinessController.do?doBatchDel" funname="deleteALLSelect"></t:dgToolBar>--%>
+   <%--<t:dgToolBar title="查看" icon="icon-search" url="bProjectBusinessController.do?goUpdate" funname="detail"></t:dgToolBar>--%>
+   <%--<t:dgToolBar title="导入" icon="icon-put" funname="ImportXls"></t:dgToolBar>--%>
+   <%--<t:dgToolBar title="导出" icon="icon-putout" funname="ExportXls"></t:dgToolBar>--%>
+   <%--<t:dgToolBar title="模板下载" icon="icon-putout" funname="ExportXlsByT"></t:dgToolBar>&ndash;%&gt;--%>
+<c:if test="${role == 'ADMIN'}">
+ <t:dgDelOpt title="删除" url="bProjectBusinessController.do?doDel&id={id}" urlclass="ace_button"  urlfont="fa-trash-o"/>
+ <t:dgToolBar title="编辑" icon="icon-edit" url="bProjectBusinessController.do?goUpdate" funname="update"></t:dgToolBar>
+</c:if>
 
-   <%--<t:dgDelOpt title="删除" url="bProjectBusinessController.do?doDel&id={id}" urlclass="ace_button"  urlfont="fa-trash-o"/>--%>
-   <%--<t:dgToolBar title="录入" icon="icon-add" url="bProjectBusinessController.do?goAdd" funname="add"></t:dgToolBar>
-   <t:dgToolBar title="编辑" icon="icon-edit" url="bProjectBusinessController.do?goUpdate" funname="update"></t:dgToolBar>
-   <t:dgToolBar title="批量删除"  icon="icon-remove" url="bProjectBusinessController.do?doBatchDel" funname="deleteALLSelect"></t:dgToolBar>
-   <t:dgToolBar title="查看" icon="icon-search" url="bProjectBusinessController.do?goUpdate" funname="detail"></t:dgToolBar>
-   <t:dgToolBar title="导入" icon="icon-put" funname="ImportXls"></t:dgToolBar>
-   <t:dgToolBar title="导出" icon="icon-putout" funname="ExportXls"></t:dgToolBar>
-   <t:dgToolBar title="模板下载" icon="icon-putout" funname="ExportXlsByT"></t:dgToolBar>--%>
   </t:datagrid>
   </div>
  </div>

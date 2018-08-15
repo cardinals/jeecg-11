@@ -713,10 +713,13 @@ public class BProjectBusinessController extends BaseController {
     @RequestMapping(params = "statisticsBusinessList")
     public ModelAndView statisticsBusinessList(HttpServletRequest request) {
         TSUser user = ResourceUtil.getSessionUser();
-        //前台获取权限
-        if (ResourceUtil.getConfigByName("accept_deptid").equals(user.getCurrentDepart().getId())){
-            request.setAttribute("role", BusinessUtil.WINDOW_ACCEPT);
-        }
+		if (ResourceUtil.getConfigByName("accept_deptid").equals(user.getCurrentDepart().getId()) ) {
+			request.setAttribute("role", BusinessUtil.WINDOW_ACCEPT);
+		}else if(ResourceUtil.getConfigByName("admin_deptid").equals(user.getCurrentDepart().getId())){
+			request.setAttribute("role", BusinessUtil.ADMIN);
+		}else{
+			request.setAttribute("role", BusinessUtil.DEPT_CHECK_ROLE);
+		}
         return new ModelAndView("com/jeecg/multiple/statisticsBusinessList");
     }
 

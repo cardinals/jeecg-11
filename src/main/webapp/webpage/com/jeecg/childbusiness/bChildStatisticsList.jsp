@@ -1,15 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@include file="/context/mytags.jsp"%>
+
 <t:base type="jquery,easyui,tools,DatePicker"></t:base>
 <div class="easyui-layout" fit="true">
   <div region="center" style="padding:0px;border:0px">
   <t:datagrid name="bChildBusinessList" pagination="true" fitColumns="true" title="子项业务统计" actionUrl="bChildBusinessController.do?datagrid" idField="id" fit="true" queryMode="group">
    <t:dgCol title="id"  field="id"  hidden="true"  queryMode="group"  width="120"></t:dgCol>
    <t:dgCol title="项目名称"  field="realityProjectName" query="true"  width="80"></t:dgCol>
-   <t:dgCol title="业务流水号"  field="businessId" hidden="true" query="true" width="120"></t:dgCol>
-   <t:dgCol title="子业务流水号"  field="childBusinessId"  query="true" width="90"></t:dgCol>
+   <t:dgCol title="业务流水号"  field="businessId" hidden="true" query="true" width="100"></t:dgCol>
+   <t:dgCol title="子业务流水号"  field="childBusinessId"  query="true" width="60"></t:dgCol>
    <t:dgCol title="项目编号"  field="projectId"  hidden="true"  queryMode="group"  width="120"></t:dgCol>
-   <t:dgCol title="阶段编号"  field="phasesId"  funname="phaseName(phasesId)"  queryMode="group"  width="90"></t:dgCol>
+   <t:dgCol title="阶段编号"  field="phasesId"  funname="phaseName(phasesId)"  queryMode="group"  width="40"></t:dgCol>
 
    <t:dgCol title="事项编号"  field="itemsId"  hidden="true"  queryMode="group"  width="120"></t:dgCol>
    <t:dgCol title="事项名称"  field="itemsName"  queryMode="group"  width="120"></t:dgCol>
@@ -31,18 +32,21 @@
    <%--<t:dgCol title="证照路径"  field="certificatePath"  queryMode="group"  width="120"></t:dgCol>--%>
    <t:dgCol title="证照上传时间"  field="certificateTime"  formatter="yyyy-MM-dd"  hidden="true"  queryMode="group"  width="120"></t:dgCol>
    <t:dgCol title="上传人"  field="createBy"  hidden="true"  queryMode="group"  width="120"></t:dgCol>
-   <t:dgCol title="操作" field="opt" width="40"></t:dgCol>
-   <%--<t:dgDelOpt title="删除" url="bChildBusinessController.do?doDel&id={id}" urlclass="ace_button"  urlfont="fa-trash-o"/>--%>
+   <t:dgCol title="操作" field="opt" width="60"></t:dgCol>
+
    <t:dgFunOpt funname="view(id)" title="查看"  urlclass="ace_button"  urlfont="fa-copy"></t:dgFunOpt>
    <%--<t:dgFunOpt funname="uploadMaterial(id)" title="证照上传"  urlclass="ace_button"  urlfont="fa-copy"></t:dgFunOpt>--%>
 
-   <%--<t:dgToolBar title="录入" icon="icon-add" url="bChildBusinessController.do?goAdd" funname="add"></t:dgToolBar>
+   <%--<t:dgToolBar title="录入" icon="icon-add" url="bChildBusinessController.do?goAdd" funname="add"></t:dgToolBar>--%>
+   <%--<t:dgToolBar title="查看" icon="icon-search" url="bChildBusinessController.do?goUpdate" funname="detail"></t:dgToolBar>--%>
+   <%--<t:dgToolBar title="导入" icon="icon-put" funname="ImportXls"></t:dgToolBar>--%>
+   <%--<t:dgToolBar title="导出" icon="icon-putout" funname="ExportXls"></t:dgToolBar>--%>
+   <%--<t:dgToolBar title="模板下载" icon="icon-putout" funname="ExportXlsByT"></t:dgToolBar>--%>
+   <c:if test="${role == 'ADMIN'}">
+   <t:dgDelOpt title="删除" url="bChildBusinessController.do?doDel&id={id}" urlclass="ace_button"  urlfont="fa-trash-o"/>
    <t:dgToolBar title="编辑" icon="icon-edit" url="bChildBusinessController.do?goUpdate" funname="update"></t:dgToolBar>
-   <t:dgToolBar title="批量删除"  icon="icon-remove" url="bChildBusinessController.do?doBatchDel" funname="deleteALLSelect"></t:dgToolBar>
-   <t:dgToolBar title="查看" icon="icon-search" url="bChildBusinessController.do?goUpdate" funname="detail"></t:dgToolBar>
-   <t:dgToolBar title="导入" icon="icon-put" funname="ImportXls"></t:dgToolBar>
-   <t:dgToolBar title="导出" icon="icon-putout" funname="ExportXls"></t:dgToolBar>
-   <t:dgToolBar title="模板下载" icon="icon-putout" funname="ExportXlsByT"></t:dgToolBar>--%>
+   <%--<t:dgToolBar title="批量删除"  icon="icon-remove" url="bChildBusinessController.do?doBatchDel" funname="deleteALLSelect"></t:dgToolBar>--%>
+   </c:if>
   </t:datagrid>
   </div>
  </div>
